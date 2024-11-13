@@ -4,10 +4,10 @@ export default function Home() {
   return (
     <>
       {/* page */}
-      <div className="px-5 pt-16">
+      <div className="w-dvw h-dvh px-5 pt-16">
         {/* top */}
-        <div className="h-14 flex justify-between items-center">
-          <div className="bold w-64 text-2xl">
+        <header className="h-14 flex justify-between items-center">
+          <h1 className="bold w-64 text-2xl">
             You have got 5 tasks today to complete
             <Image
               src={"/img/Pencil.png"}
@@ -16,9 +16,9 @@ export default function Home() {
               height={"26"}
               className="inline-block ml-2 mb-1"
             />
-          </div>
+          </h1>
           <div className="w-11 h-11 bg-gray-500 rounded-full"></div>
-        </div>
+        </header>
         <div className="relative">
           <input
             type="text"
@@ -26,19 +26,23 @@ export default function Home() {
             className="absolute foreground w-full h-12 mt-5 cursor-text"
           />
           <label htmlFor="input" className="absolute mt-8 opacity-65">
-            <i className="fa-solid fa-magnifying-glass pr-1 font-regu pl-2 pr-3"></i>
+            <i className="fa-solid fa-magnifying-glas font-regu pl-2 pr-3"></i>
             Search Task Here
           </label>
         </div>
 
-        <div>{/* Progress */}</div>
+        <section>{/* Progress */}</section>
 
-        <div>{/* Today's Tasks*/}</div>
+        <section>{/* Today's Tasks*/}</section>
+
+        <section>{/* Tommorow Tasks */}</section>
       </div>
 
-      <div>{/* Tommorow Tasks */}</div>
-
-      <div>{/* bottom menu */}</div>
+      <section className="w-full h-full flex justify-center items-end">
+        <button className="w-16 h-16 rounded-full bg-gradient-to-tl from-purple-400 to-pink-300 fixed mb-6 cursor-pointer">
+          <i className="fa-solid fa-plus text-black text-2xl"></i>
+        </button>
+      </section>
     </>
   );
 }
