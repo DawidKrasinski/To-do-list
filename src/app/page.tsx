@@ -39,9 +39,9 @@ export default function Home() {
 
         <section>{/* Progress */}</section>
 
-        <section>
-          <h2>{`Today's Tasks`}</h2>
-          <div>
+        <section className="mt-72">
+          <h2 className="text-lg">{`Today's Tasks`}</h2>
+          <div className="mt-3">
             {taskList.map((task) => (
               <TaskComponent key={task.id} task={task} />
             ))}
