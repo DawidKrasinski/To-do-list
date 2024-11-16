@@ -1,7 +1,12 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useToDoList } from "./toDoListProvider";
+import { TaskComponent } from "./components/task-component";
 
 export default function Home() {
+  const { taskList } = useToDoList();
+
   return (
     <>
       {/* page */}
@@ -34,7 +39,14 @@ export default function Home() {
 
         <section>{/* Progress */}</section>
 
-        <section>{/* Today's Tasks*/}</section>
+        <section>
+          <h2>{`Today's Tasks`}</h2>
+          <div>
+            {taskList.map((task) => (
+              <TaskComponent key={task.id} task={task} />
+            ))}
+          </div>
+        </section>
 
         <section>{/* Tommorow Tasks */}</section>
       </div>

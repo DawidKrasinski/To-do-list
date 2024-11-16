@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ToDoListProvider from "./toDoListProvider";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -35,7 +36,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-0`}
       >
-        {children}
+        <ToDoListProvider>{children}</ToDoListProvider>
       </body>
     </html>
   );

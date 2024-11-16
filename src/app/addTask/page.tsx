@@ -1,20 +1,26 @@
 "use client";
 import { useState } from "react";
-import { Task } from "../task.js";
+import { TaskType } from "../taskType.js";
+import { useToDoList } from "../toDoListProvider";
+import { useRouter } from "next/navigation";
 
 export default function AddTask() {
-  const [task, setTask] = useState<Task>({ name: "", description: "" });
-
-  function handleButtonClicked(task: Task) {
-    console.log(task);
-  }
+  const [task, setTask] = useState<TaskType>({ name: "", description: "" });
+  const { addTask } = useToDoList();
+  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    console.log(e.target, name, value);
     setTask((prevTask) => ({ ...prevTask, [name]: value }));
   };
+
+  function handleButtonClicked(task: TaskType) {
+    addTask(task);
+    router.push("/");
+  }
 
   return (
     <div className="w-dvw h-dvh px-5 pt-16">
@@ -23,6 +29,7 @@ export default function AddTask() {
         <h2 className="text-xl">Schedule</h2>
         <div className="relative">
           <input
+            name="name"
             onChange={handleChange}
             value={task.name}
             type="text"
@@ -37,6 +44,7 @@ export default function AddTask() {
           </label>
           <div className="static">
             <textarea
+              name="description"
               onChange={handleChange}
               value={task.description}
               id="taskDescriptionInput"
