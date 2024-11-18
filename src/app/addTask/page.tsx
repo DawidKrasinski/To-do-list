@@ -29,6 +29,7 @@ export default function AddTask() {
         <h2 className="text-xl">Schedule</h2>
         <div className="relative">
           <input
+            autoComplete="off"
             name="name"
             onChange={handleChange}
             value={task.name}

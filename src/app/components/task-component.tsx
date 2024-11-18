@@ -1,12 +1,40 @@
 import { TaskType } from "../taskType";
+import { useState } from "react";
+import { useToDoList } from "../toDoListProvider";
 
 export function TaskComponent({ task }: { task: TaskType }) {
+  if (task.id == undefined || task.done == undefined) {
+    throw new Error("Task is invalid");
+  }
+
+  const { uploadTaskDone } = useToDoList();
+  const id = task.id;
   const name = task.name;
+  const [done, setDone] = useState(task.done);
+
+  function changeDone(done: boolean) {
+    setDone(!done);
+    uploadTaskDone(id, !done);
+  }
+
   return (
-    <div className="h-20 w-full foreground">
-      <h3>{name}</h3>
-      <span>data</span>
-      <button className="w-7 h-7 rounded-full bg-purple-400"></button>
+    <div className="pl-8 mt-3 h-20 w-full foreground flex">
+      <div className="mt-3 w-5/6">
+        <h3>{name}</h3>
+        <span className="text-sm opacity-65">data</span>
+      </div>
+      <div className="flex justify-center items-center w-1/6">
+        <button
+          onClick={() => changeDone(done)}
+          className={`w-7 h-7 rounded-full ${
+            done
+              ? "bg-purple-400 border border-black text-black flex justify-center items-center"
+              : "bg-transparent border-2 border-purple-400 text-transparent"
+          }`}
+        >
+          <i className="fa-solid fa-check"></i>
+        </button>
+      </div>
     </div>
   );
 }

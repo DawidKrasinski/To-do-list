@@ -26,10 +26,11 @@ export async function POST(req: NextRequest) {
   }
   try {
     const body = await req.json();
-    await connection.query(`INSERT INTO tasks (name) VALUES (?);`, [
-      body.name,
-      body.description,
-    ]);
+    await connection.query(
+      `INSERT INTO tasks (name, done) VALUES (?, false);
+`,
+      [body.name, body.description]
+    );
     return NextResponse.json({}, { status: 201 });
   } catch (error) {
     console.log("cant use post method", error);
