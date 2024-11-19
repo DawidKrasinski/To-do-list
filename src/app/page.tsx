@@ -6,12 +6,11 @@ import { TaskComponent } from "./components/task-component";
 
 export default function Home() {
   const { taskList } = useToDoList();
+  console.log(taskList, "123");
 
   return (
     <>
-      {/* page */}
       <div className="w-dvw h-dvh px-5 pt-16">
-        {/* top */}
         <header className="h-14 flex justify-between items-center">
           <h1 className="bold w-64 text-2xl">
             You have got 5 tasks today to complete
@@ -37,9 +36,20 @@ export default function Home() {
           </label>
         </div>
 
-        <section>{/* Progress */}</section>
+        <section className="mt-24">
+          <h2 className="text-xl pt-2">Progress</h2>
+          <div className="mt-3 pl-4 w-full h-36 foreground">
+            <h3 style={{ fontSize: "18px" }} className="pt-3">
+              Daily Task
+            </h3>
+            <span className="block pt-1 opacity-80">2/3 Task Completed</span>
+            <span className="text-sm font-thin opacity-40 block pt-1">
+              You are almost done go ahead
+            </span>
+          </div>
+        </section>
 
-        <section className="mt-72">
+        <section className="mt-7">
           <h2 className="text-xl">{`Today's Tasks`}</h2>
           <div className="mt-3">
             {taskList.map((task) => (

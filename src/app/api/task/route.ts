@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     await connection.query(
-      `INSERT INTO tasks (name, done) VALUES (?, false);
+      `INSERT INTO tasks (name, done, description) VALUES (?, false, ?);
 `,
       [body.name, body.description]
     );

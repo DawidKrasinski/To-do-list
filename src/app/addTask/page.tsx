@@ -3,6 +3,7 @@ import { useState } from "react";
 import { TaskType } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AddTask() {
   const [task, setTask] = useState<TaskType>({ name: "", description: "" });
@@ -13,7 +14,6 @@ export default function AddTask() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    console.log(e.target, name, value);
     setTask((prevTask) => ({ ...prevTask, [name]: value }));
   };
 
@@ -24,7 +24,20 @@ export default function AddTask() {
 
   return (
     <div className="w-dvw h-dvh px-5 pt-16">
-      <header></header>
+      <header className="relative w-full h-14 flex">
+        <Link
+          href="/"
+          className="absolute w-8 h-8 border-2 text-white rounded-full flex justify-center items-center"
+        >
+          <i className="fa-solid fa-arrow-left"></i>
+        </Link>
+        <span className="relative w-fit text-2xl mx-auto">
+          Mobile App Research
+        </span>
+      </header>
+
+      <div className="">{/* calendar */}</div>
+
       <section>
         <h2 className="text-xl">Schedule</h2>
         <div className="relative">

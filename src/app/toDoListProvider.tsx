@@ -16,7 +16,6 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   async function fetchTasks() {
     const response = await fetch("/api/task");
     const body = await response.json();
-    console.log(body);
     setTaskList(body);
   }
 
@@ -28,6 +27,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
       },
       body: JSON.stringify({
         name: task.name,
+        description: task.description,
       }),
     });
     if (!response.ok) {
