@@ -9,7 +9,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        // "foreground-color": "#1E1E1E",
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
       },
     },
   },
