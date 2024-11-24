@@ -37,7 +37,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }
 
   async function uploadTaskDone(id: number, done: boolean) {
-    await fetch(`/api/task/${id}/taskDone`, {
+    await fetch(`/api/task/${id}`, {
       method: "PUT",
       body: JSON.stringify({ done }),
     });
