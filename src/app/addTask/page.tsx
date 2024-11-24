@@ -6,27 +6,33 @@ import { TaskType } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
 
 export default function AddTask() {
-  const [task, setTask] = useState<TaskType>({ name: "", description: "" });
+  const [task, setTask] = useState<TaskType>({
+    name: "",
+    description: "",
+    priority: "",
+  });
   const { addTask } = useToDoList();
   const router = useRouter();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setTask((prevTask) => ({ ...prevTask, [name]: value }));
-  };
-
-  function handleButtonClicked(task: TaskType) {
+  function handleAddTaskButtonClicked(task: TaskType) {
     addTask(task);
     router.push("/");
   }
 
-  function descriptionHandler(e: React.FormEvent<HTMLDivElement>) {
+  const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.innerText;
     if (value.trim() == "") e.currentTarget.innerHTML = "";
-
     setTask((prevTask) => ({ ...prevTask, description: value }));
+  };
+
+  function descriptionChange(e: React.FormEvent<HTMLDivElement>) {
+    const value = e.currentTarget.innerText;
+    if (value.trim() == "") e.currentTarget.innerHTML = "";
+    setTask((prevTask) => ({ ...prevTask, description: value }));
+  }
+
+  function changePriority(priority: string) {
+    setTask((prevTask) => ({ ...prevTask, priority: priority }));
   }
 
   return (
@@ -51,7 +57,7 @@ export default function AddTask() {
           <input
             autoComplete="off"
             name="name"
-            onChange={handleChange}
+            onChange={nameChange}
             value={task.name}
             type="text"
             id="taskNameInput"
@@ -60,7 +66,7 @@ export default function AddTask() {
           />
           <div
             contentEditable={true}
-            onInput={descriptionHandler}
+            onInput={descriptionChange}
             id="taskDescriptionInput"
             className="bg-muted rounded-lg p-3 min-h-24 relative empty:after:content-['Description'] after:absolute after:top-3 after:left-3 after:text-muted-foreground/40"
           ></div>
@@ -79,16 +85,31 @@ export default function AddTask() {
         <div className="text-lg flex flex-col gap-2">
           <h3 className="">Priority</h3>
           <div className="flex gap-2">
-            <button className="flex-1 p-1 border-2 rounded-xl">High</button>
-            <button className="flex-1 p-1 border-2 rounded-xl">Medium</button>
-            <button className="flex-1 p-1 border-2 rounded-xl">Low</button>
+            <button
+              className="flex-1 p-1 border-2 border-highPriorityButton rounded-xl"
+              onClick={() => changePriority("High")}
+            >
+              High
+            </button>
+            <button
+              className="flex-1 p-1 border-2 border-mediumPriorityButton rounded-xl"
+              onClick={() => changePriority("Medium")}
+            >
+              Medium
+            </button>
+            <button
+              className="flex-1 p-1 border-2 border-lowPriorityButton rounded-xl"
+              onClick={() => changePriority("Low")}
+            >
+              Low
+            </button>
           </div>
         </div>
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
         <button
-          onClick={() => handleButtonClicked(task)}
+          onClick={() => handleAddTaskButtonClicked(task)}
           className="bg-gradient-to-r from-purple-400 to-pink-400   rounded-lg  p-3 w-full "
         >
           Create Task

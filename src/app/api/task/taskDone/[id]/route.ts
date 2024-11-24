@@ -1,12 +1,11 @@
-import { getDB } from "../db";
+import { getDB } from "../../db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   const connection = await getDB();
-  const { id } = context.params;
   if (!connection) {
     return NextResponse.json(
       { error: "cant connect with database" },
@@ -15,9 +14,9 @@ export async function PUT(
   }
   try {
     const body = await req.json();
-    await connection.query(`UPDATE tasks SET done = ? WHERE id = ?;`, [
+    await connection.query(`UPDATE products SET done = ? WHERE id = ?;`, [
       body.done,
-      parseInt(id, 10),
+      params.id,
     ]);
     return NextResponse.json({}, { status: 200 });
   } catch (error) {

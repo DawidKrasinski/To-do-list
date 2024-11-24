@@ -3,4 +3,5 @@ export type TaskType = {
   name: string;
   description: string;
   done?: boolean;
+  priority: string;
 };
