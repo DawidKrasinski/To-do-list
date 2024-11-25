@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TaskType } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
+import { flushSync } from "react-dom";
 
 export default function AddTask() {
   const [task, setTask] = useState<TaskType>({
@@ -32,7 +33,9 @@ export default function AddTask() {
   }
 
   function changePriority(priority: string) {
-    setTask((prevTask) => ({ ...prevTask, priority: priority }));
+    flushSync(() => {
+      setTask((prevTask) => ({ ...prevTask, priority: priority }));
+    });
   }
 
   return (
@@ -86,19 +89,31 @@ export default function AddTask() {
           <h3 className="">Priority</h3>
           <div className="flex gap-2">
             <button
-              className="flex-1 p-1 border-2 border-highPriorityButton rounded-xl"
+              className={`flex-1 p-1 border-2 border-highPriorityButton rounded-xl ${
+                task.priority === "High"
+                  ? "bg-highPriorityButton text-background"
+                  : ""
+              }`}
               onClick={() => changePriority("High")}
             >
               High
             </button>
             <button
-              className="flex-1 p-1 border-2 border-mediumPriorityButton rounded-xl"
+              className={`flex-1 p-1 border-2 border-mediumPriorityButton rounded-xl ${
+                task.priority === "Medium"
+                  ? "bg-mediumPriorityButton text-background"
+                  : ""
+              }`}
               onClick={() => changePriority("Medium")}
             >
               Medium
             </button>
             <button
-              className="flex-1 p-1 border-2 border-lowPriorityButton rounded-xl"
+              className={`flex-1 p-1 border-2 border-lowPriorityButton rounded-xl ${
+                task.priority === "Low"
+                  ? "bg-lowPriorityButton text-background"
+                  : ""
+              }`}
               onClick={() => changePriority("Low")}
             >
               Low
