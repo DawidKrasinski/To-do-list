@@ -21,9 +21,9 @@ export default function AddTask() {
   }
 
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.innerText;
+    const value = e.currentTarget.value;
     if (value.trim() == "") e.currentTarget.innerHTML = "";
-    setTask((prevTask) => ({ ...prevTask, description: value }));
+    setTask((prevTask) => ({ ...prevTask, name: value }));
   };
 
   function descriptionChange(e: React.FormEvent<HTMLDivElement>) {

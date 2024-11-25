@@ -37,9 +37,16 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }
 
   async function uploadTaskDone(id: number, done: boolean) {
+    let doneDate;
+    if (done) {
+      const date = new Date();
+      doneDate = date.getDate();
+    } else {
+      doneDate = null;
+    }
     await fetch(`/api/task/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ done }),
+      body: JSON.stringify({ done, doneDate }),
     });
     fetchTasks();
   }

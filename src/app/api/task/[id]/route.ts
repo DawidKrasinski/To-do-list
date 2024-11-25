@@ -15,10 +15,10 @@ export async function PUT(
   }
   try {
     const body = await req.json();
-    await connection.query(`UPDATE tasks SET done = ? WHERE id = ?;`, [
-      body.done,
-      parseInt(id, 10),
-    ]);
+    await connection.query(
+      `UPDATE tasks SET done = ?, doneDate = ? WHERE id = ?;`,
+      [body.done, body.doneDate, parseInt(id, 10)]
+    );
     return NextResponse.json({}, { status: 200 });
   } catch (error) {
     console.log("cant use put method", error);

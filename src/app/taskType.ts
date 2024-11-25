@@ -3,5 +3,8 @@ export type TaskType = {
   name: string;
   description: string;
   done?: boolean;
+  doneDate?: number | null;
   priority: string;
 };
+// startDate
+// endDate
