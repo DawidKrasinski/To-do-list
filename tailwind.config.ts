@@ -13,14 +13,14 @@ export default {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
-        highPriorityButton: {
-          DEFAULT: "var(--highPriorityButton)",
+        highPriority: {
+          DEFAULT: "var(--highPriority)",
         },
-        mediumPriorityButton: {
-          DEFAULT: "var(--mediumPriorityButton)",
+        mediumPriority: {
+          DEFAULT: "var(--mediumPriority)",
         },
-        lowPriorityButton: {
-          DEFAULT: "var(--lowPriorityButton)",
+        lowPriority: {
+          DEFAULT: "var(--lowPriority)",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

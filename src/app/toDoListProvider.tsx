@@ -28,6 +28,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
       body: JSON.stringify({
         name: task.name,
         description: task.description,
+        priority: task.priority,
       }),
     });
     if (!response.ok) {

@@ -16,6 +16,7 @@ export default function AddTask() {
   const router = useRouter();
 
   function handleAddTaskButtonClicked(task: TaskType) {
+    console.log(task);
     addTask(task);
     router.push("/");
   }
@@ -89,9 +90,9 @@ export default function AddTask() {
           <h3 className="">Priority</h3>
           <div className="flex gap-2">
             <button
-              className={`flex-1 p-1 border-2 border-highPriorityButton rounded-xl ${
+              className={`flex-1 p-1 border-2 border-highPriority rounded-xl ${
                 task.priority === "High"
-                  ? "bg-highPriorityButton text-background"
+                  ? "bg-highPriority text-background"
                   : ""
               }`}
               onClick={() => changePriority("High")}
@@ -99,9 +100,9 @@ export default function AddTask() {
               High
             </button>
             <button
-              className={`flex-1 p-1 border-2 border-mediumPriorityButton rounded-xl ${
+              className={`flex-1 p-1 border-2 border-mediumPriority rounded-xl ${
                 task.priority === "Medium"
-                  ? "bg-mediumPriorityButton text-background"
+                  ? "bg-mediumPriority text-background"
                   : ""
               }`}
               onClick={() => changePriority("Medium")}
@@ -109,10 +110,8 @@ export default function AddTask() {
               Medium
             </button>
             <button
-              className={`flex-1 p-1 border-2 border-lowPriorityButton rounded-xl ${
-                task.priority === "Low"
-                  ? "bg-lowPriorityButton text-background"
-                  : ""
+              className={`flex-1 p-1 border-2 border-lowPriority rounded-xl ${
+                task.priority === "Low" ? "bg-lowPriority text-background" : ""
               }`}
               onClick={() => changePriority("Low")}
             >

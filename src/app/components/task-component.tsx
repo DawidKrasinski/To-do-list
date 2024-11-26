@@ -18,7 +18,18 @@ export function TaskComponent({ task }: { task: TaskType }) {
   }
 
   return (
-    <div className="pl-8 mt-3 h-20 w-full foreground flex">
+    <div className="mt-4 h-20 w-full flex bg-muted rounded-xl overflow-hidden">
+      <div
+        className={`w-4 mr-4 h-full ${
+          task.priority === "Low"
+            ? "bg-lowPriority"
+            : task.priority === "Medium"
+            ? "bg-mediumPriority"
+            : task.priority === "High"
+            ? "bg-highPriority"
+            : ""
+        }`}
+      ></div>
       <div className="mt-3 w-5/6">
         <h3>{name}</h3>
         <span className="text-sm opacity-65">data</span>

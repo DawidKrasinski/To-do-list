@@ -8,9 +8,9 @@
   --foreground: 0 0% 100%;
   --muted: 0 0% 12%;
   --muted-foreground: 0 0% 89%;
-  --highPriorityButton: #facbba;
-  --mediumPriorityButton: #d7f0ff;
-  --lowPriorityButton: #fad9ff;
+  --highPriority: #facbba;
+  --mediumPriority: #d7f0ff;
+  --lowPriority: #fad9ff;
 }
 
 /* .light {
