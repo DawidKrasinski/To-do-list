@@ -1,16 +1,28 @@
 import { TaskType } from "../taskType";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToDoList } from "../toDoListProvider";
 
 export function TaskComponent({ task }: { task: TaskType }) {
-  if (task.id == undefined || task.done == undefined) {
+  if (
+    task.id === undefined ||
+    task.done === undefined ||
+    task.doneDate === undefined
+  ) {
     throw new Error("Task is invalid");
   }
 
-  const { uploadTaskDone } = useToDoList();
+  const { uploadTaskDone, deleteTask } = useToDoList();
   const id = task.id;
   const name = task.name;
   const [done, setDone] = useState(task.done);
+  const date = new Date();
+  const currentDay = date.getDate();
+
+  useEffect(() => {
+    if (done && task.doneDate !== currentDay) {
+      deleteTask(id);
+    }
+  }, [done, task.doneDate, currentDay, deleteTask, id]);
 
   function changeDone(done: boolean) {
     setDone(!done);

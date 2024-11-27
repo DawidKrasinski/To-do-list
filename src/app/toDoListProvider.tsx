@@ -6,6 +6,7 @@ export type ToDoListContextType = {
   taskList: TaskType[];
   addTask: (task: TaskType) => Promise<string | undefined>;
   uploadTaskDone: (id: number, done: boolean) => Promise<void>;
+  deleteTask: (id: number) => Promise<void>;
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -52,12 +53,21 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     fetchTasks();
   }
 
+  async function deleteTask(id: number) {
+    await fetch(`api/task/${id}`, {
+      method: "DELETE",
+    });
+    fetchTasks();
+  }
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
   return (
-    <ToDoListContext.Provider value={{ addTask, uploadTaskDone, taskList }}>
+    <ToDoListContext.Provider
+      value={{ addTask, uploadTaskDone, taskList, deleteTask }}
+    >
       {props.children}
     </ToDoListContext.Provider>
   );
