@@ -1,6 +1,7 @@
 import { TaskType } from "../taskType";
 import { useState, useEffect } from "react";
 import { useToDoList } from "../toDoListProvider";
+import { flushSync } from "react-dom";
 
 export function TaskComponent({ task }: { task: TaskType }) {
   if (
@@ -19,14 +20,23 @@ export function TaskComponent({ task }: { task: TaskType }) {
   const currentDay = date.getDate();
 
   useEffect(() => {
-    if (done && task.doneDate !== currentDay) {
+    console.log(
+      "id: " + id,
+      "done?: " + done,
+      "today: " + currentDay,
+      "done date: " + task.doneDate,
+      "if: " + (done && task.doneDate !== currentDay)
+    );
+    if (done && task.doneDate !== currentDay && task.doneDate !== null) {
       deleteTask(id);
     }
   }, [done, task.doneDate, currentDay, deleteTask, id]);
 
-  function changeDone(done: boolean) {
-    setDone(!done);
-    uploadTaskDone(id, !done);
+  async function changeDone(done: boolean) {
+    flushSync(() => {
+      setDone(!done);
+    });
+    await uploadTaskDone(id, !done);
   }
 
   return (

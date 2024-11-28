@@ -26,21 +26,33 @@ export async function PUT(
   }
 }
 
-export async function DELETE({ params }: { params: { id: number } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+  if (!id) {
+    return NextResponse.json({ error: "Task ID is required" }, { status: 400 });
+  }
+
   const connection = await getDB();
   if (!connection) {
     return NextResponse.json(
-      { error: "cant connect with database" },
+      { error: "Can't connect to the database" },
       { status: 500 }
     );
   }
+
   try {
-    await connection.query(`DELETE FROM tasks WHERE id = ?;`, [params.id]);
-    return NextResponse.json({}, { status: 200 });
-  } catch (error) {
-    console.log("cant use delete method", error);
+    await connection.query("DELETE FROM tasks WHERE id = ?", [id]);
     return NextResponse.json(
-      { error: "cant use delete method" },
+      { message: "Task deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Can't use delete method", error);
+    return NextResponse.json(
+      { error: "Can't use delete method" },
       { status: 500 }
     );
   }

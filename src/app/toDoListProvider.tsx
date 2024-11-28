@@ -54,9 +54,10 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }
 
   async function deleteTask(id: number) {
-    await fetch(`api/task/${id}`, {
+    const response = await fetch(`api/task/${id}`, {
       method: "DELETE",
     });
+    console.log(response);
     fetchTasks();
   }
 
