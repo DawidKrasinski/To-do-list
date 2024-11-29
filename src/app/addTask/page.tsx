@@ -64,14 +64,12 @@ export default function AddTask() {
             onChange={nameChange}
             value={task.name}
             type="text"
-            id="taskNameInput"
             className="bg-muted p-3 placeholder:text-muted-foreground/40 rounded-lg"
             placeholder="Name"
           />
           <div
             contentEditable={true}
             onInput={descriptionChange}
-            id="taskDescriptionInput"
             className="bg-muted rounded-lg p-3 min-h-24 relative empty:after:content-['Description'] after:absolute after:top-3 after:left-3 after:text-muted-foreground/40"
           ></div>
         </section>
@@ -124,7 +122,7 @@ export default function AddTask() {
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
         <button
           onClick={() => handleAddTaskButtonClicked(task)}
-          className="bg-gradient-to-r from-purple-400 to-pink-400   rounded-lg  p-3 w-full "
+          className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg  p-3 w-full "
         >
           Create Task
         </button>

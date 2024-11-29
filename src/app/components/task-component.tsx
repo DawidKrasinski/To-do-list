@@ -33,9 +33,9 @@ export function TaskComponent({ task }: { task: TaskType }) {
   };
 
   return (
-    <div className="mt-4 h-20 w-full flex bg-muted rounded-xl overflow-hidden">
+    <div className="flex h-20 bg-muted rounded-lg overflow-hidden">
       <div
-        className={`w-4 mr-4 h-full ${
+        className={`w-4 h-full ${
           priority === "Low"
             ? "bg-lowPriority"
             : priority === "Medium"
@@ -45,21 +45,23 @@ export function TaskComponent({ task }: { task: TaskType }) {
             : ""
         }`}
       ></div>
-      <div className="mt-3 w-5/6">
-        <h3>{name}</h3>
-        <span className="text-sm opacity-65">Date</span>
-      </div>
-      <div className="flex justify-center items-center w-1/6">
-        <button
-          onClick={changeDoneStatus}
-          className={`w-7 h-7 rounded-full ${
-            isDone
-              ? "bg-purple-400 border border-black text-black flex justify-center items-center"
-              : "bg-transparent border-2 border-purple-400 text-transparent"
-          }`}
-        >
-          <i className="fa-solid fa-check"></i>
-        </button>
+      <div className="flex flex-1 items-center justify-between px-4">
+        <div>
+          <h3>{name}</h3>
+          <span className="text-sm opacity-65">Date</span>
+        </div>
+        <div className="flex justify-center items-center">
+          <button
+            onClick={changeDoneStatus}
+            className={`w-7 h-7 rounded-full ${
+              isDone
+                ? "bg-purple-400 text-black flex justify-center items-center"
+                : "bg-transparent border-2 border-purple-400 text-transparent"
+            }`}
+          >
+            <i className="fa-solid fa-check"></i>
+          </button>
+        </div>
       </div>
     </div>
   );
