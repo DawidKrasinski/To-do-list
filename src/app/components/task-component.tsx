@@ -1,66 +1,59 @@
 import { TaskType } from "../taskType";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useToDoList } from "../toDoListProvider";
-import { flushSync } from "react-dom";
 
 export function TaskComponent({ task }: { task: TaskType }) {
-  if (
-    task.id === undefined ||
-    task.done === undefined ||
-    task.doneDate === undefined
-  ) {
-    throw new Error("Task is invalid");
+  const { id, name, done, doneDate, priority } = task;
+
+  if (id === undefined || done === undefined || doneDate === undefined) {
+    throw new Error("Task has invalid properties");
   }
 
   const { uploadTaskDone, deleteTask } = useToDoList();
-  const id = task.id;
-  const name = task.name;
-  const [done, setDone] = useState(task.done);
-  const date = new Date();
-  const currentDay = date.getDate();
+  const [isDone, setIsDone] = useState(done);
+  const currentDay = new Date().getDate();
+
+  const handleDeleteTask = useCallback(async () => {
+    if (isDone && doneDate !== currentDay && doneDate !== null) {
+      await deleteTask(id);
+    }
+  }, [isDone, doneDate, currentDay, deleteTask, id]);
 
   useEffect(() => {
-    console.log(
-      "id: " + id,
-      "done?: " + done,
-      "today: " + currentDay,
-      "done date: " + task.doneDate,
-      "if: " + (done && task.doneDate !== currentDay)
-    );
-    if (done && task.doneDate !== currentDay && task.doneDate !== null) {
-      deleteTask(id);
-    }
-  }, [done, task.doneDate, currentDay, deleteTask, id]);
+    handleDeleteTask();
+  }, [handleDeleteTask]);
 
-  async function changeDone(done: boolean) {
-    flushSync(() => {
-      setDone(!done);
-    });
-    await uploadTaskDone(id, !done);
-  }
+  const changeDoneStatus = async () => {
+    if (id !== undefined) {
+      setIsDone((prevDone) => !prevDone);
+      await uploadTaskDone(id, !isDone);
+    } else {
+      console.error("Task ID is undefined.");
+    }
+  };
 
   return (
     <div className="mt-4 h-20 w-full flex bg-muted rounded-xl overflow-hidden">
       <div
         className={`w-4 mr-4 h-full ${
-          task.priority === "Low"
+          priority === "Low"
             ? "bg-lowPriority"
-            : task.priority === "Medium"
+            : priority === "Medium"
             ? "bg-mediumPriority"
-            : task.priority === "High"
+            : priority === "High"
             ? "bg-highPriority"
             : ""
         }`}
       ></div>
       <div className="mt-3 w-5/6">
         <h3>{name}</h3>
-        <span className="text-sm opacity-65">data</span>
+        <span className="text-sm opacity-65">Date</span>
       </div>
       <div className="flex justify-center items-center w-1/6">
         <button
-          onClick={() => changeDone(done)}
+          onClick={changeDoneStatus}
           className={`w-7 h-7 rounded-full ${
-            done
+            isDone
               ? "bg-purple-400 border border-black text-black flex justify-center items-center"
               : "bg-transparent border-2 border-purple-400 text-transparent"
           }`}
