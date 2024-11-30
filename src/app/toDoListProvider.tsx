@@ -17,6 +17,18 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   async function fetchTasks() {
     const response = await fetch("/api/task");
     const body = await response.json();
+
+    const properties: { [key in TaskType["priority"]]: number } = {
+      High: 1,
+      Medium: 2,
+      Low: 3,
+    };
+
+    body.sort(
+      (a: TaskType, b: TaskType) =>
+        properties[a.priority] - properties[b.priority]
+    );
+
     setTaskList(body);
   }
 
