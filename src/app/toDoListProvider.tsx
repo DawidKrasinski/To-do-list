@@ -30,6 +30,8 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         name: task.name,
         description: task.description,
         priority: task.priority,
+        startTime: task.startTime,
+        endTime: task.endTime,
       }),
     });
     if (!response.ok) {

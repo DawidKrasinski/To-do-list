@@ -27,9 +27,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     await connection.query(
-      `INSERT INTO tasks (name, done, priority, description) VALUES (?, false, ?, ?);
+      `INSERT INTO tasks (name, done, priority, description, startTime, endTime) VALUES (?, false, ?, ?, ?, ?);
 `,
-      [body.name, body.priority, body.description]
+      [body.name, body.priority, body.description, body.startTime, body.endTime]
     );
     return NextResponse.json({}, { status: 201 });
   } catch (error) {

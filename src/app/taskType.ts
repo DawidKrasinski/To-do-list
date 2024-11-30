@@ -5,6 +5,8 @@ export type TaskType = {
   done?: boolean;
   doneDate?: number | null;
   priority: string;
+  startTime: string;
+  endTime: string;
 };
 // startDate
 // endDate
