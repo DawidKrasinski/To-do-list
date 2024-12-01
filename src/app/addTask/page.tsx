@@ -5,6 +5,7 @@ import { useState } from "react";
 import { TaskType } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
 import { flushSync } from "react-dom";
+import { Day } from "../components/day-calendar";
 
 export default function AddTask() {
   const [task, setTask] = useState<TaskType>({
@@ -28,7 +29,7 @@ export default function AddTask() {
     const lastMondayDate =
       lastMonday.getDate() < 10
         ? lastMonday.getDate().toString().padStart(2, "0")
-        : lastMonday.getDate();
+        : lastMonday.getDate().toString();
 
     const months = [
       "Jan",
@@ -85,11 +86,11 @@ export default function AddTask() {
             <i className="fa-solid fa-arrow-left"></i>
           </Link>
           <span className="text-2xl flex flex-1 justify-center">
-            Mobile App Research
+            Create new task
           </span>
         </header>
 
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-6">
           <div className="flex justify-between text-purple-400">
             <i
               onClick={() => setDayOffset(dayOffset - 7)}
@@ -105,7 +106,15 @@ export default function AddTask() {
               className="fa-solid fa-chevron-right text-xl"
             ></i>
           </div>
-          <div></div>
+          <div className="flex">
+            <Day day={"Mon"} date={getLastMondayDate(dayOffset).day} />
+            <Day day={"Tue"} date={getLastMondayDate(dayOffset + 1).day} />
+            <Day day={"Wed"} date={getLastMondayDate(dayOffset + 2).day} />
+            <Day day={"Thu"} date={getLastMondayDate(dayOffset + 3).day} />
+            <Day day={"Fri"} date={getLastMondayDate(dayOffset + 4).day} />
+            <Day day={"Sat"} date={getLastMondayDate(dayOffset + 5).day} />
+            <Day day={"Sun"} date={getLastMondayDate(dayOffset + 6).day} />
+          </div>
         </section>
 
         <section className="flex flex-col gap-4">
