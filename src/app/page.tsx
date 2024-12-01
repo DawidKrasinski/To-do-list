@@ -41,7 +41,6 @@ export default function Home() {
           <h2 className="text-xl">Progress</h2>
           <div className="p-4 flex flex-col gap-1 bg-muted rounded-lg">
             <h3 style={{ fontSize: "18px" }} className="">
-              {" "}
               {/* !!! */}
               Daily Task
             </h3>
@@ -53,9 +52,12 @@ export default function Home() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-xl">{`Today's Tasks`}</h2>
+          <div className="flex justify-between">
+            <h2 className="text-xl">{`Today's Tasks`}</h2>
+            <div className="text-purple-400">See All</div>
+          </div>
           <div className="flex flex-col gap-4">
-            {taskList.map((task) => (
+            {taskList.slice(0, 3).map((task) => (
               <TaskComponent key={task.id} task={task} />
             ))}
           </div>

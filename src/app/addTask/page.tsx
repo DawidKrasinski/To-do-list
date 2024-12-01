@@ -16,6 +16,36 @@ export default function AddTask() {
   });
   const { addTask } = useToDoList();
   const router = useRouter();
+  const [dayOffset, setDayOffset] = useState(0);
+
+  function getLastMondayDate(dayOffset: number) {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const difference = (dayOfWeek + 6) % 7;
+    const lastMonday = new Date(today);
+    lastMonday.setDate(today.getDate() - difference + dayOffset);
+
+    const lastMondayDate =
+      lastMonday.getDate() < 10
+        ? lastMonday.getDate().toString().padStart(2, "0")
+        : lastMonday.getDate();
+
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    return { day: lastMondayDate, month: months[lastMonday.getMonth()] };
+  }
 
   function handleAddTaskButtonClicked(task: TaskType) {
     if (task.name.trim() && task.priority && task.startTime && task.endTime) {
@@ -46,7 +76,7 @@ export default function AddTask() {
 
   return (
     <>
-      <div className="px-4 pt-16 flex flex-col gap-8">
+      <div className="px-4 pt-16 pb-20 flex flex-col gap-8">
         <header className="flex">
           <Link
             href="/"
@@ -58,6 +88,25 @@ export default function AddTask() {
             Mobile App Research
           </span>
         </header>
+
+        <section className="flex flex-col gap-4">
+          <div className="flex justify-between text-purple-400">
+            <i
+              onClick={() => setDayOffset(dayOffset - 7)}
+              className="fa-solid fa-chevron-left text-xl"
+            ></i>
+            <h2 className="text-lg">{`${getLastMondayDate(dayOffset).day} ${
+              getLastMondayDate(dayOffset).month
+            } - ${getLastMondayDate(dayOffset + 6).day} ${
+              getLastMondayDate(dayOffset + 6).month
+            }`}</h2>
+            <i
+              onClick={() => setDayOffset(dayOffset + 7)}
+              className="fa-solid fa-chevron-right text-xl"
+            ></i>
+          </div>
+          <div></div>
+        </section>
 
         <section className="flex flex-col gap-4">
           <h2 className="text-xl">Schedule</h2>
@@ -98,7 +147,7 @@ export default function AddTask() {
           </div>
         </div>
 
-        <div className="text-lg flex flex-col gap-2">
+        <section className="text-lg flex flex-col gap-2">
           <h3>Priority</h3>
           <div className="flex gap-2">
             <button
@@ -130,7 +179,12 @@ export default function AddTask() {
               Low
             </button>
           </div>
-        </div>
+        </section>
+
+        <section className="flex jsutify-between">
+          <div>Repeat every day</div>
+          {/*!!!*/}
+        </section>
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
