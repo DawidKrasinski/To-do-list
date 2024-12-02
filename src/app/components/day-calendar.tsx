@@ -10,8 +10,16 @@ export function Day(props: { day: string; date: string }) {
         isActive ? " border-purple-400 rounded-lg" : "border-transparent"
       }`}
     >
-      <div className="flex justify-center">{props.day}</div>
-      <div className="flex justify-center">{props.date}</div>
+      <div
+        className={`flex justify-center ${isActive ? "text-purple-400" : ""}`}
+      >
+        {props.day}
+      </div>
+      <div
+        className={`flex justify-center ${isActive ? "text-purple-400" : ""}`}
+      >
+        {props.date}
+      </div>
     </div>
   );
 }

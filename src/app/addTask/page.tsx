@@ -18,6 +18,7 @@ export default function AddTask() {
   const { addTask } = useToDoList();
   const router = useRouter();
   const [dayOffset, setDayOffset] = useState(0);
+  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   function getLastMondayDate(dayOffset: number) {
     const today = new Date();
@@ -107,13 +108,13 @@ export default function AddTask() {
             ></i>
           </div>
           <div className="flex">
-            <Day day={"Mon"} date={getLastMondayDate(dayOffset).day} />
-            <Day day={"Tue"} date={getLastMondayDate(dayOffset + 1).day} />
-            <Day day={"Wed"} date={getLastMondayDate(dayOffset + 2).day} />
-            <Day day={"Thu"} date={getLastMondayDate(dayOffset + 3).day} />
-            <Day day={"Fri"} date={getLastMondayDate(dayOffset + 4).day} />
-            <Day day={"Sat"} date={getLastMondayDate(dayOffset + 5).day} />
-            <Day day={"Sun"} date={getLastMondayDate(dayOffset + 6).day} />
+            {daysOfWeek.map((day, index) => (
+              <Day
+                key={day}
+                day={day}
+                date={getLastMondayDate(dayOffset + index).day}
+              />
+            ))}
           </div>
         </section>
 
