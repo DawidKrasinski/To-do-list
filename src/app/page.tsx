@@ -20,7 +20,7 @@ export default function Home() {
                 alt=""
                 width={"26"}
                 height={"26"}
-                className="inline-block ml-2 mb-1"
+                className="inline-block ml-2 mb-1 w-auto h-auto"
               />
             </h1>
             <div className="min-w-11 min-h-11 bg-gray-500 rounded-full"></div>

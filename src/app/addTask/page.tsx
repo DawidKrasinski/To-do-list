@@ -19,6 +19,7 @@ export default function AddTask() {
   const router = useRouter();
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const [activeDate, setActiveDate] = useState({ day: "", month: "" });
 
   function getLastMondayDate(dayOffset: number) {
     const today = new Date();
@@ -110,8 +111,19 @@ export default function AddTask() {
           <div className="flex">
             {daysOfWeek.map((day, index) => (
               <Day
+                onClick={() => {
+                  setActiveDate({
+                    day: getLastMondayDate(dayOffset + index).day,
+                    month: getLastMondayDate(dayOffset + index).month,
+                  });
+                }}
                 key={day}
                 day={day}
+                isActive={
+                  activeDate.day === getLastMondayDate(dayOffset + index).day &&
+                  activeDate.month ===
+                    getLastMondayDate(dayOffset + index).month
+                }
                 date={getLastMondayDate(dayOffset + index).day}
               />
             ))}
