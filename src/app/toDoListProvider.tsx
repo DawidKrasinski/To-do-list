@@ -28,7 +28,6 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
       (a: TaskType, b: TaskType) =>
         properties[a.priority] - properties[b.priority]
     );
-
     setTaskList(body);
   }
 
@@ -53,13 +52,11 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }
 
   async function uploadTaskDone(id: number, done: boolean) {
-    const date = new Date();
-    const doneDate = done
-      ? `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-      : null;
+    // const date = new Date();
+    // const doneDate = done ? date.toISOString().split("T")[0] : null;
     await fetch(`/api/task/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ done, doneDate }),
+      body: JSON.stringify({ done /*doneDate*/ }),
     });
     fetchTasks();
   }

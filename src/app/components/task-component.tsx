@@ -11,13 +11,15 @@ export function TaskComponent({ task }: { task: TaskType }) {
 
   const { uploadTaskDone, deleteTask } = useToDoList();
   const [isDone, setIsDone] = useState(done);
-  const currentDay = new Date().getDate();
+  const date = new Date();
+  const currentDate = date.toISOString().split("T")[0];
 
   const handleDeleteTask = useCallback(async () => {
-    if (isDone && doneDate !== currentDay && doneDate !== null) {
+    console.log(doneDate, currentDate);
+    if (isDone && doneDate !== null && doneDate !== currentDate) {
       await deleteTask(id);
     }
-  }, [isDone, doneDate, currentDay, deleteTask, id]);
+  }, [isDone, doneDate, currentDate, deleteTask, id]);
 
   useEffect(() => {
     handleDeleteTask();

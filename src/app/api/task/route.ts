@@ -8,7 +8,9 @@ export async function GET() {
   }
 
   try {
-    const [results] = await connection.query("SELECT * FROM tasks");
+    const [results] = await connection.query(
+      "SELECT id, name, done, DATE_FORMAT(doneDate, '%Y-%m-%d') AS doneDate, priority FROM tasks"
+    );
     return NextResponse.json(results);
   } catch (error) {
     console.log("cant use get method", error);
