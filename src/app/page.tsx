@@ -6,6 +6,7 @@ import { TaskComponent } from "./components/task-component";
 
 export default function Home() {
   const { taskList } = useToDoList();
+  console.log(taskList);
 
   return (
     <>

@@ -23,7 +23,7 @@ export async function PUT(
     const body = await req.json();
     await connection.query(
       "UPDATE tasks SET done = ?, doneDate = CURRENT_DATE WHERE id = ?;",
-      [body.done, /*body.doneDate,*/ parseInt(id, 10)]
+      [body.done, parseInt(id, 10)]
     );
     return NextResponse.json(
       { message: "Task updated successfully" },

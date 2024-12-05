@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useToDoList } from "../toDoListProvider";
 
 export function TaskComponent({ task }: { task: TaskType }) {
-  const { id, name, done, doneDate, priority } = task;
+  const { id, name, done, doneDate, priority, date } = task;
 
   if (id === undefined || done === undefined || doneDate === undefined) {
     throw new Error("Task has invalid properties");
@@ -11,8 +11,7 @@ export function TaskComponent({ task }: { task: TaskType }) {
 
   const { uploadTaskDone, deleteTask } = useToDoList();
   const [isDone, setIsDone] = useState(done);
-  const date = new Date();
-  const currentDate = date.toISOString().split("T")[0];
+  const currentDate = new Date().toISOString().split("T")[0];
 
   const handleDeleteTask = useCallback(async () => {
     console.log(doneDate, currentDate);
@@ -50,7 +49,7 @@ export function TaskComponent({ task }: { task: TaskType }) {
       <div className="flex flex-1 items-center justify-between px-4">
         <div>
           <h3>{name}</h3>
-          <span className="text-sm opacity-65">Date</span>
+          <span className="text-sm opacity-65">{date}</span>
         </div>
         <div className="flex justify-center items-center">
           <button

@@ -7,6 +7,5 @@ export type TaskType = {
   priority: string;
   startTime: string;
   endTime: string;
+  date: string;
 };
-// startDate
-// endDate

@@ -14,6 +14,7 @@ export default function AddTask() {
     priority: "",
     startTime: "",
     endTime: "",
+    date: "",
   });
   const { addTask } = useToDoList();
   const router = useRouter();
@@ -51,7 +52,13 @@ export default function AddTask() {
   }
 
   function handleAddTaskButtonClicked(task: TaskType) {
-    if (task.name.trim() && task.priority && task.startTime && task.endTime) {
+    if (
+      task.name.trim() &&
+      task.priority &&
+      task.startTime &&
+      task.endTime &&
+      task.date.trim()
+    ) {
       console.log(task);
       addTask(task);
       router.push("/");
@@ -75,6 +82,14 @@ export default function AddTask() {
     flushSync(() => {
       setTask((prevTask) => ({ ...prevTask, priority }));
     });
+    console.log(priority);
+  };
+
+  const handleDateChange = (date: string) => {
+    flushSync(() => {
+      setTask((prevTask) => ({ ...prevTask, date }));
+    });
+    console.log(task.date);
   };
 
   return (
@@ -112,9 +127,14 @@ export default function AddTask() {
             {daysOfWeek.map((day, index) => (
               <Day
                 onClick={() => {
-                  setActiveDate({
-                    day: getLastMondayDate(dayOffset + index).day,
-                    month: getLastMondayDate(dayOffset + index).month,
+                  flushSync(() => {
+                    const newDay = getLastMondayDate(dayOffset + index).day;
+                    const newMonth = getLastMondayDate(dayOffset + index).month;
+                    setActiveDate({
+                      day: newDay,
+                      month: newMonth,
+                    });
+                    handleDateChange(`${newDay} ${newMonth}`);
                   });
                 }}
                 key={day}

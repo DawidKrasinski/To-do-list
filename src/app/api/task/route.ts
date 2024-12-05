@@ -9,7 +9,7 @@ export async function GET() {
 
   try {
     const [results] = await connection.query(
-      "SELECT id, name, done, DATE_FORMAT(doneDate, '%Y-%m-%d') AS doneDate, priority FROM tasks"
+      "SELECT id, name, done, date, DATE_FORMAT(doneDate, '%Y-%m-%d') AS doneDate, priority FROM tasks"
     );
     return NextResponse.json(results);
   } catch (error) {
@@ -29,9 +29,16 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     await connection.query(
-      `INSERT INTO tasks (name, done, priority, description, startTime, endTime) VALUES (?, false, ?, ?, ?, ?);
+      `INSERT INTO tasks (name, done, priority, description, startTime, endTime, date) VALUES (?, false, ?, ?, ?, ?, ?);
 `,
-      [body.name, body.priority, body.description, body.startTime, body.endTime]
+      [
+        body.name,
+        body.priority,
+        body.description,
+        body.startTime,
+        body.endTime,
+        body.date,
+      ]
     );
     return NextResponse.json({}, { status: 201 });
   } catch (error) {
