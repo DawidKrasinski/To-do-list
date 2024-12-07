@@ -22,17 +22,17 @@ export default function AddTask() {
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const [activeDate, setActiveDate] = useState({ day: "", month: "" });
 
-  function getLastMondayDate(dayOffset: number) {
+  function getFirstMondayDate(dayOffset: number) {
     const today = new Date();
     const dayOfWeek = today.getDay();
     const difference = (dayOfWeek + 6) % 7;
-    const lastMonday = new Date(today);
-    lastMonday.setDate(today.getDate() - difference + dayOffset);
+    const firstMonday = new Date(today);
+    firstMonday.setDate(today.getDate() - difference + dayOffset);
 
-    const lastMondayDate =
-      lastMonday.getDate() < 10
-        ? lastMonday.getDate().toString().padStart(2, "0")
-        : lastMonday.getDate().toString();
+    const firstMondayDate =
+      firstMonday.getDate() < 10
+        ? firstMonday.getDate().toString().padStart(2, "0")
+        : firstMonday.getDate().toString();
 
     const months = [
       "Jan",
@@ -48,7 +48,7 @@ export default function AddTask() {
       "Nov",
       "Dec",
     ];
-    return { day: lastMondayDate, month: months[lastMonday.getMonth()] };
+    return { day: firstMondayDate, month: months[firstMonday.getMonth()] };
   }
 
   function handleAddTaskButtonClicked(task: TaskType) {
@@ -113,10 +113,10 @@ export default function AddTask() {
               onClick={() => setDayOffset(dayOffset - 7)}
               className="fa-solid fa-chevron-left text-xl"
             ></i>
-            <h2 className="text-lg">{`${getLastMondayDate(dayOffset).day} ${
-              getLastMondayDate(dayOffset).month
-            } - ${getLastMondayDate(dayOffset + 6).day} ${
-              getLastMondayDate(dayOffset + 6).month
+            <h2 className="text-lg">{`${getFirstMondayDate(dayOffset).day} ${
+              getFirstMondayDate(dayOffset).month
+            } - ${getFirstMondayDate(dayOffset + 6).day} ${
+              getFirstMondayDate(dayOffset + 6).month
             }`}</h2>
             <i
               onClick={() => setDayOffset(dayOffset + 7)}
@@ -128,8 +128,10 @@ export default function AddTask() {
               <Day
                 onClick={() => {
                   flushSync(() => {
-                    const newDay = getLastMondayDate(dayOffset + index).day;
-                    const newMonth = getLastMondayDate(dayOffset + index).month;
+                    const newDay = getFirstMondayDate(dayOffset + index).day;
+                    const newMonth = getFirstMondayDate(
+                      dayOffset + index
+                    ).month;
                     setActiveDate({
                       day: newDay,
                       month: newMonth,
@@ -140,11 +142,12 @@ export default function AddTask() {
                 key={day}
                 day={day}
                 isActive={
-                  activeDate.day === getLastMondayDate(dayOffset + index).day &&
+                  activeDate.day ===
+                    getFirstMondayDate(dayOffset + index).day &&
                   activeDate.month ===
-                    getLastMondayDate(dayOffset + index).month
+                    getFirstMondayDate(dayOffset + index).month
                 }
-                date={getLastMondayDate(dayOffset + index).day}
+                date={getFirstMondayDate(dayOffset + index).day}
               />
             ))}
           </div>
