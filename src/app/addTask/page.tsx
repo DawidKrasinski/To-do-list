@@ -2,15 +2,15 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { TaskType } from "../taskType.js";
+import { Task } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
 import { Day } from "../components/day-calendar";
 
 export default function AddTask() {
-  const [task, setTask] = useState<TaskType>({
+  const [task, setTask] = useState<Task>({
     name: "",
     description: "",
-    priority: "",
+    priority: 0,
     startTime: "",
     endTime: "",
     date: "",
@@ -50,7 +50,7 @@ export default function AddTask() {
     return { day: firstMondayDate, month: months[firstMonday.getMonth()] };
   }
 
-  function handleAddTaskButtonClicked(task: TaskType) {
+  function handleAddTaskButtonClicked(task: Task) {
     if (
       task.name.trim() &&
       task.priority &&
@@ -68,7 +68,7 @@ export default function AddTask() {
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.FormEvent<HTMLDivElement>,
-    field: keyof TaskType
+    field: keyof Task
   ) => {
     const value =
       e.currentTarget instanceof HTMLInputElement
@@ -77,7 +77,7 @@ export default function AddTask() {
     setTask((prevTask) => ({ ...prevTask, [field]: value }));
   };
 
-  const handlePriorityChange = (priority: string) => {
+  const handlePriorityChange = (priority: number) => {
     setTask((prevTask) => ({ ...prevTask, priority }));
   };
 
@@ -186,29 +186,25 @@ export default function AddTask() {
           <div className="flex gap-2">
             <button
               className={`flex-1 p-1 border-2 border-highPriority rounded-xl ${
-                task.priority === "High"
-                  ? "bg-highPriority text-background"
-                  : ""
+                task.priority === 3 ? "bg-highPriority text-background" : ""
               }`}
-              onClick={() => handlePriorityChange("High")}
+              onClick={() => handlePriorityChange(3)}
             >
               High
             </button>
             <button
               className={`flex-1 p-1 border-2 border-mediumPriority rounded-xl ${
-                task.priority === "Medium"
-                  ? "bg-mediumPriority text-background"
-                  : ""
+                task.priority === 2 ? "bg-mediumPriority text-background" : ""
               }`}
-              onClick={() => handlePriorityChange("Medium")}
+              onClick={() => handlePriorityChange(2)}
             >
               Medium
             </button>
             <button
               className={`flex-1 p-1 border-2 border-lowPriority rounded-xl ${
-                task.priority === "Low" ? "bg-lowPriority text-background" : ""
+                task.priority === 1 ? "bg-lowPriority text-background" : ""
               }`}
-              onClick={() => handlePriorityChange("Low")}
+              onClick={() => handlePriorityChange(1)}
             >
               Low
             </button>

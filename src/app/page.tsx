@@ -7,9 +7,8 @@ import { TaskComponent } from "./components/task-component";
 export default function Home() {
   const { taskList } = useToDoList();
   console.log(taskList);
-  const date = new Date();
-  console.log(date, new Date());
-  const today = date.getDate();
+  // const date = new Date();
+  // const today = date.getDate();
 
   return (
     <>

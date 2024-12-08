@@ -1,17 +1,17 @@
 "use client";
 import { useContext, createContext, useState, useEffect } from "react";
-import { TaskType } from "./taskType";
+import { Task } from "./taskType";
 
 export type ToDoListContextType = {
-  taskList: TaskType[];
-  addTask: (task: TaskType) => Promise<string | undefined>;
+  taskList: Task[];
+  addTask: (task: Task) => Promise<string | undefined>;
   uploadTaskDone: (id: number, done: boolean) => Promise<void>;
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
 
 export default function ToDoListProvider(props: { children: React.ReactNode }) {
-  const [taskList, setTaskList] = useState<TaskType[]>([]);
+  const [taskList, setTaskList] = useState<Task[]>([]);
 
   async function fetchTasks() {
     const response = await fetch("/api/task");
@@ -19,7 +19,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     setTaskList(body);
   }
 
-  async function addTask(task: TaskType) {
+  async function addTask(task: Task) {
     const response = await fetch("/api/task", {
       method: "POST",
       headers: {

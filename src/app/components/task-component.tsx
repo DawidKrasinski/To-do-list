@@ -1,8 +1,8 @@
-import { TaskType } from "../taskType";
+import { Task } from "../taskType";
 import { useState } from "react";
 import { useToDoList } from "../toDoListProvider";
 
-export function TaskComponent({ task }: { task: TaskType }) {
+export function TaskComponent({ task }: { task: Task }) {
   const { id, name, done, doneDate, priority, date } = task;
 
   if (id === undefined || done === undefined || doneDate === undefined) {
@@ -25,13 +25,9 @@ export function TaskComponent({ task }: { task: TaskType }) {
     <div className="flex h-20 bg-muted rounded-lg overflow-hidden">
       <div
         className={`w-4 h-full ${
-          priority === "Low"
-            ? "bg-lowPriority"
-            : priority === "Medium"
-            ? "bg-mediumPriority"
-            : priority === "High"
-            ? "bg-highPriority"
-            : ""
+          { 1: "bg-lowPriority", 2: "bg-mediumPriority", 3: "bg-highPriority" }[
+            priority
+          ]
         }`}
       ></div>
       <div className="flex flex-1 items-center justify-between px-4">
