@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TaskType } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
-import { flushSync } from "react-dom";
 import { Day } from "../components/day-calendar";
 
 export default function AddTask() {
@@ -121,17 +120,13 @@ export default function AddTask() {
             {daysOfWeek.map((day, index) => (
               <Day
                 onClick={() => {
-                  flushSync(() => {
-                    const newDay = getFirstMondayDate(dayOffset + index).day;
-                    const newMonth = getFirstMondayDate(
-                      dayOffset + index
-                    ).month;
-                    setActiveDate({
-                      day: newDay,
-                      month: newMonth,
-                    });
-                    handleDateChange(`${newDay} ${newMonth}`);
+                  const newDay = getFirstMondayDate(dayOffset + index).day;
+                  const newMonth = getFirstMondayDate(dayOffset + index).month;
+                  setActiveDate({
+                    day: newDay,
+                    month: newMonth,
                   });
+                  handleDateChange(`${newDay} ${newMonth}`);
                 }}
                 key={day}
                 day={day}
