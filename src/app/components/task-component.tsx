@@ -1,5 +1,5 @@
 import { TaskType } from "../taskType";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { useToDoList } from "../toDoListProvider";
 
 export function TaskComponent({ task }: { task: TaskType }) {
@@ -9,20 +9,8 @@ export function TaskComponent({ task }: { task: TaskType }) {
     throw new Error("Task has invalid properties");
   }
 
-  const { uploadTaskDone, deleteTask } = useToDoList();
+  const { uploadTaskDone } = useToDoList();
   const [isDone, setIsDone] = useState(done);
-  const currentDate = new Date().toISOString().split("T")[0];
-
-  const handleDeleteTask = useCallback(async () => {
-    console.log(doneDate, currentDate);
-    if (isDone && doneDate !== null && doneDate !== currentDate) {
-      await deleteTask(id);
-    }
-  }, [isDone, doneDate, currentDate, deleteTask, id]);
-
-  useEffect(() => {
-    handleDeleteTask();
-  }, [handleDeleteTask]);
 
   const changeDoneStatus = async () => {
     if (id !== undefined) {

@@ -6,7 +6,6 @@ export type ToDoListContextType = {
   taskList: TaskType[];
   addTask: (task: TaskType) => Promise<string | undefined>;
   uploadTaskDone: (id: number, done: boolean) => Promise<void>;
-  deleteTask: (id: number) => Promise<void>;
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -42,18 +41,9 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }
 
   async function uploadTaskDone(id: number, done: boolean) {
-    // const date = new Date();
-    // const doneDate = done ? date.toISOString().split("T")[0] : null;
     await fetch(`/api/task/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ done /*doneDate*/ }),
-    });
-    fetchTasks();
-  }
-
-  async function deleteTask(id: number | undefined) {
-    await fetch(`api/task/${id}`, {
-      method: "DELETE",
+      body: JSON.stringify({ done }),
     });
     fetchTasks();
   }
@@ -63,9 +53,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ToDoListContext.Provider
-      value={{ addTask, uploadTaskDone, taskList, deleteTask }}
-    >
+    <ToDoListContext.Provider value={{ addTask, uploadTaskDone, taskList }}>
       {props.children}
     </ToDoListContext.Provider>
   );

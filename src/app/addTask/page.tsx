@@ -79,17 +79,11 @@ export default function AddTask() {
   };
 
   const handlePriorityChange = (priority: string) => {
-    flushSync(() => {
-      setTask((prevTask) => ({ ...prevTask, priority }));
-    });
-    console.log(priority);
+    setTask((prevTask) => ({ ...prevTask, priority }));
   };
 
   const handleDateChange = (date: string) => {
-    flushSync(() => {
-      setTask((prevTask) => ({ ...prevTask, date }));
-    });
-    console.log(task.date);
+    setTask((prevTask) => ({ ...prevTask, date }));
   };
 
   return (
