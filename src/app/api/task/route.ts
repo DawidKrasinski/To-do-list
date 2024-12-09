@@ -9,7 +9,7 @@ export async function GET() {
 
   try {
     const [results] = await connection.query(
-      "SELECT id, name, done, date, startTime, endTime, DATE_FORMAT(doneDate, '%Y-%m-%d') AS doneDate, priority FROM tasks ORDER BY startTime ASC"
+      "SELECT id, name, done, date, startTime, endTime, DATE_FORMAT(doneDate, '%Y-%m-%d') AS doneDate, priority FROM tasks WHERE NOT (done = 1 AND DATE(doneDate) != CURRENT_DATE) ORDER BY startTime ASC;"
     );
     return NextResponse.json(results);
   } catch (error) {

@@ -1,9 +1,11 @@
 "use client";
 import { useContext, createContext, useState, useEffect } from "react";
 import { Task } from "./taskType";
+import { Priority } from "./priorityType";
 
 export type ToDoListContextType = {
   taskList: Task[];
+  priorityList: Priority[];
   addTask: (task: Task) => Promise<string | undefined>;
   uploadTaskDone: (id: number, done: boolean) => Promise<void>;
 };
@@ -12,11 +14,19 @@ const ToDoListContext = createContext<ToDoListContextType | null>(null);
 
 export default function ToDoListProvider(props: { children: React.ReactNode }) {
   const [taskList, setTaskList] = useState<Task[]>([]);
+  const [priorityList, setPriorityList] = useState<Priority[]>([]);
 
   async function fetchTasks() {
     const response = await fetch("/api/task");
     const body = await response.json();
     setTaskList(body);
+  }
+
+  async function fetchPriorities() {
+    const response = await fetch("/api/priority");
+    const body = await response.json();
+    setPriorityList(body);
+    console.log(body);
   }
 
   async function addTask(task: Task) {
@@ -50,10 +60,13 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
 
   useEffect(() => {
     fetchTasks();
+    fetchPriorities();
   }, []);
 
   return (
-    <ToDoListContext.Provider value={{ addTask, uploadTaskDone, taskList }}>
+    <ToDoListContext.Provider
+      value={{ addTask, uploadTaskDone, taskList, priorityList }}
+    >
       {props.children}
     </ToDoListContext.Provider>
   );
