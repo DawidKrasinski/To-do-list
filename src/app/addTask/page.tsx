@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Task } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
 import { Day } from "../components/day-calendar";
+import { PriorityButton } from "../components/priority-component";
 
 export default function AddTask() {
   const [task, setTask] = useState<Task>({
@@ -14,8 +15,9 @@ export default function AddTask() {
     startTime: "",
     endTime: "",
     date: "",
+    color: "#FFFFFF",
   });
-  const { addTask } = useToDoList();
+  const { addTask, priorityList } = useToDoList();
   const router = useRouter();
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -184,30 +186,14 @@ export default function AddTask() {
         <section className="text-lg flex flex-col gap-2">
           <h3>Priority</h3>
           <div className="flex gap-2">
-            <button
-              className={`flex-1 p-1 border-2 border-highPriority rounded-xl ${
-                task.priority === 3 ? "bg-highPriority text-background" : ""
-              }`}
-              onClick={() => handlePriorityChange(3)}
-            >
-              High
-            </button>
-            <button
-              className={`flex-1 p-1 border-2 border-mediumPriority rounded-xl ${
-                task.priority === 2 ? "bg-mediumPriority text-background" : ""
-              }`}
-              onClick={() => handlePriorityChange(2)}
-            >
-              Medium
-            </button>
-            <button
-              className={`flex-1 p-1 border-2 border-lowPriority rounded-xl ${
-                task.priority === 1 ? "bg-lowPriority text-background" : ""
-              }`}
-              onClick={() => handlePriorityChange(1)}
-            >
-              Low
-            </button>
+            {priorityList.map((priority) => (
+              <PriorityButton
+                key={priority.id}
+                priority={priority}
+                isActive={task.priority === priority.id}
+                handlePriorityChange={handlePriorityChange}
+              />
+            ))}
           </div>
         </section>
 

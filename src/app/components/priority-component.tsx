@@ -1,33 +1,26 @@
-export function PriorityButton({
-  name,
-  color,
-  order,
-  isActive,
-  handlePriorityChange,
-}: {
-  name: string;
-  color: string;
-  order: number;
-  isActive: boolean;
+import { Priority } from "../priorityType";
+interface PriorityButtonProps {
+  priority: Priority;
   handlePriorityChange: (priority: number) => void;
-}) {
-  return (
-    <button
-      className={`flex-1 p-1 border-2 border-${color}-500 rounded-xl ${
-        isActive ? `bg-${color}-500 text-background` : ""
-      }`}
-      onClick={() => handlePriorityChange(order)}
-    >
-      {name}
-    </button>
-  );
+  isActive: boolean;
 }
 
-{
-  /* <button
-              className={`flex-1 p-1 border-2 border-lowPriority rounded-xl ${
-                task.priority === "Low" ? "bg-lowPriority text-background" : ""
-              }`}
-              onClick={() => handlePriorityChange("Low")}
-            ></button> */
+export function PriorityButton({
+  priority,
+  handlePriorityChange,
+  isActive,
+}: PriorityButtonProps) {
+  return (
+    <button
+      style={{
+        borderColor: priority.color,
+        backgroundColor: isActive ? priority.color : "transparent",
+      }}
+      className={`flex-1 p-1 rounded-xl border-2
+        ${isActive ? `text-background` : ""}`}
+      onClick={() => handlePriorityChange(priority.id)}
+    >
+      {priority.name}
+    </button>
+  );
 }

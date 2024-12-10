@@ -8,4 +8,5 @@ export type Task = {
   startTime: string;
   endTime: string;
   date: string;
+  color: string;
 };

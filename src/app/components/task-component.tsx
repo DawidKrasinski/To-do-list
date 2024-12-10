@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useToDoList } from "../toDoListProvider";
 
 export function TaskComponent({ task }: { task: Task }) {
-  const { id, name, done, doneDate, priority, date } = task;
+  const { id, name, done, doneDate, date, color } = task;
 
   if (id === undefined || done === undefined || doneDate === undefined) {
     throw new Error("Task has invalid properties");
@@ -23,13 +23,7 @@ export function TaskComponent({ task }: { task: Task }) {
 
   return (
     <div className="flex h-20 bg-muted rounded-lg overflow-hidden">
-      <div
-        className={`w-4 h-full ${
-          { 1: "bg-lowPriority", 2: "bg-mediumPriority", 3: "bg-highPriority" }[
-            priority
-          ]
-        }`}
-      ></div>
+      <div style={{ backgroundColor: color }} className={`w-4 h-full`}></div>
       <div className="flex flex-1 items-center justify-between px-4">
         <div>
           <h3>{name}</h3>
