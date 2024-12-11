@@ -13,17 +13,11 @@ export default {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
-        highPriority: {
-          DEFAULT: "var(--highPriority)",
-        },
-        mediumPriority: {
-          DEFAULT: "var(--mediumPriority)",
-        },
-        lowPriority: {
-          DEFAULT: "var(--lowPriority)",
-        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+      },
+      fontSize: {
+        "lg-xl": "18px",
       },
     },
   },

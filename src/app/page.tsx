@@ -42,10 +42,7 @@ export default function Home() {
         <section className="flex flex-col gap-2">
           <h2 className="text-xl">Progress</h2>
           <div className="p-4 flex flex-col gap-1 bg-muted rounded-lg">
-            <h3 style={{ fontSize: "18px" }} className="">
-              {/* !!! */}
-              Daily Task
-            </h3>
+            <h3 className="text-lg-xl">Daily Task</h3>
             <div className="opacity-80">2/3 Task Completed</div>
             <div className="text-sm opacity-40">
               You are almost done go ahead

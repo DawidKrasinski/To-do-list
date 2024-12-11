@@ -8,9 +8,6 @@
   --foreground: 0 0% 100%;
   --muted: 0 0% 12%;
   --muted-foreground: 0 0% 89%;
-  --highPriority: #facbba;
-  --mediumPriority: #d7f0ff;
-  --lowPriority: #fad9ff;
 }
 
 /* .light {
