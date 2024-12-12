@@ -27,7 +27,7 @@ export function TaskComponent({ task }: { task: Task }) {
       <div className="flex flex-1 items-center justify-between px-4">
         <div>
           <h3>{name}</h3>
-          <span className="text-sm opacity-65">{date}</span>
+          <span className="text-sm opacity-65">{date.split("T")[0]}</span>
         </div>
         <div className="flex justify-center items-center">
           <button

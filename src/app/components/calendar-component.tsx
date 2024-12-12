@@ -8,19 +8,15 @@ interface CalendarProps {
 export function Calendar({ handleDateChange }: CalendarProps) {
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const [activeDate, setActiveDate] = useState({ day: "", month: "" });
+  const [activeDate, setActiveDate] = useState("");
 
-  function getFirstMondayDate(dayOffset: number) {
+  function getWeek(dayOffset: number) {
     const today = new Date();
     const dayOfWeek = today.getDay();
     const difference = (dayOfWeek + 6) % 7;
+
     const firstMonday = new Date(today);
     firstMonday.setDate(today.getDate() - difference + dayOffset);
-
-    const firstMondayDate =
-      firstMonday.getDate() < 10
-        ? firstMonday.getDate().toString().padStart(2, "0")
-        : firstMonday.getDate().toString();
 
     const months = [
       "Jan",
@@ -36,7 +32,25 @@ export function Calendar({ handleDateChange }: CalendarProps) {
       "Nov",
       "Dec",
     ];
-    return { day: firstMondayDate, month: months[firstMonday.getMonth()] };
+
+    const week = [];
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(firstMonday);
+      day.setDate(firstMonday.getDate() + i);
+      const date = day.toISOString().slice(0, 10);
+      week.push({
+        date: date,
+        month: months[parseInt(date.split("-")[1]) - 1],
+      });
+    }
+
+    return week;
+  }
+
+  function changeActiveDate(index: number) {
+    const week = getWeek(dayOffset);
+    setActiveDate(week[index].date);
+    handleDateChange(week[index].date);
   }
 
   return (
@@ -46,11 +60,13 @@ export function Calendar({ handleDateChange }: CalendarProps) {
           onClick={() => setDayOffset(dayOffset - 7)}
           className="fa-solid fa-chevron-left text-xl"
         ></i>
-        <h2 className="text-lg">{`${getFirstMondayDate(dayOffset).day} ${
-          getFirstMondayDate(dayOffset).month
-        } - ${getFirstMondayDate(dayOffset + 6).day} ${
-          getFirstMondayDate(dayOffset + 6).month
-        }`}</h2>
+        <h2 className="text-lg">
+          {`${getWeek(dayOffset)[0].date.split("-")[2]} ${
+            getWeek(dayOffset)[0].month
+          } - ${getWeek(dayOffset)[6].date.split("-")[2]} ${
+            getWeek(dayOffset)[6].month
+          }`}
+        </h2>
         <i
           onClick={() => setDayOffset(dayOffset + 7)}
           className="fa-solid fa-chevron-right text-xl"
@@ -59,22 +75,11 @@ export function Calendar({ handleDateChange }: CalendarProps) {
       <div className="flex">
         {daysOfWeek.map((day, index) => (
           <Day
-            onClick={() => {
-              const newDay = getFirstMondayDate(dayOffset + index).day;
-              const newMonth = getFirstMondayDate(dayOffset + index).month;
-              setActiveDate({
-                day: newDay,
-                month: newMonth,
-              });
-              handleDateChange(`${newDay} ${newMonth}`);
-            }}
+            onClick={() => changeActiveDate(index)}
             key={day}
             day={day}
-            isActive={
-              activeDate.day === getFirstMondayDate(dayOffset + index).day &&
-              activeDate.month === getFirstMondayDate(dayOffset + index).month
-            }
-            date={getFirstMondayDate(dayOffset + index).day}
+            isActive={activeDate === getWeek(dayOffset)[index].date}
+            date={getWeek(dayOffset)[index].date.split("-")[2]}
           />
         ))}
       </div>
