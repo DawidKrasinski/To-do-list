@@ -1,6 +1,7 @@
 import { Task } from "../taskType";
 import { useState } from "react";
 import { useToDoList } from "../toDoListProvider";
+import Link from "next/link";
 
 export function TaskComponent({ task }: { task: Task }) {
   const { id, name, done, doneDate, date, color } = task;
@@ -25,10 +26,10 @@ export function TaskComponent({ task }: { task: Task }) {
     <div className="flex h-20 bg-muted rounded-lg overflow-hidden">
       <div style={{ backgroundColor: color }} className={`w-4 h-full`}></div>
       <div className="flex flex-1 items-center justify-between px-4">
-        <div>
+        <Link href={`/editTask/${id}`}>
           <h3>{name}</h3>
           <span className="text-sm opacity-65">{date.split("T")[0]}</span>
-        </div>
+        </Link>
         <div className="flex justify-center items-center">
           <button
             onClick={changeDoneStatus}

@@ -7,8 +7,6 @@ import { TaskComponent } from "./components/task-component";
 export default function Home() {
   const { taskList } = useToDoList();
   console.log(taskList);
-  // const date = new Date();
-  // const today = date.getDate();
 
   return (
     <>
@@ -53,7 +51,9 @@ export default function Home() {
         <section className="flex flex-col gap-2">
           <div className="flex justify-between">
             <h2 className="text-xl">{`Today's Tasks`}</h2>
-            <div className="text-purple-400">See All</div>
+            <div className="text-purple-400">
+              <Link href="/seeAll">See All</Link>
+            </div>
           </div>
           <div className="flex flex-col gap-4">
             {taskList.slice(0, 3).map((task) => (
