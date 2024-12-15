@@ -1,4 +1,4 @@
-import { Priority } from "../priorityType";
+import { Priority } from "../../priorityType";
 interface PriorityButtonProps {
   priority: Priority;
   handlePriorityChange: (priority: number) => void;

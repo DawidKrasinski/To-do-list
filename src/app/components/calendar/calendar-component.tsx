@@ -1,14 +1,19 @@
 import { Day } from "./day-calendar";
 import { useState } from "react";
+import { Task } from "@/app/taskType";
 
 interface CalendarProps {
-  handleDateChange: (date: string) => void;
+  setTask: React.Dispatch<React.SetStateAction<Task>>;
 }
 
-export function Calendar({ handleDateChange }: CalendarProps) {
+export function Calendar({ setTask }: CalendarProps) {
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const [activeDate, setActiveDate] = useState("");
+
+  const handleDateChange = (date: string) => {
+    setTask((prevTask) => ({ ...prevTask, date }));
+  };
 
   function getWeek(dayOffset: number) {
     const today = new Date();
@@ -54,7 +59,7 @@ export function Calendar({ handleDateChange }: CalendarProps) {
   }
 
   return (
-    <>
+    <section className="flex flex-col gap-6">
       <div className="flex justify-between text-purple-400">
         <i
           onClick={() => setDayOffset(dayOffset - 7)}
@@ -83,6 +88,6 @@ export function Calendar({ handleDateChange }: CalendarProps) {
           />
         ))}
       </div>
-    </>
+    </section>
   );
 }

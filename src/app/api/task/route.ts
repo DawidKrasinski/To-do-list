@@ -4,7 +4,10 @@ import { getDB } from "../db";
 export async function GET() {
   const connection = await getDB();
   if (!connection) {
-    return NextResponse.json({ message: "cant find databse", status: 500 });
+    return NextResponse.json(
+      { error: "Can't connect to the database" },
+      { status: 500 }
+    );
   }
 
   try {

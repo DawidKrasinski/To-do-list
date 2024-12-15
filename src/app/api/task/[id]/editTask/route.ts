@@ -2,16 +2,18 @@ import { getDB } from "@/app/api/db";
 import { NextResponse } from "next/server";
 
 export async function GET({ params }: { params: { id: string } }) {
-  const { id } = params;
   const connection = await getDB();
   if (!connection) {
-    return NextResponse.json({ message: "cant find databse", status: 500 });
+    return NextResponse.json(
+      { error: "Can't connect to the database" },
+      { status: 500 }
+    );
   }
 
   try {
     const [results] = await connection.query(
       `SELECT * FROM tasks WHERE id = ?`,
-      [id]
+      [params.id]
     );
     return NextResponse.json(results);
   } catch (error) {
