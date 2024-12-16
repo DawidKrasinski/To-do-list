@@ -24,17 +24,15 @@ export default function EditTask() {
   });
 
   async function fetchTaskById(id: string) {
-    console.log("Id taska: ", id);
     const response = await fetch(`/api/task/${id}/editTask`);
     const body = await response.json();
-    console.log("Odpowiedź z serwera:", body);
     return body;
   }
 
   useEffect(() => {
     async function loadTask() {
       const fetchedTask = await fetchTaskById(params.id);
-      setTask(fetchedTask);
+      setTask(fetchedTask[0]);
     }
     loadTask();
   }, [params.id]);
@@ -48,7 +46,7 @@ export default function EditTask() {
       task.date.trim()
     ) {
       console.log(task);
-      addTask(task); //!!!
+      addTask(task);
       router.push("/");
     } else {
       console.log("task request is invalid");
@@ -58,7 +56,7 @@ export default function EditTask() {
   return (
     <>
       <div className="px-4 pt-16 pb-20 flex flex-col gap-8">
-        <header className="flex">
+        <header className="flex pr-8">
           <Link
             href="/"
             className="w-8 h-8 border-2 text-muted-foreground rounded-full flex justify-center items-center"
@@ -66,7 +64,7 @@ export default function EditTask() {
             <i className="fa-solid fa-arrow-left"></i>
           </Link>
           <span className="text-2xl flex flex-1 justify-center">
-            Create new task
+            {task.name}
           </span>
         </header>
 
@@ -80,7 +78,13 @@ export default function EditTask() {
           onClick={() => handleAddTaskButtonClicked(task)}
           className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full"
         >
-          Create Task
+          Edit Task
+        </button>
+        <button
+          onClick={() => handleAddTaskButtonClicked(task)}
+          className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full"
+        >
+          Delete Task
         </button>
       </div>
     </>

@@ -8,6 +8,7 @@
   --foreground: 0 0% 100%;
   --muted: 0 0% 12%;
   --muted-foreground: 0 0% 89%;
+  --deleteTaskButton: #4f4f4f;
 }
 
 /* .light {

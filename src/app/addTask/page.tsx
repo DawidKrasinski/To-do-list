@@ -27,7 +27,8 @@ export default function AddTask() {
       task.priority &&
       task.startTime &&
       task.endTime &&
-      task.date.trim()
+      task.date.trim() &&
+      task.name.length < 20
     ) {
       console.log(task);
       addTask(task);
@@ -40,7 +41,7 @@ export default function AddTask() {
   return (
     <>
       <div className="px-4 pt-16 pb-20 flex flex-col gap-8">
-        <header className="flex">
+        <header className="flex pr-8">
           <Link
             href="/"
             className="w-8 h-8 border-2 text-muted-foreground rounded-full flex justify-center items-center"
