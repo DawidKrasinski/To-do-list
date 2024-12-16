@@ -15,7 +15,7 @@ export default {
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        deleteTaskButton: "hsl(var(--deleteTaskButon))",
+        deleteTaskButton: "var(--deleteTaskButton)",
       },
       fontSize: {
         "lg-xl": "18px",

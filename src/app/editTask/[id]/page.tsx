@@ -11,7 +11,7 @@ import { Priority } from "@/app/components/priority/priority-component";
 
 export default function EditTask() {
   const params = useParams<{ id: string }>();
-  const { addTask } = useToDoList();
+  const { deleteTask, editTask } = useToDoList();
   const router = useRouter();
   const [task, setTask] = useState<Task>({
     name: "",
@@ -23,12 +23,6 @@ export default function EditTask() {
     color: "#FFFFFF",
   });
 
-  async function fetchTaskById(id: string) {
-    const response = await fetch(`/api/task/${id}/editTask`);
-    const body = await response.json();
-    return body;
-  }
-
   useEffect(() => {
     async function loadTask() {
       const fetchedTask = await fetchTaskById(params.id);
@@ -37,16 +31,32 @@ export default function EditTask() {
     loadTask();
   }, [params.id]);
 
-  function handleAddTaskButtonClicked(task: Task) {
+  async function fetchTaskById(id: string) {
+    const response = await fetch(`/api/task/${id}`);
+    const body = await response.json();
+    return body;
+  }
+
+  function handleEditTaskButtonClicked(task: Task) {
     if (
       task.name.trim() &&
       task.priority &&
       task.startTime &&
       task.endTime &&
-      task.date.trim()
+      task.date.trim() &&
+      task.id
     ) {
       console.log(task);
-      addTask(task);
+      editTask(task.id, task);
+      router.push("/");
+    } else {
+      console.log("task request is invalid");
+    }
+  }
+
+  function handleDeleteTaskButtonClicked(task: Task) {
+    if (task.id) {
+      deleteTask(task.id);
       router.push("/");
     } else {
       console.log("task request is invalid");
@@ -55,7 +65,7 @@ export default function EditTask() {
 
   return (
     <>
-      <div className="px-4 pt-16 pb-20 flex flex-col gap-8">
+      <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
         <header className="flex pr-8">
           <Link
             href="/"
@@ -74,18 +84,20 @@ export default function EditTask() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
-        <button
-          onClick={() => handleAddTaskButtonClicked(task)}
-          className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full"
-        >
-          Edit Task
-        </button>
-        <button
-          onClick={() => handleAddTaskButtonClicked(task)}
-          className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full"
-        >
-          Delete Task
-        </button>
+        <div className="flex gap-6">
+          <button
+            onClick={() => handleEditTaskButtonClicked(task)}
+            className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full"
+          >
+            Edit Task
+          </button>
+          <button
+            onClick={() => handleDeleteTaskButtonClicked(task)}
+            className="bg-deleteTaskButton rounded-lg p-3 w-full"
+          >
+            Delete Task
+          </button>
+        </div>
       </div>
     </>
   );

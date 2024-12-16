@@ -40,7 +40,7 @@ export default function AddTask() {
 
   return (
     <>
-      <div className="px-4 pt-16 pb-20 flex flex-col gap-8">
+      <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
         <header className="flex pr-8">
           <Link
             href="/"
