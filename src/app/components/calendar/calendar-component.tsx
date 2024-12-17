@@ -4,12 +4,16 @@ import { Task } from "@/app/taskType";
 
 interface CalendarProps {
   setTask: React.Dispatch<React.SetStateAction<Task>>;
+  task?: Task;
 }
 
-export function Calendar({ setTask }: CalendarProps) {
+export function Calendar({ setTask, task }: CalendarProps) {
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const [activeDate, setActiveDate] = useState("");
+  const [activeDate, setActiveDate] = useState(
+    task ? task.date.split("T")[0] : ""
+  );
+  console.log(activeDate);
 
   const handleDateChange = (date: string) => {
     setTask((prevTask) => ({ ...prevTask, date }));

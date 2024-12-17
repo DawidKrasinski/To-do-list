@@ -16,7 +16,7 @@ export async function GET() {
   t.id, 
   t.name, 
   t.done, 
-  t.date, 
+  DATE_FORMAT(t.date, '%Y-%m-%d') AS date, 
   t.startTime, 
   t.endTime, 
   DATE_FORMAT(t.doneDate, '%Y-%m-%d') AS doneDate, 

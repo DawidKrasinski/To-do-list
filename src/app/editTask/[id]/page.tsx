@@ -78,7 +78,7 @@ export default function EditTask() {
           </span>
         </header>
 
-        <Calendar setTask={setTask} />
+        <Calendar setTask={setTask} task={task} />
         <Schedule setTask={setTask} task={task} />
         <Priority setTask={setTask} task={task} />
       </div>

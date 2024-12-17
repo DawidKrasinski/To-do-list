@@ -1,13 +1,9 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import { useToDoList } from "./toDoListProvider";
-import { TaskComponent } from "./components/task-component";
+import { NavBar } from "./components/navBar-component";
+import { PrintTaskList } from "./components/printTaskList";
 
 export default function Home() {
-  const { taskList } = useToDoList();
-  console.log(taskList);
-
   return (
     <>
       <div className="flex flex-col gap-8 px-4 pt-16">
@@ -48,31 +44,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="flex flex-col gap-2">
-          <div className="flex justify-between">
-            <h2 className="text-xl">{`Today's Tasks`}</h2>
-            <div className="text-purple-400">
-              <Link href="/seeAll">See All</Link>
-            </div>
-          </div>
-          <div className="flex flex-col gap-4">
-            {taskList.slice(0, 3).map((task) => (
-              <TaskComponent key={task.id} task={task} />
-            ))}
-          </div>
-        </section>
-
-        <section>{/* Tommorow Tasks */}</section>
+        <PrintTaskList day="Today" />
+        <PrintTaskList day="Tomorrow" />
+        <NavBar />
       </div>
-
-      <section className="fixed bottom-0 left-0 right-0 p-4">
-        <Link
-          href="/addTask"
-          className="w-16 h-16 rounded-full bg-gradient-to-tl from-purple-400 to-pink-300 mb-4 cursor-pointer flex justify-center items-center mx-auto"
-        >
-          <i className="fa-solid fa-plus text-black text-2xl"></i>
-        </Link>
-      </section>
     </>
   );
 }

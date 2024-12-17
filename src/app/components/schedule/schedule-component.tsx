@@ -34,7 +34,9 @@ export function Schedule({ setTask, task }: ScheduleProps) {
           contentEditable={true}
           onInput={(e) => handleInputChange(e, "description")}
           className="bg-muted rounded-lg p-3 min-h-24 relative empty:after:content-['Description'] after:absolute after:top-3 after:left-3 after:text-muted-foreground/40"
-        ></div>
+        >
+          {task.description}
+        </div>
       </section>
 
       <div className="flex gap-4">
