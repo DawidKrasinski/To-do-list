@@ -6,7 +6,7 @@ import { PrintTaskList } from "./components/printTaskList";
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col gap-8 px-4 pt-16">
+      <div className="flex flex-col gap-8 px-4 pt-16 pb-20">
         <header className="flex flex-col gap-4">
           <div className="flex justify-between items-center gap-16">
             <h1 className="text-2xl">
