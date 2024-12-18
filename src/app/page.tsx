@@ -46,7 +46,7 @@ export default function Home() {
 
         <PrintTaskList day="Today" />
         <PrintTaskList day="Tomorrow" />
-        <NavBar />
+        <NavBar activeIcon="Home" />
       </div>
     </>
   );

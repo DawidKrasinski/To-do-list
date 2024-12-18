@@ -4,12 +4,12 @@
 @tailwind utilities;
 
 :root {
-  --background: 240 50% 2%;
+  --background: 220 15% 12%;
   --foreground: 0 0% 100%;
-  --muted: 0 0% 12%;
+  --muted: 0 0% 20%;
   --muted-foreground: 0 0% 89%;
-  --deleteTaskButton: #4f4f4f;
-  --navBar: #0c0c0c;
+  --deleteTaskButton: 0 0% 34%;
+  --navBar: 220 15% 9%;
 }
 
 /* .light {

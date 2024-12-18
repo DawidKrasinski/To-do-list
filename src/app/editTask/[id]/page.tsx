@@ -25,8 +25,8 @@ export default function EditTask() {
 
   useEffect(() => {
     async function loadTask() {
-      const fetchedTask = await fetchTaskById(params.id);
-      setTask(fetchedTask[0]);
+      const [fetchedTask] = await fetchTaskById(params.id);
+      setTask(fetchedTask);
     }
     loadTask();
   }, [params.id]);
