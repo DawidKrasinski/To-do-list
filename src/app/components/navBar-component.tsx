@@ -28,7 +28,7 @@ export function NavBar({ activeIcon }: NavBarProps) {
           </Link>
         </div>
 
-        <div className="flex-1 flex">
+        <div className="flex-1 flex justify-center items-center">
           <Link
             href="/addTask"
             className="w-12 h-12 rounded-full bg-purple-400 cursor-pointer flex justify-center items-center -translate-y-6"

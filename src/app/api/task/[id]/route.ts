@@ -21,7 +21,7 @@ export async function GET(
 
   try {
     const [results] = await connection.query(
-      "SELECT id, name, done, priority, DATE_FORMAT(date, '%Y-%m-%d') AS date, startTime, endTime, DATE_FORMAT(doneDate, '%Y-%m-%d') AS doneDate FROM tasks WHERE id = ?",
+      "SELECT id, name, done, description, priority, DATE_FORMAT(date, '%Y-%m-%d') AS date, startTime, endTime, DATE_FORMAT(doneDate, '%Y-%m-%d') AS doneDate FROM tasks WHERE id = ?",
       [parseInt(id, 10)]
     );
     return NextResponse.json(results);

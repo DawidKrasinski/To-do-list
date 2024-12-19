@@ -2,15 +2,29 @@
 import Image from "next/image";
 import { NavBar } from "./components/navBar-component";
 import { PrintTaskList } from "./components/printTaskList";
+import { Progress } from "./components/progress";
+import { useToDoList } from "./toDoListProvider";
 
 export default function Home() {
+  const { taskList } = useToDoList();
+  const today = new Date().toISOString().split("T")[0];
+  const tasksToday = taskList.filter(
+    (task) => task.date.split("T")[0] === today
+  ).length;
+
+  const tasksDone = taskList.filter(
+    (task) => task.date.split("T")[0] === today && task.done
+  ).length;
+
+  const uncompletedTasks = tasksToday - tasksDone;
+
   return (
     <>
       <div className="flex flex-col gap-8 px-4 pt-16 pb-20">
         <header className="flex flex-col gap-4">
           <div className="flex justify-between items-center gap-16">
             <h1 className="text-2xl">
-              You have got 5 tasks today to complete
+              You have got {uncompletedTasks} tasks today to complete
               <Image
                 src={"/img/Pencil.png"}
                 alt=""
@@ -33,17 +47,7 @@ export default function Home() {
           </div>
         </header>
 
-        <section className="flex flex-col gap-2">
-          <h2 className="text-xl">Progress</h2>
-          <div className="p-4 flex flex-col gap-1 bg-muted rounded-lg">
-            <h3 className="text-lg-xl">Daily Task</h3>
-            <div className="opacity-80">2/3 Task Completed</div>
-            <div className="text-sm opacity-40">
-              You are almost done go ahead
-            </div>
-          </div>
-        </section>
-
+        <Progress />
         <PrintTaskList day="Today" />
         <PrintTaskList day="Tomorrow" />
         <NavBar activeIcon="Home" />
