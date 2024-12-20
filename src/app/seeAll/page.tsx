@@ -1,3 +1,7 @@
+"use client";
+
+import { TaskList } from "../components/printTaskList";
+
 export default function SeeAll() {
-  return <div>SeeAll page</div>;
+  return <TaskList day="2024-12-22" />;
 }

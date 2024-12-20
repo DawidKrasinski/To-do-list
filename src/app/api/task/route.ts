@@ -24,7 +24,7 @@ export async function GET() {
 FROM tasks t
 LEFT JOIN priority p ON t.priority = p.id
 WHERE NOT (t.done = 1 AND DATE(t.doneDate) != CURRENT_DATE)
-ORDER BY t.startTime ASC;
+ORDER BY t.done ASC, t.startTime ASC;
 `
     );
     return NextResponse.json(results);

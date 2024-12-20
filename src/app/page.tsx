@@ -1,16 +1,21 @@
 "use client";
 import Image from "next/image";
 import { NavBar } from "./components/navBar-component";
-import { PrintTaskList } from "./components/printTaskList";
+import { TaskList } from "./components/printTaskList";
 import { Progress } from "./components/progress";
 import { useToDoList } from "./toDoListProvider";
 
 export default function Home() {
   const { taskList } = useToDoList();
-  const today = new Date().toISOString().split("T")[0];
+  const date = new Date();
+  const today = date.toISOString().split("T")[0];
+  date.setDate(date.getDate() + 1);
+  const tomorrow = date.toISOString().split("T")[0];
   const tasksToday = taskList.filter(
     (task) => task.date.split("T")[0] === today
   ).length;
+
+  console.log(today, tomorrow);
 
   const tasksDone = taskList.filter(
     (task) => task.date.split("T")[0] === today && task.done
@@ -48,8 +53,8 @@ export default function Home() {
         </header>
 
         <Progress />
-        <PrintTaskList day="Today" />
-        <PrintTaskList day="Tomorrow" />
+        <TaskList day={today} />
+        <TaskList day={tomorrow} />
         <NavBar activeIcon="Home" />
       </div>
     </>

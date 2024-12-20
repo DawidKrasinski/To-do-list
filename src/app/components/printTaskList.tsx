@@ -3,19 +3,21 @@ import Link from "next/link";
 import { useToDoList } from "../toDoListProvider";
 
 interface PrintTaskListProps {
-  day: "Today" | "Tomorrow";
+  day: string;
 }
 
-export function PrintTaskList({ day }: PrintTaskListProps) {
+export function TaskList({ day }: PrintTaskListProps) {
   const { taskList } = useToDoList();
-  const header = day === "Today" ? `Today's Tasks` : "Tommorrow Task";
+
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
-  const date =
-    day === "Today"
-      ? today.toISOString().split("T")[0]
-      : tomorrow.toISOString().split("T")[0];
+  const header =
+    day === today.toISOString().split("T")[0]
+      ? `Today's Tasks`
+      : day === tomorrow.toISOString().split("T")[0]
+      ? "Tommorrow Task"
+      : day;
 
   return (
     <section className="flex flex-col gap-2">
@@ -27,7 +29,7 @@ export function PrintTaskList({ day }: PrintTaskListProps) {
       </div>
       <div className="flex flex-col gap-4">
         {taskList
-          .filter((task) => task.date.split("T")[0] === date)
+          .filter((task) => task.date.split("T")[0] === day)
           .slice(0, 3)
           .map((task) => (
             <TaskComponent key={task.id} task={task} />
