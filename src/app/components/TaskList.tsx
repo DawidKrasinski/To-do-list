@@ -4,11 +4,22 @@ import { useToDoList } from "../toDoListProvider";
 
 interface PrintTaskListProps {
   day: string;
+  seeAll: boolean;
 }
 
-export function TaskList({ day }: PrintTaskListProps) {
-  const { taskList } = useToDoList();
+function SeeAll({ isTrue }: { isTrue: boolean }) {
+  return isTrue ? (
+    <div className="text-purple-400">
+      <Link href="/seeAll">See All</Link>
+    </div>
+  ) : (
+    <div></div>
+  );
+}
 
+export function TaskList({ day, seeAll }: PrintTaskListProps) {
+  const { taskList } = useToDoList();
+  <SeeAll isTrue={seeAll} />;
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
@@ -23,9 +34,7 @@ export function TaskList({ day }: PrintTaskListProps) {
     <section className="flex flex-col gap-2">
       <div className="flex justify-between">
         <h2 className="text-xl">{header}</h2>
-        <div className="text-purple-400">
-          <Link href="/seeAll">See All</Link>
-        </div>
+        <SeeAll isTrue={seeAll} />
       </div>
       <div className="flex flex-col gap-4">
         {taskList

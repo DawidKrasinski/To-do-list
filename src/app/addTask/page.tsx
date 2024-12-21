@@ -53,7 +53,7 @@ export default function AddTask() {
           </span>
         </header>
 
-        <Calendar setTask={setTask} task={task} />
+        <Calendar setTask={setTask} />
         <Schedule setTask={setTask} task={task} />
         <Priority setTask={setTask} task={task} />
 

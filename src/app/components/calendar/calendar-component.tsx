@@ -10,10 +10,11 @@ interface CalendarProps {
 export function Calendar({ setTask, task }: CalendarProps) {
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
   const [activeDate, setActiveDate] = useState(
-    task ? task.date.split("T")[0] : ""
+    task ? task.date.split("T")[0] : new Date().toISOString().split("T")[0]
   );
-  console.log(activeDate);
+  console.log(task, activeDate);
 
   const handleDateChange = (date: string) => {
     setTask((prevTask) => ({ ...prevTask, date }));
