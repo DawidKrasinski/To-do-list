@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Task } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
 import { Calendar } from "../components/calendar/calendar-component";
@@ -20,6 +20,20 @@ export default function AddTask() {
   });
   const { addTask } = useToDoList();
   const router = useRouter();
+
+  const handleDateChange = (date: string) => {
+    setTask((prevTask) => ({ ...prevTask, date }));
+  };
+
+  const [activeDate, setActiveDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  useEffect(
+    () => () => {
+      handleDateChange(activeDate);
+    },
+    [activeDate]
+  );
 
   function handleAddTaskButtonClicked(task: Task) {
     if (
@@ -53,7 +67,7 @@ export default function AddTask() {
           </span>
         </header>
 
-        <Calendar setTask={setTask} />
+        <Calendar setDate={setActiveDate} />
         <Schedule setTask={setTask} task={task} />
         <Priority setTask={setTask} task={task} />
 

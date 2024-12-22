@@ -3,11 +3,11 @@ import { useState } from "react";
 import { Task } from "@/app/taskType";
 
 interface CalendarProps {
-  setTask: React.Dispatch<React.SetStateAction<Task>>;
+  setDate: React.Dispatch<React.SetStateAction<string>>;
   task?: Task;
 }
 
-export function Calendar({ setTask, task }: CalendarProps) {
+export function Calendar({ setDate, task }: CalendarProps) {
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -15,10 +15,6 @@ export function Calendar({ setTask, task }: CalendarProps) {
     task ? task.date.split("T")[0] : new Date().toISOString().split("T")[0]
   );
   console.log(task, activeDate);
-
-  const handleDateChange = (date: string) => {
-    setTask((prevTask) => ({ ...prevTask, date }));
-  };
 
   function getWeek(dayOffset: number) {
     const today = new Date();
@@ -60,7 +56,7 @@ export function Calendar({ setTask, task }: CalendarProps) {
   function changeActiveDate(index: number) {
     const week = getWeek(dayOffset);
     setActiveDate(week[index].date);
-    handleDateChange(week[index].date);
+    setDate(week[index].date);
   }
 
   return (

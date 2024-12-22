@@ -16,7 +16,7 @@ export function Progress() {
 
   let quote;
   if (doneProgress === 0) {
-    quote = "Have a nice day!";
+    quote = "Hello, have a nice day!";
   } else if (doneProgress < 35) {
     quote = "You are on the right path, keep going!";
   } else if (doneProgress < 50) {

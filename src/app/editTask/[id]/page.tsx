@@ -23,6 +23,20 @@ export default function EditTask() {
     color: "#FFFFFF",
   });
 
+  const handleDateChange = (date: string) => {
+    setTask((prevTask) => ({ ...prevTask, date }));
+  };
+
+  const [activeDate, setActiveDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  useEffect(
+    () => () => {
+      handleDateChange(activeDate);
+    },
+    [activeDate]
+  );
+
   useEffect(() => {
     async function loadTask() {
       const [fetchedTask] = await fetchTaskById(params.id);
@@ -78,7 +92,7 @@ export default function EditTask() {
           </span>
         </header>
 
-        <Calendar setTask={setTask} task={task} />
+        <Calendar setDate={setActiveDate} task={task} />
         <Schedule setTask={setTask} task={task} />
         <Priority setTask={setTask} task={task} />
       </div>
