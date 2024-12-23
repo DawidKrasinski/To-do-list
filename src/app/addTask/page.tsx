@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { Header } from "../components/header/header-component";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Task } from "../taskType.js";
@@ -28,12 +28,10 @@ export default function AddTask() {
   const [activeDate, setActiveDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  useEffect(
-    () => () => {
-      handleDateChange(activeDate);
-    },
-    [activeDate]
-  );
+  useEffect(() => {
+    handleDateChange(activeDate);
+    console.log(activeDate, " - activeDate");
+  }, [activeDate]);
 
   function handleAddTaskButtonClicked(task: Task) {
     if (
@@ -55,18 +53,7 @@ export default function AddTask() {
   return (
     <>
       <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
-        <header className="flex pr-8">
-          <Link
-            href="/"
-            className="w-8 h-8 border-2 text-muted-foreground rounded-full flex justify-center items-center"
-          >
-            <i className="fa-solid fa-arrow-left"></i>
-          </Link>
-          <span className="text-2xl flex flex-1 justify-center">
-            Create new task
-          </span>
-        </header>
-
+        <Header text="Create new task" />
         <Calendar setDate={setActiveDate} />
         <Schedule setTask={setTask} task={task} />
         <Priority setTask={setTask} task={task} />

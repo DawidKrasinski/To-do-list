@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Task } from "@/app/taskType.js";
 import { useToDoList } from "@/app/toDoListProvider";
@@ -8,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Schedule } from "@/app/components/schedule/schedule-component";
 import { Priority } from "@/app/components/priority/priority-component";
+import { Header } from "@/app/components/header/header-component";
 
 export default function EditTask() {
   const params = useParams<{ id: string }>();
@@ -19,31 +19,10 @@ export default function EditTask() {
     priority: 0,
     startTime: "",
     endTime: "",
-    date: new Date().toISOString().split("T")[0],
+    date: "",
     color: "#FFFFFF",
   });
-
-  const handleDateChange = (date: string) => {
-    setTask((prevTask) => ({ ...prevTask, date }));
-  };
-
-  const [activeDate, setActiveDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
-  useEffect(
-    () => () => {
-      handleDateChange(activeDate);
-    },
-    [activeDate]
-  );
-
-  useEffect(() => {
-    async function loadTask() {
-      const [fetchedTask] = await fetchTaskById(params.id);
-      setTask(fetchedTask);
-    }
-    loadTask();
-  }, [params.id]);
+  const [activeDate, setActiveDate] = useState("");
 
   async function fetchTaskById(id: string) {
     const response = await fetch(`/api/task/${id}`);
@@ -77,21 +56,24 @@ export default function EditTask() {
     }
   }
 
+  useEffect(() => {
+    const date = activeDate;
+    setTask((prevTask) => ({ ...prevTask, date }));
+  }, [activeDate]);
+
+  useEffect(() => {
+    async function loadTask() {
+      const [fetchedTask] = await fetchTaskById(params.id);
+      setTask(fetchedTask);
+      setActiveDate(fetchedTask.date);
+    }
+    loadTask();
+  }, [params.id]);
+
   return (
     <>
       <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
-        <header className="flex pr-8">
-          <Link
-            href="/"
-            className="w-8 h-8 border-2 text-muted-foreground rounded-full flex justify-center items-center"
-          >
-            <i className="fa-solid fa-arrow-left"></i>
-          </Link>
-          <span className="text-2xl flex flex-1 justify-center">
-            {task.name}
-          </span>
-        </header>
-
+        <Header text={task.name} />
         <Calendar setDate={setActiveDate} task={task} />
         <Schedule setTask={setTask} task={task} />
         <Priority setTask={setTask} task={task} />

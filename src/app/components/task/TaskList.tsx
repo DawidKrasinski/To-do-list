@@ -1,6 +1,6 @@
 import { TaskComponent } from "./task-component";
 import Link from "next/link";
-import { useToDoList } from "../toDoListProvider";
+import { useToDoList } from "../../toDoListProvider";
 
 interface PrintTaskListProps {
   day: string;

@@ -1,6 +1,6 @@
-import { Task } from "../taskType";
+import { Task } from "@/app/taskType";
 import { useState } from "react";
-import { useToDoList } from "../toDoListProvider";
+import { useToDoList } from "@/app/toDoListProvider";
 import Link from "next/link";
 
 export function TaskComponent({ task }: { task: Task }) {
