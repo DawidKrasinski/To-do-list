@@ -1,17 +1,20 @@
 import { Day } from "./day-calendar";
 import { useState } from "react";
-import { Task } from "@/app/taskType";
 
 interface CalendarProps {
-  setDate: React.Dispatch<React.SetStateAction<string>>;
-  task?: Task;
+  onChange: (date: string) => void;
+  date?: string;
 }
 
-export function Calendar({ setDate, task }: CalendarProps) {
+function simpleDate(date: Date) {
+  return date.toISOString().split("T")[0];
+}
+
+export function Calendar({ onChange, date }: CalendarProps) {
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const [activeDate, setActiveDate] = useState(
-    task ? task.date : new Date().toISOString().split("T")[0]
+    date ? date : simpleDate(new Date())
   );
 
   function getWeek(dayOffset: number) {
@@ -54,7 +57,7 @@ export function Calendar({ setDate, task }: CalendarProps) {
   function changeActiveDate(index: number) {
     const week = getWeek(dayOffset);
     setActiveDate(week[index].date);
-    setDate(week[index].date);
+    onChange(week[index].date);
   }
 
   return (

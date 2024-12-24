@@ -2,22 +2,18 @@
 
 import { TaskList } from "../components/task/TaskList";
 import { Calendar } from "../components/calendar/calendar-component";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Header } from "../components/header/header-component";
 
 export default function SeeAll() {
-  const [activeDate, setActiveDate] = useState(
+  const [activeDate, setActiveDate] = useState<string>(
     new Date().toISOString().split("T")[0]
   );
-
-  useEffect(() => {
-    console.log(activeDate);
-  }, [activeDate]);
 
   return (
     <div className="pt-12 px-4 flex flex-col gap-8">
       <Header text="See all tasks" />
-      <Calendar setDate={setActiveDate} />
+      <Calendar onChange={setActiveDate} />
       <TaskList day={activeDate} seeAll={false} />
     </div>
   );
