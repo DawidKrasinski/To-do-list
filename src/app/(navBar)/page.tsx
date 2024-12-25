@@ -1,9 +1,8 @@
 "use client";
 import Image from "next/image";
-import { NavBar } from "./components/navBar/navBar-component";
-import { TaskList } from "./components/task/TaskList";
-import { Progress } from "./components/progress/progress";
-import { useToDoList } from "./toDoListProvider";
+import { TaskList } from "../components/task/TaskList";
+import { Progress } from "../components/progress/progress";
+import { useToDoList } from "../toDoListProvider";
 
 export default function Home() {
   const { taskList } = useToDoList();
@@ -53,7 +52,6 @@ export default function Home() {
         <Progress />
         <TaskList day={today} seeAll={true} />
         <TaskList day={tomorrow} seeAll={true} />
-        <NavBar activeIcon="Home" />
       </div>
     </>
   );
