@@ -3,7 +3,7 @@ import { useState } from "react";
 
 interface CalendarProps {
   onChange: (date: string) => void;
-  date?: string;
+  date: string;
 }
 
 function simpleDate(date: Date) {
@@ -13,9 +13,6 @@ function simpleDate(date: Date) {
 export function Calendar({ onChange, date }: CalendarProps) {
   const [dayOffset, setDayOffset] = useState(0);
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const [activeDate, setActiveDate] = useState(
-    date ? date : simpleDate(new Date())
-  );
 
   function getWeek(dayOffset: number) {
     const today = new Date();
@@ -44,7 +41,7 @@ export function Calendar({ onChange, date }: CalendarProps) {
     for (let i = 0; i < 7; i++) {
       const day = new Date(firstMonday);
       day.setDate(firstMonday.getDate() + i);
-      const date = day.toISOString().slice(0, 10);
+      const date = simpleDate(day);
       week.push({
         date: date,
         month: months[parseInt(date.split("-")[1]) - 1],
@@ -56,7 +53,6 @@ export function Calendar({ onChange, date }: CalendarProps) {
 
   function changeActiveDate(index: number) {
     const week = getWeek(dayOffset);
-    setActiveDate(week[index].date);
     onChange(week[index].date);
   }
 
@@ -85,7 +81,7 @@ export function Calendar({ onChange, date }: CalendarProps) {
             onClick={() => changeActiveDate(index)}
             key={day}
             day={day}
-            isActive={activeDate === getWeek(dayOffset)[index].date}
+            isActive={date === getWeek(dayOffset)[index].date}
             date={getWeek(dayOffset)[index].date.split("-")[2]}
           />
         ))}

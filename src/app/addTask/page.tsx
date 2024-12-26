@@ -15,11 +15,15 @@ export default function AddTask() {
     priority: 0,
     startTime: "",
     endTime: "",
-    date: "",
+    date: simpleDate(new Date()),
     color: "#FFFFFF",
   });
   const { addTask } = useToDoList();
   const router = useRouter();
+
+  function simpleDate (date: Date) {
+    return date.toISOString().split("T")[0]
+  }
 
   const handleDateChange = (date: string) => {
     setTask((prevTask) => ({ ...prevTask, date }));
@@ -46,7 +50,7 @@ export default function AddTask() {
     <>
       <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
         <Header text="Create new task" />
-        <Calendar onChange={handleDateChange} />
+        <Calendar onChange={handleDateChange} date={task.date}/>
         <Schedule setTask={setTask} task={task} />
         <Priority setTask={setTask} task={task} />
 

@@ -19,9 +19,13 @@ export default function EditTask() {
     priority: 0,
     startTime: "",
     endTime: "",
-    date: "",
+    date: simpleDate(new Date),
     color: "#FFFFFF",
   });
+
+  function simpleDate (date: Date) {
+    return date.toISOString().split("T")[0]
+  }
 
   const handleDateChange = (date: string) => {
     setTask((prevTask) => ({ ...prevTask, date }));
