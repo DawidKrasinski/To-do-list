@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 import { getDB } from "../db";
+import { useDataSource } from "../db/data-source";
+import { Priority } from "../db/entity/Priority";
 
 export async function GET() {
-  const connection = await getDB();
-  if (!connection) {
-    return NextResponse.json({ message: "cant find databse", status: 500 });
-  }
+  await useDataSource()
 
   try {
-    const [results] = await connection.query("SELECT * FROM priority");
+    const results = await Priority.find()
     return NextResponse.json(results);
   } catch (error) {
     console.log("cant use get method", error);
