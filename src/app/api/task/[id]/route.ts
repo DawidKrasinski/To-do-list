@@ -1,30 +1,19 @@
 import { getDB } from "../../db";
 import { NextRequest, NextResponse } from "next/server";
+import { useDataSource } from "../../db/data-source";
+import { Task } from "../../db/entity/Task";
 
 export async function GET(
   req: NextRequest,
   context: { params: { id: string } }
 ) {
+  await useDataSource()
   const { id } = context.params;
-  const connection = await getDB();
-
-  if (!id) {
-    return NextResponse.json({ error: "Task ID is required" }, { status: 400 });
-  }
-
-  if (!connection) {
-    return NextResponse.json(
-      { error: "Can't connect to the database" },
-      { status: 500 }
-    );
-  }
 
   try {
-    const [results] = await connection.query(
-      "SELECT id, name, done, description, priority, DATE_FORMAT(date, '%Y-%m-%d') AS date, startTime, endTime, DATE_FORMAT(doneDate, '%Y-%m-%d') AS doneDate FROM tasks WHERE id = ?",
-      [parseInt(id, 10)]
-    );
-    return NextResponse.json(results);
+    const task = await Task.findOne({ where: { id: parseInt(id) }, relations: ['priority'] })
+
+    return NextResponse.json(task);
   } catch (error) {
     console.error("Can't use GET method:", error);
     return NextResponse.json(
