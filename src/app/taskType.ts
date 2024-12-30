@@ -1,5 +1,3 @@
-import { Priority } from "./priorityType"
-
 export type Task = {
   id?: string;
   name: string;

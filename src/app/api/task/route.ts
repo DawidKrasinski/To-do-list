@@ -18,8 +18,8 @@ export async function GET() {
     const tasks = tasksFromQuery.map((task) => ({
       id: task.id,
       name: task.name, 
-      description: task.name,
-      done: task.name,
+      description: task.description,
+      done: task.done,
       doneDate: task.doneDate,
       priority: task.priority.order,
       startTime: task.startTime,

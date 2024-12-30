@@ -9,6 +9,7 @@ import { Schedule } from "@/app/components/schedule/schedule-component";
 import { Priority } from "@/app/components/priority/priority-component";
 import { Header } from "@/app/components/header/header-component";
 
+
 export default function EditTask() {
   const params = useParams<{ id: string }>();
   const { deleteTask, editTask } = useToDoList();
@@ -21,6 +22,7 @@ export default function EditTask() {
     endTime: "",
     date: simpleDate(new Date),
   });
+  const [orginalTaskName, setOrginalTaskName] = useState("")
 
   function simpleDate (date: Date) {
     return date.toISOString().split("T")[0]
@@ -64,16 +66,17 @@ export default function EditTask() {
 
   useEffect(() => {
     async function loadTask() {
-      const [fetchedTask] = await fetchTaskById(params.id);
+      const fetchedTask = await fetchTaskById(params.id);
       setTask(fetchedTask);
+      setOrginalTaskName(fetchedTask.name)
     }
-    loadTask();
+  loadTask();
   }, [params.id]);
 
   return (
     <>
       <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
-        <Header text={task.name} />
+        <Header text={orginalTaskName} />
         <Calendar onChange={handleDateChange} date={task.date} />
         <Schedule setTask={setTask} task={task} />
         <Priority setTask={setTask} task={task} />
