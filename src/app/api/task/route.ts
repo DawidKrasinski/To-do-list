@@ -2,13 +2,32 @@ import { NextResponse, NextRequest } from "next/server";
 import { useDataSource } from "../db/data-source";
 import { Task } from "../db/entity/Task";
 import { Priority } from "../db/entity/Priority";
-import { DataSource } from "typeorm";
 
 export async function GET() {
   try {
-    const dataSource = await useDataSource()
-    const repository = dataSource.getRepository(Task)
-    const tasks = await repository.createQueryBuilder('task').where("task.done != :done", { done: true }).getMany() //
+    await useDataSource()
+    const tasksFromQuery = await Task
+      .createQueryBuilder('task')
+      .leftJoinAndSelect("task.priority", "priority")
+      .where("NOT (task.done = 1 AND DATE(task.doneDate) != CURRENT_DATE)")
+      .orderBy("task.priority", "DESC")      
+      .addOrderBy("task.done", "ASC")
+      .addOrderBy("task.startTime", "ASC")
+      .getMany()  
+
+    const tasks = tasksFromQuery.map((task) => ({
+      id: task.id,
+      name: task.name, 
+      description: task.name,
+      done: task.name,
+      doneDate: task.doneDate,
+      priority: task.priority.order,
+      startTime: task.startTime,
+      endTime: task.endTime,
+      date: task.date,
+      color: task.priority.color,
+    }))
+
     return NextResponse.json(tasks)
 
   } catch (error) {

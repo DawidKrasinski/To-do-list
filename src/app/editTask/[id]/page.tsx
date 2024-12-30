@@ -20,7 +20,6 @@ export default function EditTask() {
     startTime: "",
     endTime: "",
     date: simpleDate(new Date),
-    color: "#FFFFFF",
   });
 
   function simpleDate (date: Date) {

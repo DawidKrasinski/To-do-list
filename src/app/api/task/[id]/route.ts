@@ -28,25 +28,19 @@ export async function PATCH(
   context: { params: { id: string } }
 ) {
   const { id } = context.params;
-  const connection = await getDB();
+  useDataSource()
 
   if (!id) {
     return NextResponse.json({ error: "Task ID is required" }, { status: 400 });
   }
 
-  if (!connection) {
-    return NextResponse.json(
-      { error: "Can't connect to the database" },
-      { status: 500 }
-    );
-  }
 
   try {
     const body = await req.json();
-    await connection.query(
-      "UPDATE tasks SET done = ?, doneDate = CURRENT_DATE WHERE id = ?;",
-      [body.done, parseInt(id, 10)]
-    );
+    
+      // "UPDATE tasks SET done = ?, doneDate = CURRENT_DATE WHERE id = ?;",
+      // [body.done, parseInt(id, 10)]
+    
     return NextResponse.json(
       { message: "Task updated successfully" },
       { status: 200 }

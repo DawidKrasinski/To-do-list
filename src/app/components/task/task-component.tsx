@@ -4,7 +4,7 @@ import { useToDoList } from "@/app/toDoListProvider";
 import Link from "next/link";
 
 export function TaskComponent({ task }: { task: Task }) {
-  const { id, name, done, doneDate, date, color } = task;
+  const { id, name, done, doneDate, date, priority, color } = task;
 
   if (id === undefined || done === undefined || doneDate === undefined) {
     throw new Error("Task has invalid properties");

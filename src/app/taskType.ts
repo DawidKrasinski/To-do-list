@@ -1,3 +1,5 @@
+import { Priority } from "./priorityType"
+
 export type Task = {
   id?: string;
   name: string;
@@ -8,5 +10,5 @@ export type Task = {
   startTime: string;
   endTime: string;
   date: string;
-  color: string;
+  color?: string;
 };

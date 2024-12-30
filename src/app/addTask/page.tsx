@@ -16,7 +16,6 @@ export default function AddTask() {
     startTime: "",
     endTime: "",
     date: simpleDate(new Date()),
-    color: "#FFFFFF",
   });
   const { addTask } = useToDoList();
   const router = useRouter();
