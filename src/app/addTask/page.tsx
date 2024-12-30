@@ -28,6 +28,10 @@ export default function AddTask() {
     setTask((prevTask) => ({ ...prevTask, date }));
   };
 
+  const handlePriorityChange = (priority: number) => {
+    setTask((prevTask) => ({ ...prevTask, priority }));
+  };
+
   function handleAddTaskButtonClicked(task: Task) {
     if (
       task.name.trim() &&
@@ -48,10 +52,10 @@ export default function AddTask() {
   return (
     <>
       <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
-        <Header text="Create new task" />
+        <Header header="Create new task" />
         <Calendar onChange={handleDateChange} date={task.date}/>
         <Schedule setTask={setTask} task={task} />
-        <Priority setTask={setTask} task={task} />
+        <Priority onChange={handlePriorityChange} priority={task.priority} />
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
           <button

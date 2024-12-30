@@ -21,7 +21,7 @@ export async function GET() {
       description: task.description,
       done: task.done,
       doneDate: task.doneDate,
-      priority: task.priority.order,
+      priority: task.priority.id,
       startTime: task.startTime,
       endTime: task.endTime,
       date: task.date,

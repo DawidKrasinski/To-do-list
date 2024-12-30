@@ -12,7 +12,7 @@ export default function SeeAll() {
 
   return (
     <div className="pt-12 px-4 flex flex-col gap-8">
-      <Header text="See all tasks" />
+      <Header header="See all tasks" />
       <Calendar onChange={setActiveDate} date={activeDate}/>
       <TaskList day={activeDate} seeAll={false} />
     </div>

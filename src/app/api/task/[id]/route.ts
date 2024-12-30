@@ -11,7 +11,21 @@ export async function GET(
   const { id } = context.params;
 
   try {
-    const task = await Task.findOne({ where: { id: parseInt(id) }, relations: ['priority'] })
+    const taskQuery = await Task.findOne({ where: { id: parseInt(id) }, relations: ['priority'] })
+    if(!taskQuery) throw "Task not found"
+
+    const task = {
+      id: taskQuery.id,
+      name: taskQuery.name, 
+      description: taskQuery.description,
+      done: taskQuery.done,
+      doneDate: taskQuery.doneDate,
+      priority: taskQuery.priority.id,
+      startTime: taskQuery.startTime,
+      endTime: taskQuery.endTime,
+      date: taskQuery.date,
+      color: taskQuery.priority.color,
+    }
 
     return NextResponse.json(task);
   } catch (error) {

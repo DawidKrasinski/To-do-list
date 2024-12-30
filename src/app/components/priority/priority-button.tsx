@@ -1,13 +1,13 @@
 import { Priority } from "../../priorityType";
 interface PriorityButtonProps {
   priority: Priority;
-  handlePriorityChange: (priority: number) => void;
+  onChange: (priority: number) => void;
   isActive: boolean;
 }
 
 export function PriorityButton({
   priority,
-  handlePriorityChange,
+  onChange,
   isActive,
 }: PriorityButtonProps) {
   return (
@@ -18,7 +18,7 @@ export function PriorityButton({
       }}
       className={`flex-1 p-1 rounded-xl border-2
         ${isActive ? `text-background` : ""}`}
-      onClick={() => handlePriorityChange(priority.id)}
+      onClick={() => onChange(priority.id)}
     >
       {priority.name}
     </button>

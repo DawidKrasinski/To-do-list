@@ -32,6 +32,10 @@ export default function EditTask() {
     setTask((prevTask) => ({ ...prevTask, date }));
   };
 
+  const handlePriorityChange = (priority: number) => {
+    setTask((prevTask) => ({ ...prevTask, priority }));
+  };
+
   async function fetchTaskById(id: string) {
     const response = await fetch(`/api/task/${id}`);
     const body = await response.json();
@@ -69,6 +73,7 @@ export default function EditTask() {
       const fetchedTask = await fetchTaskById(params.id);
       setTask(fetchedTask);
       setOrginalTaskName(fetchedTask.name)
+      console.log("priority", fetchedTask.priority)
     }
   loadTask();
   }, [params.id]);
@@ -76,10 +81,10 @@ export default function EditTask() {
   return (
     <>
       <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
-        <Header text={orginalTaskName} />
+        <Header header={orginalTaskName} />
         <Calendar onChange={handleDateChange} date={task.date} />
         <Schedule setTask={setTask} task={task} />
-        <Priority setTask={setTask} task={task} />
+        <Priority onChange={handlePriorityChange} priority={task.priority} />
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">

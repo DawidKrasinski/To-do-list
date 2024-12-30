@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 interface HeaderProps {
-  text: string;
+  header: string;
 }
 
-export function Header({ text }: HeaderProps) {
+export function Header({ header }: HeaderProps) {
   return (
     <div className="flex pr-8">
       <Link
@@ -13,7 +13,7 @@ export function Header({ text }: HeaderProps) {
       >
         <i className="fa-solid fa-arrow-left"></i>
       </Link>
-      <span className="text-2xl flex flex-1 justify-center">{text}</span>
+      <span className="text-2xl flex flex-1 justify-center">{header}</span>
     </div>
   );
 }

@@ -3,28 +3,26 @@ import { Task } from "@/app/taskType";
 import { useToDoList } from "@/app/toDoListProvider";
 
 interface PriorityProps {
-  task: Task;
-  setTask: React.Dispatch<React.SetStateAction<Task>>;
+  priority: number;
+  onChange: (priority: number) => void
 }
 
-export function Priority({ setTask, task }: PriorityProps) {
+export function Priority({ onChange, priority}: PriorityProps) {
   const { priorityList } = useToDoList();
 
-  const handlePriorityChange = (priority: number) => {
-    setTask((prevTask) => ({ ...prevTask, priority }));
-  };
+  
   return (
     <section className="text-lg flex flex-col gap-2">
       <h3>Priority</h3>
       <div className="flex gap-2">
-        {priorityList.map((priority) => (
-          <PriorityButton
-            key={priority.id}
-            priority={priority}
-            isActive={task.priority === priority.id}
-            handlePriorityChange={handlePriorityChange}
-          />
-        ))}
+      {priorityList.map((priorityElement) => (
+        <PriorityButton
+          key={priorityElement.id}
+          priority={priorityElement}
+          isActive={priority === priorityElement.id}
+          onChange={onChange}
+        />
+      ))}
       </div>
     </section>
   );
