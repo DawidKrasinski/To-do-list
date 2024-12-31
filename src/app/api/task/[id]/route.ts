@@ -1,4 +1,3 @@
-import { getDB } from "../../db";
 import { NextRequest, NextResponse } from "next/server";
 import { useDataSource } from "../../db/data-source";
 import { Task } from "../../db/entity/Task";
@@ -108,33 +107,41 @@ export async function PUT(
   context: { params: { id: string } }
 ) {
   const { id } = context.params;
-  const connection = await getDB();
+  await useDataSource()
 
   if (!id) {
     return NextResponse.json({ error: "Task ID is required" }, { status: 400 });
   }
 
-  if (!connection) {
-    return NextResponse.json(
-      { error: "Can't connect to the database" },
-      { status: 500 }
-    );
-  }
-
   try {
     const body = await req.json();
-    await connection.query(
-      "UPDATE tasks SET name = ?, priority = ?, description = ?, startTime = ?, endTime = ?, date = ? WHERE id = ?;",
-      [
-        body.name,
-        body.priority,
-        body.description,
-        body.startTime,
-        body.endTime,
-        body.date,
-        body.id,
-      ]
-    );
+    // await connection.query(
+    //   "UPDATE tasks SET name = ?, priority = ?, description = ?, startTime = ?, endTime = ?, date = ? WHERE id = ?;",
+    //   [
+    //     body.name,
+    //     body.priority,
+    //     body.description,
+    //     body.startTime,
+    //     body.endTime,
+    //     body.date,
+    //     body.id,
+    //   ]
+    // );
+
+    await Task
+      .createQueryBuilder()
+      .update()
+      .set({
+        name: body.name,
+        priority: body.priority,
+        description: body.description,
+        startTime: body.startTime,
+        endTime: body.endTime,
+        date: body.date,
+      })
+      .where("id = :id", {id: parseInt(body.id)})
+      .execute()
+
     return NextResponse.json(
       { message: "Task updated successfully" },
       { status: 200 }
