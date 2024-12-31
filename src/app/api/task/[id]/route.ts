@@ -42,7 +42,7 @@ export async function PATCH(
   context: { params: { id: string } }
 ) {
   const { id } = context.params;
-  useDataSource()
+  await useDataSource()
 
   if (!id) {
     return NextResponse.json({ error: "Task ID is required" }, { status: 400 });
@@ -51,7 +51,7 @@ export async function PATCH(
   try {
     const body = await req.json();
 
-      const task = await Task
+      await Task
       .createQueryBuilder()
       .update(Task)
       .set({done: body.done, doneDate: new Date().toISOString().split("T")[0]})
@@ -76,23 +76,22 @@ export async function DELETE(
   context: { params: { id: string } }
 ) {
   const { id } = context.params;
-  const connection = await getDB();
+  await useDataSource()
 
   if (!id) {
     return NextResponse.json({ error: "Task ID is required" }, { status: 400 });
   }
 
-  if (!connection) {
-    return NextResponse.json(
-      { error: "Can't connect to the database" },
-      { status: 500 }
-    );
-  }
-
   try {
-    await connection.query("DELETE FROM tasks WHERE id = ?", [id]);
+
+    await Task
+      .createQueryBuilder()
+      .softDelete()
+      .where("id = :id", {id: parseInt(id)})
+      .execute()
+
     return NextResponse.json(
-      { message: "Task deleted successfully" },
+      { message: "Task set as deleted successfully" },
       { status: 200 }
     );
   } catch (error) {
