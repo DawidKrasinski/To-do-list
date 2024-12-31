@@ -25,6 +25,9 @@ export class Task extends BaseEntity {
     @Column("date", { nullable: true })
     doneDate: Date | null = null;
 
+    @Column({length: 500})
+    description: string;
+
     @ManyToOne(() => Priority, (priority) => priority.tasks)
     priority: Priority;
 
@@ -33,7 +36,8 @@ export class Task extends BaseEntity {
         date?: Date,
         startTime?: string,
         endTime?: string,
-        priority?: Priority
+        priority?: Priority,
+        description?: string,
     ) {
         super();
         this.name = name ?? '';
@@ -41,6 +45,7 @@ export class Task extends BaseEntity {
         this.startTime = startTime ?? '';
         this.endTime = endTime ?? '';
         this.priority = priority ?? new Priority();
+        this.description = description ?? ''
     }
 }
 

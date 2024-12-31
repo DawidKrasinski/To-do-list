@@ -48,13 +48,16 @@ export async function PATCH(
     return NextResponse.json({ error: "Task ID is required" }, { status: 400 });
   }
 
-
   try {
     const body = await req.json();
-    
-      // "UPDATE tasks SET done = ?, doneDate = CURRENT_DATE WHERE id = ?;",
-      // [body.done, parseInt(id, 10)]
-    
+
+      const task = await Task
+      .createQueryBuilder()
+      .update(Task)
+      .set({done: body.done, doneDate: new Date().toISOString().split("T")[0]})
+      .where("id = :id", {id: parseInt(id)})
+      .execute()
+
     return NextResponse.json(
       { message: "Task updated successfully" },
       { status: 200 }

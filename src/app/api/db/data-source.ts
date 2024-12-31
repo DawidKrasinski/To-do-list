@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
     database: "todo-list",
     entities: [Task, Priority],
     synchronize: true,
-    logging: false,
+    logging: false, 
 })
 
 export const useDataSource = async () => {
