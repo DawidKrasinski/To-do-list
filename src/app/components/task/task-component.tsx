@@ -4,7 +4,7 @@ import { useToDoList } from "@/app/toDoListProvider";
 import Link from "next/link";
 
 export function TaskComponent({ task }: { task: Task }) {
-  const { id, name, done, doneDate, date, priority, color } = task;
+  const { id, name, done, doneDate, date, priority } = task;
 
   if (id === undefined || done === undefined || doneDate === undefined) {
     throw new Error("Task has invalid properties");
@@ -24,7 +24,7 @@ export function TaskComponent({ task }: { task: Task }) {
 
   return (
     <div className="flex h-20 bg-muted rounded-lg overflow-hidden">
-      <div style={{ backgroundColor: color }} className={`w-4 h-full`}></div>
+      <div style={{ backgroundColor: priority.color }} className={`w-4 h-full`}></div>
       <div className="flex flex-1 items-center justify-between px-4">
         <Link href={`/editTask/${id}`}>
           <h3>{name}</h3>

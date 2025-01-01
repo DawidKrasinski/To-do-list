@@ -6,13 +6,13 @@ import { Task } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
 import { Calendar } from "../components/calendar/calendar-component";
 import { Schedule } from "@/app/components/schedule/schedule-component";
-import { Priority } from "@/app/components/priority/priority-component";
+import { PrioritySection } from "@/app/components/priority/priority-component";
 
 export default function AddTask() {
   const [task, setTask] = useState<Task>({
     name: "",
     description: "",
-    priority: 0,
+    priority: {id: 0},
     startTime: "",
     endTime: "",
     date: simpleDate(new Date()),
@@ -29,7 +29,8 @@ export default function AddTask() {
   };
 
   const handlePriorityChange = (priority: number) => {
-    setTask((prevTask) => ({ ...prevTask, priority }));
+    const updatedTask = { ...task, priority: { ...task.priority, id: priority } }; 
+    setTask(updatedTask);
   };
 
   function handleAddTaskButtonClicked(task: Task) {
@@ -55,7 +56,7 @@ export default function AddTask() {
         <Header header="Create new task" />
         <Calendar onChange={handleDateChange} date={task.date}/>
         <Schedule setTask={setTask} task={task} />
-        <Priority onChange={handlePriorityChange} priority={task.priority} />
+        <PrioritySection onChange={handlePriorityChange} priority={task.priority} />
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
           <button

@@ -10,21 +10,8 @@ export async function GET(
   const { id } = context.params;
 
   try {
-    const taskQuery = await Task.findOne({ where: { id: parseInt(id) }, relations: ['priority'] })
-    if(!taskQuery) throw "Task not found"
-
-    const task = {
-      id: taskQuery.id,
-      name: taskQuery.name, 
-      description: taskQuery.description,
-      done: taskQuery.done,
-      doneDate: taskQuery.doneDate,
-      priority: taskQuery.priority.id,
-      startTime: taskQuery.startTime,
-      endTime: taskQuery.endTime,
-      date: taskQuery.date,
-      color: taskQuery.priority.color,
-    }
+    const task = await Task.findOne({ where: { id: parseInt(id) }, relations: ['priority'] })
+    if(!task) throw "Task not found"
 
     return NextResponse.json(task);
   } catch (error) {
@@ -115,25 +102,12 @@ export async function PUT(
 
   try {
     const body = await req.json();
-    // await connection.query(
-    //   "UPDATE tasks SET name = ?, priority = ?, description = ?, startTime = ?, endTime = ?, date = ? WHERE id = ?;",
-    //   [
-    //     body.name,
-    //     body.priority,
-    //     body.description,
-    //     body.startTime,
-    //     body.endTime,
-    //     body.date,
-    //     body.id,
-    //   ]
-    // );
-
     await Task
       .createQueryBuilder()
       .update()
       .set({
         name: body.name,
-        priority: body.priority,
+        priority: body.priority.id,
         description: body.description,
         startTime: body.startTime,
         endTime: body.endTime,

@@ -6,7 +6,7 @@ import { Priority } from "../db/entity/Priority";
 export async function GET() {
   try {
     await useDataSource()
-    const tasksFromQuery = await Task
+    const tasks = await Task
       .createQueryBuilder('task')
       .leftJoinAndSelect("task.priority", "priority")
       .where("NOT (task.done = 1 AND DATE(task.doneDate) != CURRENT_DATE)")
@@ -14,19 +14,6 @@ export async function GET() {
       .addOrderBy("task.done", "ASC")
       .addOrderBy("task.startTime", "ASC")
       .getMany()  
-
-    const tasks = tasksFromQuery.map((task) => ({
-      id: task.id,
-      name: task.name, 
-      description: task.description,
-      done: task.done,
-      doneDate: task.doneDate,
-      priority: task.priority.id,
-      startTime: task.startTime,
-      endTime: task.endTime,
-      date: task.date,
-      color: task.priority.color,
-    }))
 
     return NextResponse.json(tasks)
 
@@ -41,7 +28,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const priority = await Priority.findOneBy({id: body.priority})
+    const priority = await Priority.findOneBy({id: body.priority.id})
     console.log(priority)
 
     if(!priority) return NextResponse.json({error: "Priority not found"}, {status: 500})

@@ -6,7 +6,7 @@ import { Calendar } from "@/app/components/calendar/calendar-component";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Schedule } from "@/app/components/schedule/schedule-component";
-import { Priority } from "@/app/components/priority/priority-component";
+import { PrioritySection } from "@/app/components/priority/priority-component";
 import { Header } from "@/app/components/header/header-component";
 
 
@@ -17,7 +17,7 @@ export default function EditTask() {
   const [task, setTask] = useState<Task>({
     name: "",
     description: "",
-    priority: 0,
+    priority: {id: 0},
     startTime: "",
     endTime: "",
     date: simpleDate(new Date),
@@ -33,7 +33,8 @@ export default function EditTask() {
   };
 
   const handlePriorityChange = (priority: number) => {
-    setTask((prevTask) => ({ ...prevTask, priority }));
+    task.priority.id = priority
+    setTask(task)
   };
 
   async function fetchTaskById(id: string) {
@@ -84,7 +85,7 @@ export default function EditTask() {
         <Header header={orginalTaskName} />
         <Calendar onChange={handleDateChange} date={task.date} />
         <Schedule setTask={setTask} task={task} />
-        <Priority onChange={handlePriorityChange} priority={task.priority} />
+        <PrioritySection onChange={handlePriorityChange} priority={task.priority} />
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">

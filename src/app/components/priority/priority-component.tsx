@@ -1,13 +1,13 @@
+import { Priority } from "@/app/priorityType";
 import { PriorityButton } from "./priority-button";
-import { Task } from "@/app/taskType";
 import { useToDoList } from "@/app/toDoListProvider";
 
 interface PriorityProps {
-  priority: number;
+  priority: Priority;
   onChange: (priority: number) => void
 }
 
-export function Priority({ onChange, priority}: PriorityProps) {
+export function PrioritySection({ onChange, priority}: PriorityProps) {
   const { priorityList } = useToDoList();
 
   
@@ -15,14 +15,16 @@ export function Priority({ onChange, priority}: PriorityProps) {
     <section className="text-lg flex flex-col gap-2">
       <h3>Priority</h3>
       <div className="flex gap-2">
-      {priorityList.map((priorityElement) => (
+      {priorityList.map((priorityElement) => {
+        console.log(priorityElement.name, priority.id, priorityElement.id)
+        return (
         <PriorityButton
           key={priorityElement.id}
           priority={priorityElement}
-          isActive={priority === priorityElement.id}
-          onChange={onChange}
+          isActive={priority.id === priorityElement.id}
+          onChange={onChange} 
         />
-      ))}
+      )})}
       </div>
     </section>
   );

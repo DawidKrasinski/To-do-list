@@ -10,6 +10,7 @@ export function PriorityButton({
   onChange,
   isActive,
 }: PriorityButtonProps) {
+
   return (
     <button
       style={{
