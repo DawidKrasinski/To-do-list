@@ -19,6 +19,7 @@ function EditableArea({
     if (!ref.current) return;
     ref.current.innerHTML = value;
   }, [value]);
+
   return (
     <div
       contentEditable={true}

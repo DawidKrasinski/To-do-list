@@ -3,7 +3,8 @@ import Link from "next/link";
 import { useToDoList } from "../../toDoListProvider";
 
 interface PrintTaskListProps {
-  day: string;
+  day?: string;
+  searchInputValue?: string;
   seeAll: boolean;
 }
 
@@ -17,16 +18,21 @@ function SeeAll({ isTrue }: { isTrue: boolean }) {
   );
 }
 
-export function TaskList({ day, seeAll }: PrintTaskListProps) {
+export function TaskList({ day, seeAll, searchInputValue}: PrintTaskListProps) {
+
+  function simpleDate(date: Date){
+    return date.toISOString().split("T")[0]
+  }
+
   const { taskList } = useToDoList();
   <SeeAll isTrue={seeAll} />;
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
   const header =
-    day === today.toISOString().split("T")[0]
+    day === simpleDate(today)
       ? `Today's Tasks`
-      : day === tomorrow.toISOString().split("T")[0]
+      : day === simpleDate(tomorrow)
       ? "Tommorrow Task"
       : day;
 
@@ -37,10 +43,15 @@ export function TaskList({ day, seeAll }: PrintTaskListProps) {
         <SeeAll isTrue={seeAll} />
       </div>
       <div className="flex flex-col gap-4">
-        {taskList
-          .filter((task) => task.date.split("T")[0] === day)
+        {day ? taskList
+          .filter((task) => day ? task.date === day : task)
           .slice(0, 3)
           .map((task) => (
+            <TaskComponent key={task.id} task={task} />
+          ))
+        : taskList
+        .filter((task) => searchInputValue ? task.name.includes(searchInputValue) : task)
+        .map((task) => (
             <TaskComponent key={task.id} task={task} />
           ))}
       </div>

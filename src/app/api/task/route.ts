@@ -10,8 +10,8 @@ export async function GET() {
       .createQueryBuilder('task')
       .leftJoinAndSelect("task.priority", "priority")
       .where("NOT (task.done = 1 AND DATE(task.doneDate) != CURRENT_DATE)")
-      .orderBy("task.priority", "DESC")      
-      .addOrderBy("task.done", "ASC")
+      .orderBy("task.done", "ASC")      
+      .addOrderBy("task.priority", "DESC")
       .addOrderBy("task.startTime", "ASC")
       .getMany()  
 

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { TaskList } from "../components/task/TaskList";
 import { Progress } from "../components/progress/progress";
 import { useToDoList } from "../toDoListProvider";
+import { useState } from "react";
 
 export default function Home() {
   const { taskList } = useToDoList();
@@ -19,6 +20,12 @@ export default function Home() {
   ).length;
 
   const uncompletedTasks = tasksToday - tasksDone;
+
+  const [searchInputValue, setSearchInputValue] = useState("")
+
+  function onSeatchInputChange (e: React.ChangeEvent<HTMLInputElement>){
+    setSearchInputValue(e.target.value)
+  }
 
   return (
     <>
@@ -44,14 +51,23 @@ export default function Home() {
               id="searchInput"
               placeholder="Search Task Here"
               className="bg-muted p-3 rounded-lg"
+              onChange={(e) => onSeatchInputChange(e)}
             />
             {/* <i className="fa-solid fa-magnifying-glass pl-2 pr-3"></i> */}
           </div>
         </header>
-
-        <Progress />
-        <TaskList day={today} seeAll={true} />
-        <TaskList day={tomorrow} seeAll={true} />
+        
+        <div>{
+          searchInputValue ? (<TaskList searchInputValue={searchInputValue} seeAll={false}/>)
+           : (
+            <div className="flex flex-col gap-8">
+              <Progress />
+              <TaskList day={today} seeAll={true} />
+              <TaskList day={tomorrow} seeAll={true} />
+           </div> 
+          )
+          }</div>
+        
       </div>
     </>
   );
