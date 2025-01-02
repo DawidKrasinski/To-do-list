@@ -32,12 +32,15 @@ function EditableArea({
 
 export function Schedule({ setTask, task }: ScheduleProps) {
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    value: string,
     field: keyof Task
   ) => {
-    const value = e.currentTarget.value;
     setTask((prevTask) => ({ ...prevTask, [field]: value }));
   };
+
+  const handleDescriptionDivChange = (value: string) => {
+    setTask((prevTask) => ({ ...prevTask, description: value }));
+  }
 
   return (
     <>
@@ -46,13 +49,13 @@ export function Schedule({ setTask, task }: ScheduleProps) {
         <input
           autoComplete="off"
           name="name"
-          onChange={(e) => handleInputChange(e, "name")}
+          onChange={(e) => handleInputChange(e.target.value, "name")}
           value={task.name}
           type="text"
           className="bg-muted p-3 placeholder:text-muted-foreground/40 rounded-lg"
           placeholder="Name"
         />
-        <EditableArea value={task.description} />
+        <EditableArea value={task.description} onChange={handleDescriptionDivChange}/>
       </section>
 
       <div className="flex gap-4">
@@ -60,7 +63,7 @@ export function Schedule({ setTask, task }: ScheduleProps) {
           <h3 className="text-lg">Start Time</h3>
           <input
             type="time"
-            onChange={(e) => handleInputChange(e, "startTime")}
+            onChange={(e) => handleInputChange(e.target.value, "startTime")}
             value={task.startTime}
             className="bg-muted p-3 rounded-lg"
           />
@@ -69,7 +72,7 @@ export function Schedule({ setTask, task }: ScheduleProps) {
           <h3 className="text-lg">End Time</h3>
           <input
             type="time"
-            onChange={(e) => handleInputChange(e, "endTime")}
+            onChange={(e) => handleInputChange(e.target.value, "endTime")}
             value={task.endTime}
             className="bg-muted p-3 rounded-lg"
           />

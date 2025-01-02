@@ -38,7 +38,7 @@ export function NavBar({ activeIcon }: NavBarProps) {
         </div>
 
         <div className="flex-1 flex justify-center items-center">
-          <Link href="#">
+          <Link href="/priorities">
             <i
               className={`fa-solid fa-clipboard-list text-2xl text-purple-400 ${
                 activeIcon === "Priorities" ? "" : "opacity-35"

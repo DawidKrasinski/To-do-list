@@ -33,8 +33,8 @@ export default function EditTask() {
   };
 
   const handlePriorityChange = (priority: number) => {
-    task.priority.id = priority
-    setTask(task)
+    const updatedTask = { ...task, priority: { ...task.priority, id: priority } }; 
+    setTask(updatedTask);
   };
 
   async function fetchTaskById(id: string) {
@@ -85,7 +85,7 @@ export default function EditTask() {
         <Header header={orginalTaskName} />
         <Calendar onChange={handleDateChange} date={task.date} />
         <Schedule setTask={setTask} task={task} />
-        <PrioritySection onChange={handlePriorityChange} priority={task.priority} />
+        <PrioritySection onChange={handlePriorityChange} priority={task.priority}/>
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">

@@ -17,7 +17,7 @@ export function PriorityButton({
         borderColor: priority.color,
         backgroundColor: isActive ? priority.color : "transparent",
       }}
-      className={`flex-1 p-1 rounded-xl border-2
+      className={`flex-1 p-1 rounded-xl border-2 text-lg
         ${isActive ? `text-background` : ""}`}
       onClick={() => onChange(priority.id)}
     >

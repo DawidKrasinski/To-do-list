@@ -4,6 +4,7 @@ import { TaskList } from "../components/task/TaskList";
 import { Progress } from "../components/progress/progress";
 import { useToDoList } from "../toDoListProvider";
 import { useState } from "react";
+import { UserPhoto } from "./components/user/userPhoto";
 
 export default function Home() {
   const { taskList } = useToDoList();
@@ -31,7 +32,7 @@ export default function Home() {
     <>
       <div className="flex flex-col gap-8 px-4 pt-16 pb-20">
         <header className="flex flex-col gap-4">
-          <div className="flex justify-between items-center gap-16">
+          <div className="flex items-center gap-16">
             <h1 className="text-2xl">
               You have got {uncompletedTasks} tasks today to complete
               <Image
@@ -42,7 +43,7 @@ export default function Home() {
                 className="inline-block ml-2 mb-1 w-auto h-auto"
               />
             </h1>
-            <div className="min-w-11 min-h-11 bg-gray-500 rounded-full"></div>
+            <UserPhoto/>
           </div>
           <div className="flex flex-col">
             {/* !!! */}
@@ -50,6 +51,7 @@ export default function Home() {
               type="text"
               id="searchInput"
               placeholder="Search Task Here"
+              autoComplete="off"
               className="bg-muted p-3 rounded-lg"
               onChange={(e) => onSeatchInputChange(e)}
             />

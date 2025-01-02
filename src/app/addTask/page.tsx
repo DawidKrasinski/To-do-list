@@ -56,7 +56,7 @@ export default function AddTask() {
         <Header header="Create new task" />
         <Calendar onChange={handleDateChange} date={task.date}/>
         <Schedule setTask={setTask} task={task} />
-        <PrioritySection onChange={handlePriorityChange} priority={task.priority} />
+        <PrioritySection onChange={handlePriorityChange} priority={task.priority}/>
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
           <button

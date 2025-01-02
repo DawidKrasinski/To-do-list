@@ -38,7 +38,8 @@ export async function POST(req: NextRequest) {
       new Date(body.date),
       body.startTime,
       body.endTime, 
-      priority
+      priority,
+      body.description,
     )
 
     await task.save()
