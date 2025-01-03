@@ -12,7 +12,7 @@ export default function AddTask() {
   const [task, setTask] = useState<Task>({
     name: "",
     description: "",
-    priority: {id: 0},
+    priority: {id: 0, color: "#ffffff", name: "", order: 0},
     startTime: "",
     endTime: "",
     date: simpleDate(new Date()),
@@ -36,7 +36,7 @@ export default function AddTask() {
   function handleAddTaskButtonClicked(task: Task) {
     if (
       task.name.trim() &&
-      task.priority &&
+      task.priority.id &&
       task.startTime &&
       task.endTime &&
       task.date.trim() &&

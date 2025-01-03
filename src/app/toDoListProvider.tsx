@@ -6,10 +6,11 @@ import { Priority } from "./priorityType";
 export type ToDoListContextType = {
   taskList: Task[];
   priorityList: Priority[];
-  addTask: (task: Task) => Promise<string | undefined>;
+  addTask: (task: Task) => Promise<void>;
   uploadTaskDone: (id: string, done: boolean) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   editTask: (id: string, task: Task) => Promise<void>;
+  addPriority: (priority: Priority) => Promise<void>
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -47,10 +48,22 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         date: task.date,
       }),
     });
-    if (!response.ok) {
-      return response.statusText;
-    }
     fetchTasks();
+  }
+
+  async function addPriority(priority: Priority) {
+    const response = await fetch("/api/priority", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        order: priority.order,
+        color: priority.color,
+        name: priority.name,
+      })
+    })
+    fetchPriorities()
   }
 
   async function deleteTask(id: string) {
@@ -96,6 +109,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         uploadTaskDone,
         deleteTask,
         editTask,
+        addPriority,
         taskList,
         priorityList,
       }}

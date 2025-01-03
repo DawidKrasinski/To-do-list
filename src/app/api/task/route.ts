@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
       priority,
       body.description,
     )
-
+    console.log(task)
     await task.save()
     return NextResponse.json({}, { status: 201 });
   } catch (error) {

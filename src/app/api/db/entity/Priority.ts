@@ -17,4 +17,15 @@ export class Priority extends BaseEntity {
 
     @OneToMany(() => Task, (task) => task.priority)
     tasks!: Task[]
+
+    constructor(
+        name?: string,
+        order?: number,
+        color?: string,
+    ) {
+        super();
+        this.name = name ?? '';
+        this.order = order ?? 0;
+        this.color = color ?? '';
+    }
 }

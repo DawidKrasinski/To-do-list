@@ -6,8 +6,8 @@ import { UserPhoto } from "../components/user/userPhoto";
 import { useToDoList } from "@/app/toDoListProvider";
 
 export default function addPriority () {
-    const [activePriority, setActivePriority] = useState<Priority>({id: 0})
-    const {priorityList} = useToDoList()
+    const [activePriority, setActivePriority] = useState<Priority>({id: 0, color: "#ffffff", name: "", order: 0})
+    const {priorityList, addPriority} = useToDoList()
 
     function handleActivePriorityChange(priorityId: number) {
         const priority = priorityList.find((priority) => priority.id === priorityId)
@@ -23,7 +23,13 @@ export default function addPriority () {
     }
 
     function handleAddPriorityButtonClicked(priority: Priority) {
-        console.log(priority)
+        if(priority.color && priority.name?.trim()){
+            console.log(priority)
+            addPriority(priority)
+        } else {
+            console.log("Priority is invalid")
+        }
+        
     }
 
     return (
