@@ -17,7 +17,7 @@ export default function EditTask() {
   const [task, setTask] = useState<Task>({
     name: "",
     description: "",
-    priority: {id: 0},
+    priority: {id: 0, color: "#ffffff", name: "", order: 0},
     startTime: "",
     endTime: "",
     date: simpleDate(new Date),
@@ -53,7 +53,7 @@ export default function EditTask() {
       task.id
     ) {
       console.log(task);
-      editTask(task.id, task);
+      editTask(task);
       router.push("/");
     } else {
       console.log("task request is invalid");
@@ -98,7 +98,7 @@ export default function EditTask() {
           </button>
           <button
             onClick={() => handleDeleteTaskButtonClicked(task)}
-            className="bg-deleteTaskButton rounded-lg p-3 w-full"
+            className="bg-deleteButton rounded-lg p-3 w-full"
           >
             Delete Task
           </button>

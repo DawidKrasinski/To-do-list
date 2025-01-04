@@ -9,10 +9,11 @@ export type ToDoListContextType = {
   priorityList: Priority[];
   addTask: (task: Task) => Promise<void>;
   uploadTaskDone: (id: string, done: boolean) => Promise<void>;
-  deleteTask: (id: string) => Promise<void>;
+  deleteTask: (id: number) => Promise<void>;
   editTask: (task: Task) => Promise<void>;
   addPriority: (priority: priorityType) => Promise<void>;
   editPriority: (priority: priorityType) => Promise<void>;
+  deletePriority: (id: number) => Promise<void>
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -68,11 +69,19 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     fetchPriorities()
   }
 
-  async function deleteTask(id: string) {
-    await fetch(`/api/task/${parseInt(id, 10)}`, {
+  async function deleteTask(id: number) {
+    await fetch(`/api/task/${id}`, {
       method: "DELETE",
     });
     fetchTasks();
+  }
+
+  async function deletePriority(id: number){
+    await fetch(`/api/priority/${id}`, {
+      method: "DELETE",
+    });
+    await fetchPriorities();
+    await fetchTasks()
   }
 
   async function uploadTaskDone(id: string, done: boolean) {
@@ -108,7 +117,8 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         order: priority.order,
       })
     })
-    fetchPriorities()
+    await fetchPriorities()
+    await fetchTasks()
   }
 
   useEffect(() => {
@@ -122,6 +132,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         addTask,
         uploadTaskDone,
         deleteTask,
+        deletePriority,
         editTask,
         editPriority,
         addPriority,

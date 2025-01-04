@@ -7,7 +7,7 @@ import { useToDoList } from "@/app/toDoListProvider";
 
 export default function addPriority () {
     const [activePriority, setActivePriority] = useState<Priority>({id: 0, color: "#ffffff", name: "", order: 0})
-    const {priorityList, addPriority, editPriority} = useToDoList()
+    const {priorityList, addPriority, editPriority, deletePriority} = useToDoList()
     const isEditing = priorityList.find((priority) => priority.id === activePriority.id)
 
     function handleActivePriorityChange(priorityId: number) {
@@ -41,6 +41,10 @@ export default function addPriority () {
         }
     }
 
+    function handleDeletePriorityButtonClicked(id: number){
+        deletePriority(id)
+    }
+
     return (
         <div className="px-4 pt-16 text-lg flex flex-col flex-col gap-8">
             <div className="flex gap-16 items-center">
@@ -55,12 +59,18 @@ export default function addPriority () {
                         <input type="color" value={activePriority.color} onChange={(e) => handlePriorityColorChange(e.target.value)} className="bg-muted rounded-lg p-3"/>
                     </div>
             </div>
-            <button
+            <div className="flex gap-6">
+                <button
             onClick={() => isEditing ? handleEditPriorityButtonClicked(activePriority) : handleAddPriorityButtonClicked(activePriority)}
             className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full"
           >
             {isEditing ? "Edit Priority" : "Create Priority"}
           </button>
+          {isEditing ? <button
+            onClick={() => handleDeletePriorityButtonClicked(activePriority.id)}
+            className="bg-deleteButton rounded-lg p-3 w-full"
+          >Delete Priority</button> : ""}
+          </div>
         </div>
     )
 }
