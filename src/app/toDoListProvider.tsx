@@ -1,7 +1,8 @@
 "use client";
 import { useContext, createContext, useState, useEffect } from "react";
 import { Task } from "./taskType";
-import { Priority } from "./priorityType";
+import { Priority as priorityType} from "./priorityType";
+import { Priority } from "./api/db/entity/Priority";
 
 export type ToDoListContextType = {
   taskList: Task[];
@@ -9,8 +10,9 @@ export type ToDoListContextType = {
   addTask: (task: Task) => Promise<void>;
   uploadTaskDone: (id: string, done: boolean) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
-  editTask: (id: string, task: Task) => Promise<void>;
-  addPriority: (priority: Priority) => Promise<void>
+  editTask: (task: Task) => Promise<void>;
+  addPriority: (priority: priorityType) => Promise<void>;
+  editPriority: (priority: priorityType) => Promise<void>;
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -51,7 +53,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     fetchTasks();
   }
 
-  async function addPriority(priority: Priority) {
+  async function addPriority(priority: priorityType) {
     const response = await fetch("/api/priority", {
       method: "POST",
       headers: {
@@ -81,8 +83,8 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     fetchTasks();
   }
 
-  async function editTask(id: string, task: Task) {
-    await fetch(`/api/task/${parseInt(id, 10)}`, {
+  async function editTask(task: Task) {
+    await fetch(`/api/task/${task.id}`, {
       method: "PUT",
       body: JSON.stringify({
         name: task.name,
@@ -91,10 +93,22 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         startTime: task.startTime,
         endTime: task.endTime,
         date: task.date.split("T")[0],
-        id: parseInt(id, 10),
+        id: task.id,
       }),
     });
     fetchTasks();
+  }
+
+  async function editPriority(priority: priorityType){
+    await fetch(`/api/priority/${priority.id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        name: priority.name,
+        color: priority.color,
+        order: priority.order,
+      })
+    })
+    fetchPriorities()
   }
 
   useEffect(() => {
@@ -109,6 +123,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         uploadTaskDone,
         deleteTask,
         editTask,
+        editPriority,
         addPriority,
         taskList,
         priorityList,

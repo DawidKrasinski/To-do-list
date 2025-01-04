@@ -7,7 +7,7 @@ import { useToDoList } from "@/app/toDoListProvider";
 
 export default function addPriority () {
     const [activePriority, setActivePriority] = useState<Priority>({id: 0, color: "#ffffff", name: "", order: 0})
-    const {priorityList, addPriority} = useToDoList()
+    const {priorityList, addPriority, editPriority} = useToDoList()
     const isEditing = priorityList.find((priority) => priority.id === activePriority.id)
 
     function handleActivePriorityChange(priorityId: number) {
@@ -35,7 +35,7 @@ export default function addPriority () {
     function handleEditPriorityButtonClicked(priority: Priority) {
         if(priority.color && priority.name?.trim()){
             console.log(priority)
-            // editPriority(priority)
+            editPriority(priority)
         } else {
             console.log("Priority is invalid")
         }
