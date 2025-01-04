@@ -8,6 +8,7 @@ import { useToDoList } from "@/app/toDoListProvider";
 export default function addPriority () {
     const [activePriority, setActivePriority] = useState<Priority>({id: 0, color: "#ffffff", name: "", order: 0})
     const {priorityList, addPriority} = useToDoList()
+    const isEditing = priorityList.find((priority) => priority.id === activePriority.id)
 
     function handleActivePriorityChange(priorityId: number) {
         const priority = priorityList.find((priority) => priority.id === priorityId)
@@ -29,7 +30,15 @@ export default function addPriority () {
         } else {
             console.log("Priority is invalid")
         }
-        
+    }
+
+    function handleEditPriorityButtonClicked(priority: Priority) {
+        if(priority.color && priority.name?.trim()){
+            console.log(priority)
+            // editPriority(priority)
+        } else {
+            console.log("Priority is invalid")
+        }
     }
 
     return (
@@ -40,17 +49,17 @@ export default function addPriority () {
             </div>
             <PrioritySection onChange={handleActivePriorityChange} priority={activePriority}/>
             <div className="flex flex-col gap-4">   
-                <h2 className="text-xl">Create new priority</h2>
+                <h2 className="text-xl">{isEditing ? "You are editing priority" : "Create new priority"}</h2>
                     <div className="flex gap-2">
                         <input placeholder="name" value={activePriority.name} type="text" onChange={(e) => handlePriorityNameChange(e.target.value)} className="bg-muted rounded-lg p-3"/>
                         <input type="color" value={activePriority.color} onChange={(e) => handlePriorityColorChange(e.target.value)} className="bg-muted rounded-lg p-3"/>
                     </div>
             </div>
             <button
-            onClick={() => handleAddPriorityButtonClicked(activePriority)}
+            onClick={() => isEditing ? handleEditPriorityButtonClicked(activePriority) : handleAddPriorityButtonClicked(activePriority)}
             className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full"
           >
-            Create Priority
+            {isEditing ? "Edit Priority" : "Create Priority"}
           </button>
         </div>
     )

@@ -25,9 +25,11 @@ export async function POST(req: NextRequest) {
       body.color,
     )
     console.log(priority)
-    return NextResponse.json(priority);
+    await priority.save()
+    return NextResponse.json({}, { status: 201 });
   } catch (error) {
     console.log("cant use get method", error);
     return NextResponse.json({ error: "cant use get method" }, { status: 500 });
   }
 }
+
