@@ -8,7 +8,7 @@ export type ToDoListContextType = {
   taskList: Task[];
   priorityList: Priority[];
   addTask: (task: Task) => Promise<void>;
-  uploadTaskDone: (id: string, done: boolean) => Promise<void>;
+  uploadTaskDone: (id: number, done: boolean) => Promise<void>;
   deleteTask: (id: number) => Promise<void>;
   editTask: (task: Task) => Promise<void>;
   addPriority: (priority: priorityType) => Promise<void>;
@@ -84,8 +84,8 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     await fetchTasks()
   }
 
-  async function uploadTaskDone(id: string, done: boolean) {
-    await fetch(`/api/task/${parseInt(id, 10)}`, {
+  async function uploadTaskDone(id: number, done: boolean) {
+    await fetch(`/api/task/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ done }),
     });

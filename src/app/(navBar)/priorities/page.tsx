@@ -7,7 +7,7 @@ import { useToDoList } from "@/app/toDoListProvider";
 
 export default function addPriority () {
     const [activePriority, setActivePriority] = useState<Priority>({id: 0, color: "#ffffff", name: "", order: 0})
-    const {priorityList, addPriority, editPriority, deletePriority} = useToDoList()
+    const {priorityList, taskList, addPriority, editPriority, deletePriority} = useToDoList()
     const isEditing = priorityList.find((priority) => priority.id === activePriority.id)
 
     function handleActivePriorityChange(priorityId: number) {
@@ -41,7 +41,8 @@ export default function addPriority () {
         }
     }
 
-    function handleDeletePriorityButtonClicked(id: number){
+    function handleDeletePriorityButtonClicked(id: number){ 
+        if(!taskList.some((task) => task.priority.id === id))
         deletePriority(id)
     }
 
