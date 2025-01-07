@@ -8,7 +8,7 @@ interface PriorityProps {
   onChange: (priority: number) => void
 }
 
-export function PrioritySection({ onChange, priority}: PriorityProps) {
+export function Priorities({ onChange, priority}: PriorityProps) {
   const { priorityList } = useToDoList();
 
   return (

@@ -6,7 +6,7 @@ import { Calendar } from "@/app/components/calendar/calendar-component";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Schedule } from "@/app/components/schedule/schedule-component";
-import { PrioritySection } from "@/app/components/priority/priority-component";
+import { Priorities } from "@/app/components/priority/priority-component";
 import { Header } from "@/app/components/header/header-component";
 
 
@@ -85,7 +85,7 @@ export default function EditTask() {
         <Header header={orginalTaskName} />
         <Calendar onChange={handleDateChange} date={task.date} />
         <Schedule setTask={setTask} task={task} />
-        <PrioritySection onChange={handlePriorityChange} priority={task.priority}/>
+        <Priorities onChange={handlePriorityChange} priority={task.priority}/>
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">

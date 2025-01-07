@@ -1,9 +1,10 @@
 "use client"
-import { PrioritySection } from "@/app/components/priority/priority-component";
+import { Priorities } from "@/app/components/priority/priority-component";
 import { Priority } from "@/app/priorityType";
 import { useState } from "react";
 import { UserPhoto } from "../components/user/userPhoto";
 import { useToDoList } from "@/app/toDoListProvider";
+import { PrioritySection } from "../components/prioritySection/priority";
 
 export default function addPriority () {
     const [activePriority, setActivePriority] = useState<Priority>({id: 0, color: "#ffffff", name: "", order: 0})
@@ -52,7 +53,7 @@ export default function addPriority () {
                 <h1 className="text-2xl">Hi *Name*, you are in priority section</h1>
                 <UserPhoto/>
             </div>
-            <PrioritySection onChange={handleActivePriorityChange} priority={activePriority}/>
+            <PrioritySection onChange={handleActivePriorityChange} priority={activePriority} onDrop={}/>
             <div className="flex flex-col gap-4">   
                 <h2 className="text-xl">{isEditing ? "You are editing priority" : "Create new priority"}</h2>
                     <div className="flex gap-2">

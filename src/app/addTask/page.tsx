@@ -6,7 +6,7 @@ import { Task } from "../taskType.js";
 import { useToDoList } from "../toDoListProvider";
 import { Calendar } from "../components/calendar/calendar-component";
 import { Schedule } from "@/app/components/schedule/schedule-component";
-import { PrioritySection } from "@/app/components/priority/priority-component";
+import { Priorities } from "@/app/components/priority/priority-component";
 
 export default function AddTask() {
   const [task, setTask] = useState<Task>({
@@ -56,7 +56,7 @@ export default function AddTask() {
         <Header header="Create new task" />
         <Calendar onChange={handleDateChange} date={task.date}/>
         <Schedule setTask={setTask} task={task} />
-        <PrioritySection onChange={handlePriorityChange} priority={task.priority}/>
+        <Priorities onChange={handlePriorityChange} priority={task.priority}/>
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
           <button

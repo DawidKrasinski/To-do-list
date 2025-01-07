@@ -6,7 +6,7 @@ export async function GET() {
   await useDataSource()
 
   try {
-    const results = await Priority.find()
+    const results = await Priority.find({order: {order: "ASC"}})
     return NextResponse.json(results);
   } catch (error) {
     console.log("cant use get method", error);
