@@ -21,6 +21,7 @@ export function Priorities({ onChange, priority}: PriorityProps) {
           priority={priorityElement}
           isActive={priority.id === priorityElement.id}
           onChange={onChange} 
+          isDraggable={false}
         />
       ))}
       </div>

@@ -47,18 +47,22 @@ export default function addPriority () {
         deletePriority(id)
     }
 
+    function handleDrop(newPriorityIndex: number, oldPriorityIndex: number){
+        console.log(newPriorityIndex, oldPriorityIndex)
+    }
+
     return (
         <div className="px-4 pt-16 text-lg flex flex-col flex-col gap-8">
             <div className="flex gap-16 items-center">
                 <h1 className="text-2xl">Hi *Name*, you are in priority section</h1>
                 <UserPhoto/>
             </div>
-            <PrioritySection onChange={handleActivePriorityChange} priority={activePriority} onDrop={}/>
+            <PrioritySection onChange={handleActivePriorityChange} priority={activePriority} onDrop={handleDrop}/>
             <div className="flex flex-col gap-4">   
                 <h2 className="text-xl">{isEditing ? "You are editing priority" : "Create new priority"}</h2>
-                    <div className="flex gap-2">
+                    <div className="flex gap-4">
                         <input placeholder="name" value={activePriority.name} type="text" onChange={(e) => handlePriorityNameChange(e.target.value)} className="bg-muted rounded-lg p-3"/>
-                        <input type="color" value={activePriority.color} onChange={(e) => handlePriorityColorChange(e.target.value)} className="bg-muted rounded-lg p-3"/>
+                        <input type="color" value={activePriority.color} onChange={(e) => handlePriorityColorChange(e.target.value)} className="bg-muted rounded-lg p-3 flex flex-1"/>
                     </div>
             </div>
             <div className="flex gap-6">
