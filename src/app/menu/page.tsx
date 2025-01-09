@@ -14,21 +14,23 @@ export default function Menu() {
 
   function Theme({ isActive, name }: { isActive: boolean; name: string }) {
     return (
-      <div className="flex flex-1 flex-col gap-8">
+      <div
+        className={`${
+          { light: "light", custom: "custom" }[name]
+        } flex justify-center items-center flex-1 flex-col gap-4`}
+      >
         <div
           className={`${
-            isActive ? "border-purple-400 rounded-lg" : "border-transparent"
-          } border-2 `}
+            isActive ? "border-purple-400" : "border-gray-500"
+          } w-16 h-16 rounded-xl border-2 flex overflow-hidden`}
         >
-          <div className="flex justify-center items-center w-16 h-16 rounded-xl">
-            <div className="bg-white">
-              <div className="bg-background"></div>
-              <div className="bg-muted-foreground"></div>
-            </div>
-            <div className="bg-muted"></div>
+          <div className="flex flex-1 flex-col">
+            <div className="flex flex-1 bg-background"></div>
+            <div className="flex flex-1 bg-muted-foreground"></div>
           </div>
-          <div className="flex justify-center items-center">{name}</div>
+          <div className="flex flex-1 bg-muted"></div>
         </div>
+        <div className={`${isActive ? "text-purple-400" : ""}`}>{name}</div>
       </div>
     );
   }

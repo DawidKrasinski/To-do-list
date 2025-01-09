@@ -12,12 +12,12 @@
   --navBar: 220 15% 9%;
 }
 
-/* .light {
+.light {
   --background: 230 40% 38%;
   --foreground: 240 50% 2%;
   --muted: 180 50% 98%;
   --muted-foreground: 240 50% 2%;
-} */
+}
 
 body {
   font-family: Arial, Helvetica, sans-serif;
