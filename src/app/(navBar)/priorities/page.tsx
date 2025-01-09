@@ -66,7 +66,7 @@ export default function addPriority() {
   }
 
   return (
-    <div className="px-4 pt-16 text-lg flex flex-col flex-col gap-8">
+    <div className="px-4 pt-16 text-lg flex flex-col gap-8">
       <div className="flex gap-16 items-center">
         <h1 className="text-2xl">Hi *Name*, you are in priority section</h1>
         <UserPhoto />
