@@ -6,7 +6,11 @@ import { useRef, useState } from "react";
 
 export default function Menu() {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [activeTheme, setActiveTheme] = useState("dark");
+  const [activeTheme, setActiveTheme] = useState("");
+
+  function handleThemeChange(theme: string) {
+    setActiveTheme(theme);
+  }
 
   function handleImageClick() {
     inputRef.current?.click();
@@ -15,6 +19,7 @@ export default function Menu() {
   function Theme({ isActive, name }: { isActive: boolean; name: string }) {
     return (
       <div
+        onClick={() => handleThemeChange(name)}
         className={`${
           { light: "light", custom: "custom" }[name]
         } flex justify-center items-center flex-1 flex-col gap-4`}
@@ -22,13 +27,15 @@ export default function Menu() {
         <div
           className={`${
             isActive ? "border-purple-400" : "border-gray-500"
-          } w-16 h-16 rounded-xl border-2 flex overflow-hidden`}
+          } border-2 rounded-xl`}
         >
-          <div className="flex flex-1 flex-col">
-            <div className="flex flex-1 bg-background"></div>
-            <div className="flex flex-1 bg-muted-foreground"></div>
+          <div className="w-16 h-16 border-4 border-transparent rounded-xl flex overflow-hidden">
+            <div className="flex flex-1 flex-col">
+              <div className="flex flex-1 bg-background"></div>
+              <div className="flex flex-1 bg-muted-foreground"></div>
+            </div>
+            <div className="flex flex-1 bg-muted"></div>
           </div>
-          <div className="flex flex-1 bg-muted"></div>
         </div>
         <div className={`${isActive ? "text-purple-400" : ""}`}>{name}</div>
       </div>
@@ -39,19 +46,17 @@ export default function Menu() {
     <div className="flex flex-col gap-16 pt-16 px-4">
       <div className="flex flex-col gap-8">
         <Header header="Settings" />
-        <div onClick={handleImageClick}>
-          <div>
-            <Image
-              src={"/img/Pencil.png"}
-              height={100}
-              width={100}
-              alt={""}
-              className="rounded-full"
-            />
-          </div>
-
-          <input type="file" ref={inputRef} className="opacity-0" />
+        <div onClick={handleImageClick} className="flex justify-center">
+          <Image
+            src={"/img/Pencil.png"}
+            height={100}
+            width={100}
+            alt={""}
+            className="rounded-full"
+          />
         </div>
+
+        <input type="file" ref={inputRef} className="hidden" />
         <input
           value={"name"}
           type="text"

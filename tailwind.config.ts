@@ -17,6 +17,7 @@ export default {
         foreground: "hsl(var(--foreground))",
         deleteButton: "hsl(var(--deleteButton))",
         navBar: "hsl(var(--navBar))",
+        unactiveIcon: "hsl(var(--unactive-icon))",
       },
       fontSize: {
         "lg-xl": "18px",

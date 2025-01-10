@@ -10,13 +10,15 @@
   --muted-foreground: 0 0% 89%;
   --deleteButton: 0 0% 34%;
   --navBar: 220 15% 9%;
+  --unactive-icon: 300 30% 60%;
 }
 
 .light {
-  --background: 230 40% 38%;
-  --foreground: 240 50% 2%;
-  --muted: 180 50% 98%;
+  --background: 200 100% 95%;
+  --foreground: 220 15% 12%;
+  --muted: 0 0% 100%;
   --muted-foreground: 240 50% 2%;
+  --navBar: 210 100% 85%;
 }
 
 body {
