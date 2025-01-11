@@ -1,4 +1,4 @@
-import { Priority } from "../../priorityType";
+import { Priority } from "../../types/priorityType";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 interface PriorityButtonProps {
@@ -27,7 +27,9 @@ export function PriorityButton({
       }}
       className={`flex-1 p-1 rounded-xl border-2 text-lg
         ${isActive ? `text-background` : ""}`}
-      onClick={() => onChange(priority.id)}
+      onClick={() => {
+        onChange(priority.id);
+      }}
       draggable={isDraggable}
       ref={setNodeRef}
       {...attributes}

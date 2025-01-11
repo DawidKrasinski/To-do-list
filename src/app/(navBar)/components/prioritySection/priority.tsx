@@ -1,5 +1,5 @@
 import { PriorityButton } from "@/app/components/priority/priority-button";
-import { Priority } from "@/app/priorityType";
+import { Priority } from "@/app/types/priorityType";
 import { useToDoList } from "@/app/toDoListProvider";
 import { DragEndEvent } from "@dnd-kit/core";
 import {
@@ -14,7 +14,7 @@ interface PriorityProps {
   onDrop: (newPriorityIndex: number, oldPriorityIndex: number) => void;
 }
 
-export function PrioritySection({ onChange, onDrop, priority }: PriorityProps) {
+export function PrioritySection({ onChange, priority }: PriorityProps) {
   const { priorityList } = useToDoList();
 
   return (
@@ -24,15 +24,18 @@ export function PrioritySection({ onChange, onDrop, priority }: PriorityProps) {
           items={priorityList}
           strategy={horizontalListSortingStrategy}
         >
-          {priorityList.map((priorityElement) => (
-            <PriorityButton
-              key={priorityElement.id}
-              priority={priorityElement}
-              isActive={priority.id === priorityElement.id}
-              onChange={onChange}
-              isDraggable={true}
-            />
-          ))}
+          {priorityList.map((priorityElement) => {
+            console.log(priorityElement.id, priority.id);
+            return (
+              <PriorityButton
+                key={priorityElement.id}
+                priority={priorityElement}
+                isActive={priority.id === priorityElement.id}
+                onChange={onChange}
+                isDraggable={true}
+              />
+            );
+          })}
         </SortableContext>
       </div>
     </section>

@@ -1,6 +1,6 @@
 "use client";
 import { Priorities } from "@/app/components/priority/priority-component";
-import { Priority } from "@/app/priorityType";
+import { Priority } from "@/app/types/priorityType";
 import { useState } from "react";
 import { UserPhoto } from "../components/user/userPhoto";
 import { useToDoList } from "@/app/toDoListProvider";
