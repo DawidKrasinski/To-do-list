@@ -1,13 +1,31 @@
 "use client";
 import { Priorities } from "@/app/components/priority/priority-component";
 import { Priority } from "@/app/types/priorityType";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserPhoto } from "../components/user/userPhoto";
 import { useToDoList } from "@/app/toDoListProvider";
 import { PrioritySection } from "../components/prioritySection/priority";
 import { closestCorners, DndContext, DragEndEvent } from "@dnd-kit/core";
+import { User } from "@/app/types/userType";
 
 export default function addPriority() {
+  const { getUser } = useToDoList();
+  const [user, setUser] = useState<User>({
+    name: "",
+    theme: "dark",
+    photo: "/",
+    id: 0,
+    localStorageId: "",
+  });
+  useEffect(() => {
+    const fetchUser = async () => {
+      const localStorageId = localStorage.getItem("userId");
+      if (!localStorageId) return;
+      const user = await getUser(localStorageId);
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
   const [activePriority, setActivePriority] = useState<Priority>({
     id: 0,
     color: "#ffffff",
@@ -21,6 +39,7 @@ export default function addPriority() {
   );
 
   function handleDragEnd(event: DragEndEvent) {
+    //!!!!!!!!!!!!!
     console.log("event: ", event);
   }
 
@@ -51,6 +70,7 @@ export default function addPriority() {
   function handleEditPriorityButtonClicked(priority: Priority) {
     if (priority.color && priority.name?.trim()) {
       console.log(priority);
+
       editPriority(priority);
     } else {
       console.log("Priority is invalid");
@@ -62,14 +82,17 @@ export default function addPriority() {
   }
 
   function handleDrop(newPriorityIndex: number, oldPriorityIndex: number) {
+    //!!!!!!!!!!!!
     console.log(newPriorityIndex, oldPriorityIndex);
   }
 
   return (
     <div className="px-4 pt-16 text-lg flex flex-col gap-8">
       <div className="flex gap-16 items-center">
-        <h1 className="text-2xl">Hi *Name*, you are in priority section</h1>
-        <UserPhoto />
+        <h1 className="text-2xl">{`Hi ${user.name}, you are in priority section`}</h1>
+        <div className="w-16 h-16 rounded-full overflow-hidden">
+          <UserPhoto />
+        </div>
       </div>
       <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
         <PrioritySection

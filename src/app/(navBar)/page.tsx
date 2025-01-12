@@ -22,10 +22,10 @@ export default function Home() {
 
   const uncompletedTasks = tasksToday - tasksDone;
 
-  const [searchInputValue, setSearchInputValue] = useState("")
+  const [searchInputValue, setSearchInputValue] = useState("");
 
-  function onSeatchInputChange (e: React.ChangeEvent<HTMLInputElement>){
-    setSearchInputValue(e.target.value)
+  function onSeatchInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchInputValue(e.target.value);
   }
 
   return (
@@ -43,7 +43,9 @@ export default function Home() {
                 className="inline-block ml-2 mb-1 w-auto h-auto"
               />
             </h1>
-            <UserPhoto/>
+            <div className="w-16 h-16 rounded-full overflow-hidden">
+              <UserPhoto />
+            </div>
           </div>
           <div className="flex flex-col">
             {/* !!! */}
@@ -58,18 +60,18 @@ export default function Home() {
             {/* <i className="fa-solid fa-magnifying-glass pl-2 pr-3"></i> */}
           </div>
         </header>
-        
-        <div>{
-          searchInputValue ? (<TaskList searchInputValue={searchInputValue} seeAll={false}/>)
-           : (
+
+        <div>
+          {searchInputValue ? (
+            <TaskList searchInputValue={searchInputValue} seeAll={false} />
+          ) : (
             <div className="flex flex-col gap-8">
               <Progress />
               <TaskList day={today} seeAll={true} />
               <TaskList day={tomorrow} seeAll={true} />
-           </div> 
-          )
-          }</div>
-        
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

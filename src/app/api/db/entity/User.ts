@@ -6,7 +6,7 @@ export class User extends BaseEntity {
   id!: number;
 
   @Column()
-  localStoreId!: string;
+  localStorageId!: string;
 
   @Column()
   name!: string;
@@ -24,7 +24,7 @@ export class User extends BaseEntity {
     theme?: string
   ) {
     super();
-    this.localStoreId = localStoreId ?? "";
+    this.localStorageId = localStoreId ?? "";
     this.name = name ?? "";
     this.photo = photo ?? "";
     this.theme = theme ?? "";

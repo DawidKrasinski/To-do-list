@@ -1,27 +1,62 @@
 "use client";
 
-import Image from "next/image";
 import { Header } from "../components/header/header-component";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useToDoList } from "../toDoListProvider";
+import { User } from "../types/userType";
+import { UserPhoto } from "../(navBar)/components/user/userPhoto";
+import { useRouter } from "next/navigation";
 
 export default function Menu() {
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [activeTheme, setActiveTheme] = useState("");
+  const { editUser, getUser } = useToDoList();
+  const [user, setUser] = useState<User>({
+    name: "",
+    theme: "dark",
+    photo: "",
+    id: 0,
+    localStorageId: "",
+  });
 
-  function handleThemeChange(theme: string) {
-    setActiveTheme(theme);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const localStorageId = localStorage.getItem("userId");
+      if (!localStorageId) return;
+      const user = await getUser(localStorageId);
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
+
+  function handleThemeChange(theme: "light" | "dark" | "custom") {
+    setUser((user) => ({ ...user, theme }));
+  }
+
+  function handleNameChange(name: string) {
+    setUser((user) => ({ ...user, name }));
+  }
+
+  function handlePhotoChange(photo: string) {
+    setUser((user) => ({ ...user, photo }));
   }
 
   function handleImageClick() {
     inputRef.current?.click();
   }
 
-  function Theme({ isActive, name }: { isActive: boolean; name: string }) {
+  function Theme({
+    isActive,
+    name,
+  }: {
+    isActive: boolean;
+    name: "dark" | "light" | "custom";
+  }) {
     return (
       <div
         onClick={() => handleThemeChange(name)}
         className={`${
-          { light: "light", custom: "custom" }[name]
+          { light: "light", custom: "custom", dark: "dark" }[name]
         } flex justify-center items-center flex-1 flex-col gap-4`}
       >
         <div
@@ -32,7 +67,7 @@ export default function Menu() {
           <div className="w-16 h-16 border-4 border-transparent rounded-xl flex overflow-hidden">
             <div className="flex flex-1 flex-col">
               <div className="flex flex-1 bg-background"></div>
-              <div className="flex flex-1 bg-muted-foreground"></div>
+              <div className="flex flex-1 bg-navBar"></div>
             </div>
             <div className="flex flex-1 bg-muted"></div>
           </div>
@@ -47,29 +82,39 @@ export default function Menu() {
       <div className="flex flex-col gap-8">
         <Header header="Settings" />
         <div onClick={handleImageClick} className="flex justify-center">
-          <Image
-            src={"/img/Pencil.png"}
-            height={100}
-            width={100}
-            alt={""}
-            className="rounded-full"
+          <div className="w-32 h-32 rounded-full overflow-hidden">
+            <UserPhoto />
+          </div>
+
+          <input
+            onChange={(e) => handlePhotoChange(e.target.value)}
+            type="file"
+            ref={inputRef}
+            className="hidden"
           />
         </div>
 
-        <input type="file" ref={inputRef} className="hidden" />
         <input
-          value={"name"}
+          onChange={(e) => handleNameChange(e.target.value)}
+          value={user.name}
           type="text"
+          placeholder="Name"
           className="bg-muted p-3 rounded-lg"
         ></input>
       </div>
       <div className="flex gap-8">
-        <Theme name="light" isActive={activeTheme === "light"} />
-        <Theme name="dark" isActive={activeTheme === "dark"} />
-        <Theme name="custom" isActive={activeTheme === "custom"} />
+        <Theme name="light" isActive={user.theme === "light"} />
+        <Theme name="dark" isActive={user.theme === "dark"} />
+        <Theme name="custom" isActive={user.theme === "custom"} />
       </div>
       <div className="fixed bottom-0 left-0 right-0 p-4">
-        <button className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full">
+        <button
+          onClick={() => {
+            editUser(user);
+            router.push("/");
+          }}
+          className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg p-3 w-full"
+        >
           Save Changes
         </button>
       </div>

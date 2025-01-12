@@ -4,6 +4,7 @@ import { Task } from "./types/taskType";
 import { Priority as priorityType } from "./types/priorityType";
 import { Priority } from "./api/db/entity/Priority";
 import { User } from "./types/userType";
+import { url } from "inspector";
 
 export type ToDoListContextType = {
   taskList: Task[];
@@ -15,6 +16,8 @@ export type ToDoListContextType = {
   addPriority: (priority: priorityType) => Promise<void>;
   editPriority: (priority: priorityType) => Promise<void>;
   deletePriority: (id: number) => Promise<void>;
+  editUser: (user: User) => Promise<void>;
+  getUser: (user: string) => Promise<User>;
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -22,7 +25,6 @@ const ToDoListContext = createContext<ToDoListContextType | null>(null);
 export default function ToDoListProvider(props: { children: React.ReactNode }) {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [priorityList, setPriorityList] = useState<Priority[]>([]);
-  const [user, setUser] = useState<User>();
 
   async function fetchTasks() {
     const response = await fetch("/api/task");
@@ -41,8 +43,8 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   async function getUser(localStorageId: string) {
     const response = await fetch(`/api/user/${localStorageId}`);
     const body = await response.json();
-    setUser(body);
-    console.log(body);
+    console.log("user body", body);
+    return body;
   }
 
   async function addTask(task: Task) {
@@ -113,6 +115,19 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     fetchTasks();
   }
 
+  async function editUser(user: User) {
+    console.log(user.localStorageId);
+    await fetch(`/api/user/${user.localStorageId}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        name: user.name,
+        theme: user.theme,
+        photo: user.photo,
+      }),
+    });
+    console.log("editUser:", user);
+  }
+
   async function editTask(task: Task) {
     await fetch(`/api/task/${task.id}`, {
       method: "PUT",
@@ -145,17 +160,13 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   useEffect(() => {
     fetchTasks();
     fetchPriorities();
-    let storeUserId = localStorage.getItem("userId");
+    const storageUserId = localStorage.getItem("userId");
 
-    if (!storeUserId) {
+    if (!storageUserId) {
       const newUserId = crypto.randomUUID();
       localStorage.setItem("userId", newUserId);
-      storeUserId = newUserId;
-      createNewUser(storeUserId);
+      createNewUser(newUserId);
     }
-
-    console.log("localStore id:", storeUserId);
-    getUser(storeUserId);
   }, []);
 
   return (
@@ -167,7 +178,9 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         deletePriority,
         editTask,
         editPriority,
+        editUser,
         addPriority,
+        getUser,
         taskList,
         priorityList,
       }}
