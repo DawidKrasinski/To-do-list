@@ -1,12 +1,11 @@
 "use client";
-import { Priorities } from "@/app/components/priority/priority-component";
 import { Priority } from "@/app/types/priorityType";
 import { useEffect, useState } from "react";
 import { UserPhoto } from "../components/user/userPhoto";
 import { useToDoList } from "@/app/toDoListProvider";
 import { PrioritySection } from "../components/prioritySection/priority";
-import { closestCorners, DndContext, DragEndEvent } from "@dnd-kit/core";
 import { User } from "@/app/types/userType";
+import { DragEndEvent } from "@dnd-kit/core";
 
 export default function addPriority() {
   const { getUser } = useToDoList();
@@ -94,13 +93,12 @@ export default function addPriority() {
           <UserPhoto />
         </div>
       </div>
-      <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
-        <PrioritySection
-          onChange={handleActivePriorityChange}
-          priority={activePriority}
-          onDrop={handleDrop}
-        />
-      </DndContext>
+
+      <PrioritySection
+        onChange={handleActivePriorityChange}
+        priority={activePriority}
+        onDrop={handleDrop}
+      />
 
       <div className="flex flex-col gap-4">
         <h2 className="text-xl">
