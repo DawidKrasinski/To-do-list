@@ -30,20 +30,17 @@ export function PrioritySection({ onChange, priority }: PriorityProps) {
         >
           <SortableContext
             strategy={horizontalListSortingStrategy}
-            items={priorityList.map((task) => priority.id)}
+            items={priorityList.map((priority) => priority.id)}
           >
-            {priorityList.map((priorityElement) => {
-              console.log(priorityElement.id, priority.id);
-              return (
-                <PriorityButton
-                  key={priorityElement.id}
-                  priority={priorityElement}
-                  isActive={priority.id === priorityElement.id}
-                  onChange={onChange}
-                  isDraggable={true}
-                />
-              );
-            })}
+            {priorityList.map((priorityElement) => (
+              <PriorityButton
+                key={priorityElement.id}
+                priority={priorityElement}
+                isActive={priority.id === priorityElement.id}
+                onChange={onChange}
+                isDraggable={true}
+              />
+            ))}
           </SortableContext>
         </DndContext>
       </div>

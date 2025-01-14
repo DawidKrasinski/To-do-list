@@ -15,7 +15,7 @@ export function PriorityButton({
   isDraggable,
 }: PriorityButtonProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: priority.id.toString() });
+    useSortable({ id: priority.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
