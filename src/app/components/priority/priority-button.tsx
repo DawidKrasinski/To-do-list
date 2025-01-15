@@ -24,9 +24,6 @@ export function PriorityButton({
     backgroundColor: isActive ? priority.color : "transparent",
   };
 
-  console.log("Transform:", transform);
-  console.log("Transition:", transition);
-
   return (
     <button
       ref={setNodeRef}

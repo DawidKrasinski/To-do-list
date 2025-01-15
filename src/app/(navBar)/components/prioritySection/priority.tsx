@@ -3,9 +3,11 @@ import { Priority } from "@/app/types/priorityType";
 import { useToDoList } from "@/app/toDoListProvider";
 import { closestCorners, DndContext, DragEndEvent } from "@dnd-kit/core";
 import {
+  arrayMove,
   horizontalListSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
+import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 
 interface PriorityProps {
   priority: Priority;
@@ -14,17 +16,22 @@ interface PriorityProps {
 }
 
 export function PrioritySection({ onChange, priority }: PriorityProps) {
-  const { priorityList } = useToDoList();
+  const { priorityList, changePrioritiesOrder } = useToDoList();
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-    console.log("active:", active, "over:", over);
+    if (over && active.id !== over.id) {
+      // const newPriority = priorityList.find()
+      // changePrioritiesOrder(active.id, over.id);
+      // return arrayMove(priorityList, oldOrder, newOrder);
+    }
   }
 
   return (
     <section className="text-xl flex flex-col gap-2">
       <div className="flex gap-2">
         <DndContext
+          modifiers={[restrictToHorizontalAxis]}
           collisionDetection={closestCorners}
           onDragEnd={handleDragEnd}
         >
