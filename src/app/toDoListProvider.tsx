@@ -25,6 +25,13 @@ const ToDoListContext = createContext<ToDoListContextType | null>(null);
 export default function ToDoListProvider(props: { children: React.ReactNode }) {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [priorityList, setPriorityList] = useState<Priority[]>([]);
+  const [user, setUser] = useState<User>({
+    name: "",
+    theme: "",
+    photo: "/",
+    id: 0,
+    localStorageId: "",
+  });
 
   async function fetchTasks() {
     const response = await fetch("/api/task");
@@ -43,7 +50,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   async function getUser(localStorageId: string) {
     const response = await fetch(`/api/user/${localStorageId}`);
     const body = await response.json();
-    console.log("user body", body);
+    setUser(body);
     return body;
   }
 
@@ -81,7 +88,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }
 
   async function createNewUser(localStorageId: string) {
-    await fetch("/api/user", {
+    const response = await fetch("/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -170,23 +177,25 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ToDoListContext.Provider
-      value={{
-        addTask,
-        uploadTaskDone,
-        deleteTask,
-        deletePriority,
-        editTask,
-        editPriority,
-        editUser,
-        addPriority,
-        getUser,
-        taskList,
-        priorityList,
-      }}
-    >
-      {props.children}
-    </ToDoListContext.Provider>
+    <div className={`${user.theme} bg-background text-foreground h-dvh`}>
+      <ToDoListContext.Provider
+        value={{
+          addTask,
+          uploadTaskDone,
+          deleteTask,
+          deletePriority,
+          editTask,
+          editPriority,
+          editUser,
+          addPriority,
+          getUser,
+          taskList,
+          priorityList,
+        }}
+      >
+        {props.children}
+      </ToDoListContext.Provider>
+    </div>
   );
 }
 

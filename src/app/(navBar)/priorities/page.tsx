@@ -91,7 +91,7 @@ export default function addPriority() {
 
   return (
     <div className="px-4 pt-16 text-lg flex flex-col gap-8">
-      <div className="flex gap-16 items-center">
+      <div className="flex gap-16 justify-between items-center">
         <h1 className="text-2xl">{`Hi ${user.name}, you are in priority section`}</h1>
         <div className="w-16 h-16 rounded-full overflow-hidden">
           <UserPhoto />

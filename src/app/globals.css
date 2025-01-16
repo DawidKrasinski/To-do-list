@@ -4,12 +4,7 @@
 @tailwind utilities;
 
 :root {
-  --background: 220 15% 12%;
-  --foreground: 0 0% 100%;
-  --muted: 0 0% 20%;
-  --muted-foreground: 0 0% 89%;
   --deleteButton: 0 0% 34%;
-  --navBar: 220 15% 9%;
   --unactive-icon: 300 30% 60%;
 }
 

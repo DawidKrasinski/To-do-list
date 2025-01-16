@@ -22,6 +22,7 @@ export function PriorityButton({
     transition,
     borderColor: priority.color,
     backgroundColor: isActive ? priority.color : "transparent",
+    touchAction: "none",
   };
 
   return (
@@ -31,7 +32,7 @@ export function PriorityButton({
       {...listeners}
       style={style}
       className={`flex-1 p-1 rounded-xl border-2 text-lg
-        ${isActive ? `text-background` : ""}`}
+        ${isActive ? `text-gray-900` : ""}`}
       onMouseDown={() => {
         onChange(priority.id);
       }}
