@@ -24,9 +24,6 @@ export function PriorityButton({
     backgroundColor: isActive ? priority.color : "transparent",
   };
 
-  console.log("Transform:", transform);
-  console.log("Transition:", transition);
-
   return (
     <button
       ref={setNodeRef}
@@ -35,7 +32,7 @@ export function PriorityButton({
       style={style}
       className={`flex-1 p-1 rounded-xl border-2 text-lg
         ${isActive ? `text-background` : ""}`}
-      onClick={() => {
+      onMouseDown={() => {
         onChange(priority.id);
       }}
       draggable={isDraggable}

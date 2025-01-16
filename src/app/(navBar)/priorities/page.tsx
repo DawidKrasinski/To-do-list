@@ -43,10 +43,14 @@ export default function addPriority() {
   }
 
   function handleActivePriorityChange(priorityId: number) {
-    const priority = priorityList.find(
-      (priority) => priority.id === priorityId
-    );
-    if (priority) setActivePriority({ ...priority });
+    if (activePriority.id === priorityId) {
+      setActivePriority({ id: 0, color: "#ffffff", name: "", order: 0 });
+    } else {
+      const priority = priorityList.find(
+        (priority) => priority.id === priorityId
+      );
+      if (priority) setActivePriority({ ...priority });
+    }
   }
 
   function handlePriorityNameChange(priorityName: string) {
@@ -110,13 +114,13 @@ export default function addPriority() {
             value={activePriority.name}
             type="text"
             onChange={(e) => handlePriorityNameChange(e.target.value)}
-            className="bg-muted rounded-lg p-3"
+            className="bg-muted rounded-lg p-3 flex flex-1"
           />
           <input
             type="color"
             value={activePriority.color}
             onChange={(e) => handlePriorityColorChange(e.target.value)}
-            className="bg-muted rounded-lg p-3 flex flex-1"
+            className="bg-muted rounded-lg p-3 w-28"
           />
         </div>
       </div>
