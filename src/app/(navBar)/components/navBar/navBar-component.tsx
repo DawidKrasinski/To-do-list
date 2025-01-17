@@ -23,7 +23,7 @@ export function NavBar({ activeIcon }: NavBarProps) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 w-full bg-navBar rounded-t-2xl py-1 px-4">
       <div className="flex gap-8">
-        <Icon href="#" icon="fa-calendar-days" />
+        <Icon href="/calendar" icon="fa-calendar-days" />
         <Icon href="/" icon="fa-house" />
 
         <div className="flex-1 flex justify-center items-center">
@@ -36,20 +36,8 @@ export function NavBar({ activeIcon }: NavBarProps) {
         </div>
 
         <Icon href="/priorities" icon="fa-clipboard-list" />
-        <Icon href="#" icon="fa-user-group" />
+        <Icon href="/group" icon="fa-user-group" />
       </div>
     </nav>
   );
-}
-
-{
-  /* <div className="flex-1 flex justify-center items-center">
-  <Link href="#">
-    <i
-      className={`fa-solid fa-user-group text-2xl text-purple-400 ${
-        activeIcon === "Groups" ? "" : "opacity-35"
-      }`}
-    ></i>
-  </Link>
-</div>; */
 }

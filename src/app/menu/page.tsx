@@ -18,6 +18,12 @@ export default function Menu() {
     id: 0,
     localStorageId: "",
   });
+  const customColors = {
+    text: "#ffffff",
+    muted: "#000000",
+    navBar: "#555555",
+    background: "#666666",
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -77,6 +83,50 @@ export default function Menu() {
     );
   }
 
+  function CustomTheme({
+    isCustom,
+    customColors,
+  }: {
+    isCustom: boolean;
+    customColors?: {
+      text: string;
+      background: string;
+      navBar: string;
+      muted: string;
+    };
+  }) {
+    function ColorInput({
+      text,
+      customColor,
+    }: {
+      text: string;
+      customColor: string;
+    }) {
+      return (
+        <div className="flex justify-between items-center">
+          <div className="text-lg">{text}</div>
+          <input
+            type="color"
+            value={customColor}
+            className="bg-muted p-4 rounded-lg"
+          />
+        </div>
+      );
+    }
+
+    console.log(isCustom, customColors);
+    return isCustom && customColors ? (
+      <div className="flex flex-col gap-8">
+        <ColorInput text="background:" customColor={customColors.background} />
+        <ColorInput text="text:" customColor={customColors.text} />
+        <ColorInput text="navigation bar:" customColor={customColors.navBar} />
+        <ColorInput text="field:" customColor={customColors.muted} />
+      </div>
+    ) : (
+      ""
+    );
+  }
+
   return (
     <div className="flex flex-col gap-16 pt-16 px-4">
       <div className="flex flex-col gap-8">
@@ -107,6 +157,10 @@ export default function Menu() {
         <Theme name="dark" isActive={user.theme === "dark"} />
         <Theme name="custom" isActive={user.theme === "custom"} />
       </div>
+      <CustomTheme
+        isCustom={user.theme === "custom"}
+        customColors={customColors}
+      />
       <div className="fixed bottom-0 left-0 right-0 p-4">
         <button
           onClick={() => {
