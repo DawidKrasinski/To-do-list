@@ -28,6 +28,8 @@ export default function Home() {
     setSearchInputValue(e.target.value);
   }
 
+  console.log(taskList);
+
   return (
     <>
       <div className="flex flex-col gap-8 px-4 pt-16 pb-20">

@@ -17,6 +17,18 @@ export class User extends BaseEntity {
   @Column()
   theme!: string;
 
+  // @Column({ nullable: true })
+  // backgroundColor: string | null = null;
+
+  // @Column({ nullable: true })
+  // textColor: string | null = null;
+
+  // @Column({ nullable: true })
+  // navBarColor: string | null = null;
+
+  // @Column({ nullable: true })
+  // fieldColor: string | null = null;
+
   constructor(
     localStoreId?: string,
     name?: string,

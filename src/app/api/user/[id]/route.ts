@@ -6,12 +6,12 @@ export async function GET(
   req: NextRequest,
   context: { params: { id: string } }
 ) {
-  console.log("context:", context);
   await useDataSource();
   try {
     const user = await User.findOneBy({
       localStorageId: context.params.id,
     });
+    console.log("----------------------------------------user:", user);
     return NextResponse.json(user);
   } catch (error) {
     console.log("cant use get method", error);

@@ -31,6 +31,10 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     photo: "/",
     id: 0,
     localStorageId: "",
+    textColor: null,
+    backgroundColor: null,
+    navBarColor: null,
+    fieldColor: null,
   });
 
   async function fetchTasks() {
