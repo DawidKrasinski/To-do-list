@@ -15,6 +15,10 @@ export default function addPriority() {
     photo: "/",
     id: 0,
     localStorageId: "",
+    textColor: "",
+    backgroundColor: "",
+    navBarColor: "",
+    fieldColor: "",
   });
   useEffect(() => {
     const fetchUser = async () => {

@@ -17,17 +17,17 @@ export class User extends BaseEntity {
   @Column()
   theme!: string;
 
-  // @Column({ nullable: true })
-  // backgroundColor: string | null = null;
+  @Column()
+  backgroundColor: string = "#ffffff";
 
-  // @Column({ nullable: true })
-  // textColor: string | null = null;
+  @Column()
+  textColor: string = "#ffffff";
 
-  // @Column({ nullable: true })
-  // navBarColor: string | null = null;
+  @Column()
+  navBarColor: string = "#ffffff";
 
-  // @Column({ nullable: true })
-  // fieldColor: string | null = null;
+  @Column()
+  fieldColor: string = "#ffffff";
 
   constructor(
     localStoreId?: string,

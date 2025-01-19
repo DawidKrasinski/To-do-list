@@ -4,8 +4,8 @@ export type User = {
   theme: string;
   id: number;
   localStorageId: string;
-  backgroundColor: string | null;
-  textColor: string | null;
-  fieldColor: string | null;
-  navBarColor: string | null;
+  backgroundColor: string;
+  textColor: string;
+  fieldColor: string;
+  navBarColor: string;
 };

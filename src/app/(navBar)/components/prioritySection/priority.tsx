@@ -23,13 +23,13 @@ export function PrioritySection({ onChange, priority }: PriorityProps) {
 
   return (
     <section className="text-xl flex flex-col gap-2">
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         <DndContext
           collisionDetection={closestCorners}
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            strategy={horizontalListSortingStrategy}
+            // strategy={horizontalListSortingStrategy}
             items={priorityList.map((priority) => priority.id)}
           >
             {priorityList.map((priorityElement) => (

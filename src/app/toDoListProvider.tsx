@@ -17,7 +17,8 @@ export type ToDoListContextType = {
   editPriority: (priority: priorityType) => Promise<void>;
   deletePriority: (id: number) => Promise<void>;
   editUser: (user: User) => Promise<void>;
-  getUser: (user: string) => Promise<User>;
+  getUser: (userLocalStorageId: string) => Promise<User>;
+  editCustomTheme: (user: User) => Promise<void>;
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -31,10 +32,10 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     photo: "/",
     id: 0,
     localStorageId: "",
-    textColor: null,
-    backgroundColor: null,
-    navBarColor: null,
-    fieldColor: null,
+    textColor: "#ffffff",
+    backgroundColor: "#ffffff",
+    navBarColor: "#ffffff",
+    fieldColor: "#ffffff",
   });
 
   async function fetchTasks() {
@@ -136,7 +137,6 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         photo: user.photo,
       }),
     });
-    console.log("editUser:", user);
   }
 
   async function editTask(task: Task) {
@@ -168,6 +168,18 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     await fetchTasks();
   }
 
+  async function editCustomTheme(user: User) {
+    await fetch(`/api/user/${user.localStorageId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        background: user.backgroundColor,
+        text: user.textColor,
+        field: user.fieldColor,
+        navBar: user.navBarColor,
+      }),
+    });
+  }
+
   useEffect(() => {
     fetchTasks();
     fetchPriorities();
@@ -191,6 +203,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
           editTask,
           editPriority,
           editUser,
+          editCustomTheme,
           addPriority,
           getUser,
           taskList,
