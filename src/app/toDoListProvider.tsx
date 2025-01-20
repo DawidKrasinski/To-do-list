@@ -17,8 +17,8 @@ export type ToDoListContextType = {
   editPriority: (priority: priorityType) => Promise<void>;
   deletePriority: (id: number) => Promise<void>;
   editUser: (user: User) => Promise<void>;
-  getUser: (user: string) => Promise<User>;
-  changePrioritiesOrder: (fromOrder: number, toOrder: number) => Promise<void>;
+  getUser: (userLocalStorageId: string) => Promise<User>;
+  editCustomTheme: (user: User) => Promise<void>;
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -26,6 +26,17 @@ const ToDoListContext = createContext<ToDoListContextType | null>(null);
 export default function ToDoListProvider(props: { children: React.ReactNode }) {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [priorityList, setPriorityList] = useState<Priority[]>([]);
+  const [user, setUser] = useState<User>({
+    name: "",
+    theme: "",
+    photo: "/",
+    id: 0,
+    localStorageId: "",
+    textColor: "#ffffff",
+    backgroundColor: "#ffffff",
+    navBarColor: "#ffffff",
+    fieldColor: "#ffffff",
+  });
 
   async function fetchTasks() {
     const response = await fetch("/api/task");
@@ -44,7 +55,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   async function getUser(localStorageId: string) {
     const response = await fetch(`/api/user/${localStorageId}`);
     const body = await response.json();
-    console.log("user body", body);
+    setUser(body);
     return body;
   }
 
@@ -82,7 +93,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }
 
   async function createNewUser(localStorageId: string) {
-    await fetch("/api/user", {
+    const response = await fetch("/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -134,7 +145,6 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
         photo: user.photo,
       }),
     });
-    console.log("editUser:", user);
   }
 
   async function editTask(task: Task) {
@@ -166,6 +176,18 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     await fetchTasks();
   }
 
+  async function editCustomTheme(user: User) {
+    await fetch(`/api/user/${user.localStorageId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        background: user.backgroundColor,
+        text: user.textColor,
+        field: user.fieldColor,
+        navBar: user.navBarColor,
+      }),
+    });
+  }
+
   useEffect(() => {
     fetchTasks();
     fetchPriorities();
@@ -179,24 +201,26 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ToDoListContext.Provider
-      value={{
-        addTask,
-        uploadTaskDone,
-        deleteTask,
-        deletePriority,
-        editTask,
-        editPriority,
-        editUser,
-        changePrioritiesOrder,
-        addPriority,
-        getUser,
-        taskList,
-        priorityList,
-      }}
-    >
-      {props.children}
-    </ToDoListContext.Provider>
+    <div className={`${user.theme} bg-background text-foreground h-dvh`}>
+      <ToDoListContext.Provider
+        value={{
+          addTask,
+          uploadTaskDone,
+          deleteTask,
+          deletePriority,
+          editTask,
+          editPriority,
+          editUser,
+          editCustomTheme,
+          addPriority,
+          getUser,
+          taskList,
+          priorityList,
+        }}
+      >
+        {props.children}
+      </ToDoListContext.Provider>
+    </div>
   );
 }
 

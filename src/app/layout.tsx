@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ToDoListProvider, { useToDoList } from "./toDoListProvider";
 import localFont from "next/font/local";
 import "./globals.css";
+import { useEffect } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,8 +19,6 @@ export const metadata: Metadata = {
   title: "ToDoList",
 };
 
-// const { user } = useToDoList();
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,13 +34,9 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToDoListProvider>
-          {/* <div className={`${user.theme}`}> */}
-          {children}
-          {/* </div> */}
-        </ToDoListProvider>
+        <ToDoListProvider>{children}</ToDoListProvider>
       </body>
     </html>
   );

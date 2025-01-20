@@ -17,6 +17,18 @@ export class User extends BaseEntity {
   @Column()
   theme!: string;
 
+  @Column()
+  backgroundColor: string = "#ffffff";
+
+  @Column()
+  textColor: string = "#ffffff";
+
+  @Column()
+  navBarColor: string = "#ffffff";
+
+  @Column()
+  fieldColor: string = "#ffffff";
+
   constructor(
     localStoreId?: string,
     name?: string,

@@ -28,11 +28,13 @@ export default function Home() {
     setSearchInputValue(e.target.value);
   }
 
+  console.log(taskList);
+
   return (
     <>
       <div className="flex flex-col gap-8 px-4 pt-16 pb-20">
         <header className="flex flex-col gap-4">
-          <div className="flex items-center gap-16">
+          <div className="flex gap-16 justify-between items-center">
             <h1 className="text-2xl">
               You have got {uncompletedTasks} tasks today to complete
               <Image

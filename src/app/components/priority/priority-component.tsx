@@ -14,7 +14,7 @@ export function Priorities({ onChange, priority }: PriorityProps) {
   return (
     <section className="text-xl flex flex-col gap-2">
       <h3>Priority</h3>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         {priorityList.map((priorityElement) => (
           <PriorityButton
             key={priorityElement.id}

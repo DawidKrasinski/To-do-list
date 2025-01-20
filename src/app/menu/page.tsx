@@ -6,17 +6,23 @@ import { useToDoList } from "../toDoListProvider";
 import { User } from "../types/userType";
 import { UserPhoto } from "../(navBar)/components/user/userPhoto";
 import { useRouter } from "next/navigation";
+import { Theme } from "../components/theme/theme";
+import { CustomTheme } from "../components/theme/custom-theme";
 
 export default function Menu() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const { editUser, getUser } = useToDoList();
+  const { editUser, getUser, editCustomTheme } = useToDoList();
   const [user, setUser] = useState<User>({
     name: "",
     theme: "dark",
     photo: "",
     id: 0,
     localStorageId: "",
+    textColor: "#ffffff",
+    fieldColor: "#ffffff",
+    navBarColor: "#ffffff",
+    backgroundColor: "#ffffff",
   });
 
   useEffect(() => {
@@ -45,36 +51,9 @@ export default function Menu() {
     inputRef.current?.click();
   }
 
-  function Theme({
-    isActive,
-    name,
-  }: {
-    isActive: boolean;
-    name: "dark" | "light" | "custom";
-  }) {
-    return (
-      <div
-        onClick={() => handleThemeChange(name)}
-        className={`${
-          { light: "light", custom: "custom", dark: "dark" }[name]
-        } flex justify-center items-center flex-1 flex-col gap-4`}
-      >
-        <div
-          className={`${
-            isActive ? "border-purple-400" : "border-gray-500"
-          } border-2 rounded-xl`}
-        >
-          <div className="w-16 h-16 border-4 border-transparent rounded-xl flex overflow-hidden">
-            <div className="flex flex-1 flex-col">
-              <div className="flex flex-1 bg-background"></div>
-              <div className="flex flex-1 bg-navBar"></div>
-            </div>
-            <div className="flex flex-1 bg-muted"></div>
-          </div>
-        </div>
-        <div className={`${isActive ? "text-purple-400" : ""}`}>{name}</div>
-      </div>
-    );
+  function handleCustomColorChange(value: string, field: string) {
+    setUser((user) => ({ ...user, [field]: value }));
+    editCustomTheme(user);
   }
 
   return (
@@ -103,10 +82,32 @@ export default function Menu() {
         ></input>
       </div>
       <div className="flex gap-8">
-        <Theme name="light" isActive={user.theme === "light"} />
-        <Theme name="dark" isActive={user.theme === "dark"} />
-        <Theme name="custom" isActive={user.theme === "custom"} />
+        <Theme
+          name="light"
+          isActive={user.theme === "light"}
+          onChange={handleThemeChange}
+        />
+        <Theme
+          name="dark"
+          isActive={user.theme === "dark"}
+          onChange={handleThemeChange}
+        />
+        <Theme
+          name="custom"
+          isActive={user.theme === "custom"}
+          onChange={handleThemeChange}
+        />
       </div>
+      <CustomTheme
+        isCustom={user.theme === "custom"}
+        customColors={{
+          textColor: user.textColor,
+          backgroundColor: user.backgroundColor,
+          fieldColor: user.fieldColor,
+          navBarColor: user.navBarColor,
+        }}
+        onChange={handleCustomColorChange}
+      />
       <div className="fixed bottom-0 left-0 right-0 p-4">
         <button
           onClick={() => {
