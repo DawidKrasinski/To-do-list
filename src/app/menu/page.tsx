@@ -8,6 +8,7 @@ import { UserPhoto } from "../(navBar)/components/user/userPhoto";
 import { useRouter } from "next/navigation";
 import { Theme } from "../components/theme/theme";
 import { CustomTheme } from "../components/theme/custom-theme";
+import { flushSync } from "react-dom";
 
 export default function Menu() {
   const router = useRouter();
@@ -53,7 +54,13 @@ export default function Menu() {
 
   function handleCustomColorChange(value: string, field: string) {
     setUser((user) => ({ ...user, [field]: value }));
-    editCustomTheme(user);
+  }
+
+  function handleBlur() {
+    console.log("Handle blur", user);
+    flushSync(() => {
+      editCustomTheme(user);
+    });
   }
 
   return (
@@ -107,6 +114,7 @@ export default function Menu() {
           navBarColor: user.navBarColor,
         }}
         onChange={handleCustomColorChange}
+        onBlur={handleBlur}
       />
       <div className="fixed bottom-0 left-0 right-0 p-4">
         <button

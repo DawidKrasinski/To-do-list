@@ -1,5 +1,11 @@
 "use client";
-import { useContext, createContext, useState, useEffect } from "react";
+import {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  CSSProperties,
+} from "react";
 import { Task } from "./types/taskType";
 import { Priority as priorityType } from "./types/priorityType";
 import { Priority } from "./api/db/entity/Priority";
@@ -33,7 +39,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     id: 0,
     localStorageId: "",
     textColor: "#ffffff",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#000000",
     navBarColor: "#ffffff",
     fieldColor: "#ffffff",
   });
@@ -127,13 +133,13 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     fetchTasks();
   }
 
-  async function changePrioritiesOrder(fromOrder: number, toOrder: number) {
-    await fetch(`/api/priority`, {
-      method: "PATCH",
-      body: JSON.stringify({ fromOrder, toOrder }),
-    });
-    fetchTasks();
-  }
+  // async function changePrioritiesOrder(fromOrder: number, toOrder: number) {
+  //   await fetch(`/api/priority`, {
+  //     method: "PATCH",
+  //     body: JSON.stringify({ fromOrder, toOrder }),
+  //   });
+  //   fetchTasks();
+  // }
 
   async function editUser(user: User) {
     console.log(user.localStorageId);
@@ -200,8 +206,16 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     }
   }, []);
 
+  // console.log(user.backgroundColor);
+  // const style: CSSProperties & { [key: string]: string } = {
+  //   "--background": user.backgroundColor,
+  // };
+
   return (
-    <div className={`${user.theme} bg-background text-foreground h-dvh`}>
+    <div
+      // style={style}
+      className={`${user.theme} bg-background text-foreground h-dvh`}
+    >
       <ToDoListContext.Provider
         value={{
           addTask,

@@ -41,10 +41,10 @@ export default function addPriority() {
     (priority) => priority.id === activePriority.id
   );
 
-  function handleDragEnd(event: DragEndEvent) {
-    //!!!!!!!!!!!!!
-    console.log("event: ", event);
-  }
+  // function handleDragEnd(event: DragEndEvent) {
+  //   //!!!!!!!!!!!!!
+  //   console.log("event: ", event);
+  // }
 
   function handleActivePriorityChange(priorityId: number) {
     if (activePriority.id === priorityId) {

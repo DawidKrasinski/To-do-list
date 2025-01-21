@@ -16,7 +16,7 @@ interface PriorityProps {
 }
 
 export function PrioritySection({ onChange, priority }: PriorityProps) {
-  const { priorityList, changePrioritiesOrder } = useToDoList();
+  const { priorityList } = useToDoList();
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -31,7 +31,6 @@ export function PrioritySection({ onChange, priority }: PriorityProps) {
     <section className="text-xl flex flex-col gap-2">
       <div className="flex gap-2 flex-wrap">
         <DndContext
-          modifiers={[restrictToHorizontalAxis]}
           collisionDetection={closestCorners}
           onDragEnd={handleDragEnd}
         >
