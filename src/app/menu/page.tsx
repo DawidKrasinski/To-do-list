@@ -4,7 +4,7 @@ import { Header } from "../components/header/header-component";
 import { useEffect, useRef, useState } from "react";
 import { useToDoList } from "../toDoListProvider";
 import { User } from "../types/userType";
-import { UserPhoto } from "../(navBar)/components/user/userPhoto";
+import { UserPhoto } from "../components/photo/userPhoto";
 import { useRouter } from "next/navigation";
 import { Theme } from "../components/theme/theme";
 import { CustomTheme } from "../components/theme/custom-theme";

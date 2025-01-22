@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { useDataSource } from "../db/data-source";
 import { Priority } from "../db/entity/Priority";
+import { arrayMove } from "@dnd-kit/sortable";
 
 export async function GET() {
   await useDataSource();
@@ -29,29 +30,31 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function PATCH(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   await useDataSource();
   const body = await req.json();
+  const { fromId, toId } = body;
 
   try {
     const priorities = await Priority.find({ order: { order: "ASC" } });
-    const [movedElement] = priorities.splice(body.fromOrder, 1);
-    priorities.splice(body.toIndex, 0, movedElement);
-
-    for (let i = 0; i < priorities.length; i++) {
-      priorities[i].order = i;
+    const fromIndex = priorities.findIndex(
+      (priority) => priority.id === fromId
+    );
+    const toIndex = priorities.findIndex((priority) => priority.id === toId);
+    const updatedPriorities = arrayMove(priorities, fromIndex, toIndex);
+    for (let i = 0; i < updatedPriorities.length; i++) {
+      updatedPriorities[i].order = i + 1;
     }
-
-    await Priority.save(priorities);
+    await Priority.save(updatedPriorities);
 
     return NextResponse.json(
       { message: "Priority updated successfully" },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Can't use PATCH method:", error);
+    console.error("Can't use PUT method:", error);
     return NextResponse.json(
-      { error: "Can't use PATCH method" },
+      { error: "Can't use PUT method" },
       { status: 500 }
     );
   }

@@ -4,7 +4,7 @@ import { TaskList } from "../components/task/TaskList";
 import { Progress } from "../components/progress/progress";
 import { useToDoList } from "../toDoListProvider";
 import { useState } from "react";
-import { UserPhoto } from "./components/user/userPhoto";
+import { UserPhoto } from "../components/photo/userPhoto";
 
 export default function Home() {
   const { taskList } = useToDoList();

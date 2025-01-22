@@ -25,6 +25,7 @@ export type ToDoListContextType = {
   editUser: (user: User) => Promise<void>;
   getUser: (userLocalStorageId: string) => Promise<User>;
   editCustomTheme: (user: User) => Promise<void>;
+  changePrioritiesOrder: (fromId: number, toId: number) => Promise<void>;
 };
 
 const ToDoListContext = createContext<ToDoListContextType | null>(null);
@@ -133,13 +134,14 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
     fetchTasks();
   }
 
-  // async function changePrioritiesOrder(fromOrder: number, toOrder: number) {
-  //   await fetch(`/api/priority`, {
-  //     method: "PATCH",
-  //     body: JSON.stringify({ fromOrder, toOrder }),
-  //   });
-  //   fetchTasks();
-  // }
+  async function changePrioritiesOrder(fromId: number, toId: number) {
+    await fetch(`/api/priority`, {
+      method: "PUT",
+      body: JSON.stringify({ fromId: fromId, toId: toId }),
+    });
+    fetchTasks();
+    fetchPriorities();
+  }
 
   async function editUser(user: User) {
     console.log(user.localStorageId);
@@ -228,6 +230,7 @@ export default function ToDoListProvider(props: { children: React.ReactNode }) {
           editCustomTheme,
           addPriority,
           getUser,
+          changePrioritiesOrder,
           taskList,
           priorityList,
         }}

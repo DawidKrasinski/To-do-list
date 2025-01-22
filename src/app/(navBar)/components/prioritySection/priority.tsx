@@ -2,12 +2,7 @@ import { PriorityButton } from "@/app/components/priority/priority-button";
 import { Priority } from "@/app/types/priorityType";
 import { useToDoList } from "@/app/toDoListProvider";
 import { closestCorners, DndContext, DragEndEvent } from "@dnd-kit/core";
-import {
-  arrayMove,
-  horizontalListSortingStrategy,
-  SortableContext,
-} from "@dnd-kit/sortable";
-import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
+import { SortableContext } from "@dnd-kit/sortable";
 
 interface PriorityProps {
   priority: Priority;
@@ -16,14 +11,14 @@ interface PriorityProps {
 }
 
 export function PrioritySection({ onChange, priority }: PriorityProps) {
-  const { priorityList } = useToDoList();
+  const { priorityList, changePrioritiesOrder } = useToDoList();
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (over && active.id !== over.id) {
-      // const newPriority = priorityList.find()
-      // changePrioritiesOrder(active.id, over.id);
-      // return arrayMove(priorityList, oldOrder, newOrder);
+      const activeId = Number(active.id);
+      const overId = Number(over.id);
+      changePrioritiesOrder(activeId, overId);
     }
   }
 
