@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { useDataSource } from "../db/data-source";
 import { Priority } from "../db/entity/Priority";
-import { arrayMove } from "@dnd-kit/sortable";
 
 export async function GET() {
   await useDataSource();
@@ -35,6 +34,13 @@ export async function PUT(req: NextRequest) {
   const body = await req.json();
   const { fromId, toId } = body;
 
+  function arrayMove<T>(array: T[], from: number, to: number) {
+    const draggedItem = array[from];
+    array.splice(from, 1);
+    array.splice(to, 0, draggedItem);
+    return array;
+  }
+
   try {
     const priorities = await Priority.find({ order: { order: "ASC" } });
     const fromIndex = priorities.findIndex(
@@ -43,7 +49,7 @@ export async function PUT(req: NextRequest) {
     const toIndex = priorities.findIndex((priority) => priority.id === toId);
     const updatedPriorities = arrayMove(priorities, fromIndex, toIndex);
     for (let i = 0; i < updatedPriorities.length; i++) {
-      updatedPriorities[i].order = i + 1;
+      updatedPriorities[i].order = i;
     }
     await Priority.save(updatedPriorities);
 
