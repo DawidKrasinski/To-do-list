@@ -34,7 +34,7 @@ export async function PUT(req: NextRequest) {
   const body = await req.json();
   const { fromId, toId } = body;
 
-  function arrayMove<T>(array: T[], from: number, to: number) {
+  function arrayMove(array: Priority[], from: number, to: number) {
     const draggedItem = array[from];
     array.splice(from, 1);
     array.splice(to, 0, draggedItem);
